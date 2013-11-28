@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mit XMLSpy v2012 rel. 2 sp1 (http://www.altova.com) von Dirk Weißer (INIT GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:element name="VehicleDataRequest" type="VehicleDataRequestStructure"/>
+	<xs:complexType name="VehicleDataRequestStructure">
+		<xs:sequence>
+			<xs:element name="VehicleStatus" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="VehicleActivity" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="VehicleDataResponse" type="VehicleDataResponseStructure"/>
+	<xs:complexType name="VehicleDataResponseStructure">
+		<xs:sequence>
+			<xs:element name="VehicleCode" type="VehicleCodeType"/>
+			<xs:element name="VehicleStatus" type="VehicleStatusStructure" minOccurs="0"/>
+			<xs:element name="VehicleActivity" type="VehicleActivityStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!---->
+	<xs:element name="StopRequestRequest" type="StopRequestRequestStructure"/>
+	<xs:complexType name="StopRequestRequestStructure">
+		<xs:sequence>
+			<xs:element name="StopRef" type="StopPointRefStructure"/>
+			<xs:element name="StopName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="DisabledPerson" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StopRequestResponse" type="StopRequestResponseStructure"/>
+	<xs:complexType name="StopRequestResponseStructure">
+		<xs:sequence>
+			<xs:element name="StopRequestReceived" type="xs:boolean"/>
+			<xs:element name="RequestedStop" type="xs:NMTOKEN" minOccurs="0"/>
+			<xs:element name="EstimatedArrivalTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!---->
+	<xs:simpleType name="ConnectionTypeEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Interchange"/>
+			<xs:enumeration value="ProtectedConnection"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConnectionStateEnumeration">
+		<xs:annotation>
+			<xs:documentation>Information whether a connection will rest protected</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ConnectionBroken"/>
+			<xs:enumeration value="ConnectionOK"/>
+			<xs:enumeration value="NoInformationAvailable"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DoorStateEnumeration">
+		<xs:annotation>
+			<xs:documentation>Information on the state of the doors in a vehicle</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DoorsOpen"/>
+			<xs:enumeration value="AllDoorsClosed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExitSideEnumeration">
+		<xs:annotation>
+			<xs:documentation>Information on the ExitSide (sic!)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="both"/>
+			<xs:enumeration value="left"/>
+			<xs:enumeration value="right"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JourneyModeEnumeration">
+		<xs:annotation>
+			<xs:documentation>Information on the kind of a trip</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NoTrip"/>
+			<xs:enumeration value="AdditionalTrip"/>
+			<xs:enumeration value="ServiceTrip"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationStateEnumeration">
+		<xs:annotation>
+			<xs:documentation>Information on the location in a very general way</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AfterStop"/>
+			<xs:enumeration value="AtStop"/>
+			<xs:enumeration value="BeforeStop"/>
+			<xs:enumeration value="BetweenStop"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RouteDeviationEnumeration">
+		<xs:annotation>
+			<xs:documentation>Information whether the vehicle is onroute or offroute</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onroute"/>
+			<xs:enumeration value="offroute"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!---->
+	<xs:complexType name="AnnouncementStructure">
+		<xs:sequence>
+			<xs:element name="AnnouncementRef" type="xs:int"/>
+			<xs:element name="AnnouncementText" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AnnouncementTTSText" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConnectionStructure">
+		<xs:sequence>
+			<xs:element name="ConnectionRef" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>StopPoint-referenced connection-reference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConnectionType" type="ConnectionTypeEnumeration"/>
+			<xs:element name="DisplayContent" type="DisplayContentStructure"/>
+			<xs:element name="DepartureStopPointRef" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Ref to stop point where connecting trip departs from.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Platform" type="xs:string"/>
+			<xs:element name="ConnectionState" type="ConnectionStateEnumeration"/>
+			<xs:element name="Transportmode" type="VehicleTypeStructure" minOccurs="0"/>
+			<xs:element name="ExpectedDepartureTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DestinationStructure">
+		<xs:sequence>
+			<xs:element name="DestinationRef" type="xs:NMTOKEN"/>
+			<xs:element name="DestinationName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="DestinationShortName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DisplayContentStructure">
+		<xs:sequence>
+			<xs:element name="Line" type="LineInformationStructure" minOccurs="0"/>
+			<xs:element name="Destination" type="DestinationStructure"/>
+			<xs:element name="Via" type="ViaPointStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:group ref="DisplayPolicyGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LineInformationStructure">
+		<xs:sequence>
+			<xs:element ref="LineRef"/>
+			<xs:element name="LineName" type="InternationalTextStructure" maxOccurs="unbounded"/>
+			<xs:element name="LineShortName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LineNumber" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StopInformationStructure">
+		<xs:sequence>
+			<xs:element name="StopIndex" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>StopIndex on current trip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StopRef" type="StopPointRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference to the stoppoint from the planning system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StopName" type="InternationalTextStructure" maxOccurs="unbounded"/>
+			<xs:element name="StopAlternativeName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Platform" type="xs:string" minOccurs="0"/>
+			<xs:element name="DisplayContent" type="DisplayContentStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ArrivalScheduled" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="DepartureScheduled" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="RecordedArrivalTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This Value is needed for the demonstration at the SSB</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DistanceToNextStop" type="xs:double" minOccurs="0"/>
+			<xs:element name="AnnouncementNextStop" type="AnnouncementStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FareZone" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Connection" type="ConnectionStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StopSequenceStructure">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="StopPoint" type="StopInformationStructure" minOccurs="2" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleActivityStructure">
+		<xs:sequence>
+			<xs:element name="TimetableDelay" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Delay to a precision in seconds. Early times are shown as negative values.
+            		</xs:documentation>
+					<xs:documentation>
+            			tbd: what happens, if this value isn't set
+            		</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RouteDeviation" type="RouteDeviationEnumeration" minOccurs="0"/>
+			<xs:element name="JourneyMode" type="JourneyModeEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>   		</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="ServicePatternPositionGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleStatusStructure">
+		<xs:sequence>
+			<xs:element name="DoorState" type="DoorStateEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+            		</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehicleStopRequested" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is the Stop-Button inside the vehicle pressed?             		</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InPanic" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Überfallruf</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="VehicleTypeRef" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleTypeStructure">
+		<xs:sequence>
+			<xs:element ref="VehicleTypeRef"/>
+			<xs:element name="VehicleName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViaPointStructure">
+		<xs:annotation>
+			<xs:documentation>Description of a via point on journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ViaPointRef" type="xs:int"/>
+			<xs:element name="PlaceRef" type="StopPointRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identifier of the via place in the journey; used to help identify the vehicle journey on arrival boards.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PlaceName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The name of the via place in the journey; used to help identify the vehicle to the public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PlaceShortName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The short name of the via place in the journey; used to help identify the vehicle to the public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ViaPointDisplayPriority" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Value, which allows to decide which Information is shown, if there is not enough time to show all</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!---->
+	<xs:group name="ServicePatternPositionGroup">
+		<xs:sequence>
+			<xs:element name="StopSequence" type="StopSequenceStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CurrentStopIndex" type="xs:int" minOccurs="0"/>
+			<xs:element name="LocationState" type="LocationStateEnumeration" minOccurs="0"/>
+			<xs:element name="NextExitSide" type="ExitSideEnumeration" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="DisplayPolicyGroup">
+		<xs:sequence>
+			<xs:element name="PeriodDuration" type="xs:duration">
+				<xs:annotation>
+					<xs:documentation>If more than one Sign-Information is given, you need to know</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Duration" type="xs:duration">
+				<xs:annotation>
+					<xs:documentation>Time-Value, which defines the part of the Periodtime in which this Sign-Information should be shown</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+</xs:schema>

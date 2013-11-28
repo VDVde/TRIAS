@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_JourneySupport-v1.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation>== Connection Demand =======================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConnectionDemandRequest" type="ConnectionDemandRequestStructure"/>
+	<xs:complexType name="ConnectionDemandRequestStructure">
+		<xs:sequence>
+			<xs:element name="RequestId" type="xs:NMTOKEN"/>
+			<xs:element name="Connection" type="GeneralizedConnectionStructure"/>
+			<xs:element name="NumberOfPersons" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="TravelProbability" type="PercentType" minOccurs="0"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Connection Demand - RESPONSE =======================================-->
+	<xs:element name="ConnectionDemandResponse" type="ConnectionDemandResponseStructure"/>
+	<xs:complexType name="ConnectionDemandResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralizedConnectionStructure">
+		<xs:choice>
+			<xs:element name="DatedConnection" type="DatedConnectionStructure"/>
+			<xs:element name="PickUpLocation" type="DatedCallAtLocationStructure"/>
+			<xs:element name="SetDownLocation" type="DatedCallAtLocationStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="DatedConnectionStructure">
+		<xs:sequence>
+			<xs:element name="ConnectionId" type="xs:NMTOKEN" minOccurs="0"/>
+			<xs:element name="Feeder" type="FeederDistributorStructure"/>
+			<xs:element name="Distributor" type="FeederDistributorStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FeederDistributorStructure">
+		<xs:sequence>
+			<xs:group ref="DatedJourneyRefGroup"/>
+			<xs:element name="ConnectionLocation" type="CallAtStopStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Delete Connection Demand - REQUEST ========================================-->
+	<xs:element name="ConnectionDemandDeleteRequest" type="ConnectionDemandDeleteRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ConnectionDemandDeleteRequestStructure">
+		<xs:sequence>
+			<xs:element name="RequestId" type="xs:NMTOKEN"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>== Delete Connection Demand Response =======================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConnectionDemandDeleteResponse" type="ConnectionDemandDeleteResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ConnectionDemandDeleteResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>== Connection Report =======================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConnectionReportRequest" type="ConnectionReportRequestStructure"/>
+	<xs:complexType name="ConnectionReportRequestStructure">
+		<xs:sequence>
+			<xs:element name="RequestId" type="xs:NMTOKEN"/>
+			<xs:element name="Connection" type="GeneralizedConnectionStructure"/>
+			<xs:element name="Succeeded" type="xs:boolean"/>
+			<xs:element name="Reason" type="InternationalTextStructure" minOccurs="0"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ConnectionReportResponse" type="ConnectionReportResponseStructure"/>
+	<xs:complexType name="ConnectionReportResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>== Connection Status Request Response =======================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConnectionStatusRequest" type="ConnectionStatusRequestStructure"/>
+	<xs:complexType name="ConnectionStatusRequestStructure">
+		<xs:sequence>
+			<xs:element name="RequestId" type="xs:NMTOKEN"/>
+			<xs:element name="Connection" type="GeneralizedConnectionStructure"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ConnectionStatusResponse" type="ConnectionStatusResponseStructure"/>
+	<xs:complexType name="ConnectionStatusResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ConnectionStatus" type="ConnectionStatusStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>== Connection Status Subscription =======================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConnectionStatusNotification" type="ConnectionStatusNotificationStructure"/>
+	<xs:complexType name="ConnectionStatusNotificationStructure">
+		<xs:sequence>
+			<xs:element name="ConnectionStatus" type="ConnectionStatusStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>== Connection Status ================================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="ConnectionStatusEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="unknown"/>
+			<xs:enumeration value="planned"/>
+			<xs:enumeration value="confirmed"/>
+			<xs:enumeration value="broken"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ConnectionStatusStructure">
+		<xs:sequence>
+			<xs:element name="Connection" type="GeneralizedConnectionStructure"/>
+			<xs:element name="Status" type="ConnectionStatusEnumeration"/>
+			<xs:element name="Alternative" type="RecommendationStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RecommendationStructure">
+		<xs:sequence>
+			<xs:element name="RecommendationId" type="xs:NMTOKEN"/>
+			<xs:element name="Text" type="InternationalTextStructure"/>
+			<xs:element name="Type" type="RecommendationTypeEnumeration"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="RecommendationTypeEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NextService"/>
+			<xs:enumeration value="DifferentRoute"/>
+			<xs:enumeration value="Hotel"/>
+			<xs:enumeration value="Taxi"/>
+			<xs:enumeration value="Bus"/>
+			<xs:enumeration value="Helpdesk"/>
+			<xs:enumeration value="Hotline"/>
+			<xs:enumeration value="Driver"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

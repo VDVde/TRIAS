@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.siri.org.uk/siri" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4" id="siri_connectionTimetable_service">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>CEN TC278 WG3 SG7 Team</Contributor>
+				<Contributor>Dipl.-Ing. Sven Juergens psitrans  juergens@psitrans.de</Contributor>
+				<Contributor>Gustav Thiessen BLIC thi@BLIC.DE</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>Drafted for version 1.0  CEN TC278 WG3 SG7 Editor Nicholas Knowles, Kizoom. mailto:schemer@siri.org.uk</Creator>
+				<Date>
+					<Created>2004-09-10</Created>
+				</Date>
+				<Date>
+					<Modified>2004-10-01</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-14</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-20</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-05-11</Modified>
+				</Date>
+				<Date>
+					<Modified>2007-04-17</Modified>
+					<!-- Name Space changes -->
+				</Date>
+				<Date>
+					<Modified>2008-11-17</Modified>
+					<!-- Revise to support substitution groups -->
+				</Date>
+				<Date>
+					<Modified>2011-01-19</Modified>
+					<!-- Drop use of As Flat Groups  for InterChangeJourney -->
+				</Date>
+				<Description>
+					<p>SIRI is a European CEN technical standard for the exchange of Public Transport real time information.</p>
+					<p>This sub-schema describes the Connection Timetable Service, which provides timetables of planned connections at a connection point.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.siri.org.uk/schemas/1.3}siri_connectionTimetable_service.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_requests-v1.3.xsd</Requires>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_journey-v1.1.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+                            <Copyright>CEN, VDV, RTIG  2004,2005</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the VDV, RTIG XML and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 0.1a Draft for approval</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and road transport
+</Category>
+					<Project>CEN TC278 WG3 SG7</Project>
+				</Subject>
+				<Title>SIRI XML schema. Service Interface for Real Time Information. Connection Timetable Service.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="siri/siri_requests-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri/siri_journey-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri/siri_permissions-v1.2.xsd"/>
+	<xsd:group name="SiriConnectionTimetableIndexGroup">
+		<xsd:annotation>
+			<xsd:documentation>Convenience artifact to pick out main elements of the Connection Timetable Service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ConnectionTimetableRequest"/>
+			<xsd:element ref="ConnectionTimetableSubscriptionRequest"/>
+			<xsd:element ref="ConnectionTimetableDelivery"/>
+			<xsd:sequence>
+				<xsd:element ref="ConnectionTimetableCapabilitiesRequest"/>
+				<xsd:element ref="ConnectionTimetableCapabilitiesResponse"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="ConnectionTimetableRequest" type="ConnectionTimetableRequestStructure" substitutionGroup="AbstractFunctionalServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about timetabled connections at a stop.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:group name="ConnectionTimetableTopicGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that specify the content to be returned. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ArrivalWindow" type="ClosedTimestampRangeStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Earliest and latest time. If absent, default to the data horizon of the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ConnectionLinkRef" type="ConnectionLinkRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Connection point  for which data is to be supplied.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LineRef" type="LineRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Feeder line for which data is to be supplied.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DirectionRef" type="DirectionRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Feeder direction for which data is to be supplied.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ConnectionTimetableRequestStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Request for Connection Timetable Service </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractFunctionalServiceRequestStructure">
+				<xsd:sequence>
+					<xsd:group ref="ConnectionTimetableTopicGroup"/>
+					<xsd:group ref="ConnectionTimetableRequestPolicyGroup"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of request. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ConnectionTimetableRequestPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the request processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Language" type="xsd:language" default="en" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Preferred language in which to return  text  values.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ConnectionTimetableSunscriptionPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the subscription processing</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
+	<xsd:element name="ConnectionTimetableSubscriptionRequest" type="ConnectionTimetableSubscriptionStructure" substitutionGroup="AbstractFunctionalServiceSubscriptionRequest">
+		<xsd:annotation>
+			<xsd:documentation>Subscription Request for information about Timetabled connections at a stop.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ConnectionTimetableSubscriptionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Subscription Request for Connection Protection.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSubscriptionStructure">
+				<xsd:sequence>
+					<xsd:element ref="ConnectionTimetableRequest"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="ConnectionTimetableDelivery" type="ConnectionTimetableDeliveryStructure" substitutionGroup="AbstractFunctionalServiceDelivery">
+		<xsd:annotation>
+			<xsd:documentation>Delivery for Connection Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ConnectionTimetableDeliveryStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Delivery for Connection Protection.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceDeliveryStructure">
+				<xsd:sequence>
+					<xsd:group ref="ConnectionTimetablePayloadGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ConnectionTimetablePayloadGroup">
+		<xsd:annotation>
+			<xsd:documentation>Feeder delivery payload content.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TimetabledFeederArrival" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TimetabledFeederArrivalCancellation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="AbstractFeederItemStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for an interchange feeder Activity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractIdentifiedItemStructure">
+				<xsd:sequence>
+					<xsd:group ref="InterchangeFeederIdentityGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="InterchangeFeederIdentityGroup">
+		<xsd:annotation>
+			<xsd:documentation>Identifiers of Interchange Feeder Journey Call at Connection Link.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InterchangeRef" type="InterchangeRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifies the Interchange between two journeys for which data is being returned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ConnectionLinkRef" type="ConnectionLinkRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of the Connection Point Link or Connection Area for which data is to be returned. A reference associated with known feeder arrival and distributor departure stop points. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="ContextualisedStopPointInSequenceGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="TimetabledFeederArrival" type="TimetabledFeederArrivalStructure">
+		<xsd:annotation>
+			<xsd:documentation>A feeder arrival at the connection point</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TimetabledFeederArrivalStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for incoming visit by feeder journey to  interchange.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractFeederItemStructure">
+				<xsd:sequence>
+					<xsd:element name="FeederJourney" type="InterchangeJourneyStructure">
+						<xsd:annotation>
+							<xsd:documentation>Information about the feeder journey.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AimedArrivalTime" type="xsd:dateTime">
+						<xsd:annotation>
+							<xsd:documentation>Planned Arrival time at the connection point.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="TimetabledFeederArrivalCancellation" type="TimetabledFeederArrivalCancellationStructure">
+		<xsd:annotation>
+			<xsd:documentation>Cancellation of a Feeder Arrival to the connection point.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TimetabledFeederArrivalCancellationStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Timetabled Deletion of a feeder connection.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractReferencingItemStructure">
+				<xsd:sequence>
+					<xsd:group ref="InterchangeFeederIdentityGroup"/>
+					<xsd:element name="LineRef" type="LineRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifies the Line.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="DirectionRef" type="DirectionRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifies the direction, typically outward or return.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="VehicleJourneyRef" type="FramedVehicleJourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Reference to a Vehicle journey.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:group ref="JourneyPatternInfoGroup" minOccurs="0"/>
+					<xsd:element name="Reason" type="NaturalLanguageStringStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Reason for deletion.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="InterchangeJourneyStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for feeder or Distributor  Journey info about a Vehicle Journey.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="JourneyIdentityGroup"/>
+			<xsd:group ref="JourneyPatternInfoGroup" minOccurs="0"/>
+			<xsd:group ref="VehicleJourneyInfoGroup" minOccurs="0"/>
+			<xsd:group ref="DisruptionGroup" minOccurs="0"/>
+			<xsd:group ref="OperationalInfoGroup" minOccurs="0"/>
+			<xsd:element name="Monitored" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is real-time information available for journey; if not present, not known.  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AimedDepartureTime" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Timetabled Departure Time from the connection.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Extensions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ==== WSDL=========================================-->
+	<xsd:complexType name="ConnectionTimetableDeliveriesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Deliveries for Connection Timetable Service. Used in WSDL</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ConnectionTimetableDelivery"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ====Capability Request=================================================================== -->
+	<xsd:element name="ConnectionTimetableCapabilitiesRequest" type="ServiceCapabilitiesRequestStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Connection Timetable Service Capabilities. Answered with a ConnectionTimetableCapabilitiesResponse.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ConnectionTimetableCapabilitiesResponse" type="ConnectionTimetableCapabilitiesResponseStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesResponse">
+		<xsd:annotation>
+			<xsd:documentation>Capabilities for Connection Timetable Service. Answers a ConnectionTimetableCapabilitiesRequest.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ConnectionTimetableCapabilitiesResponseStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Delivery for Connection TimetableService.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceCapabilitiesResponseStructure">
+				<xsd:sequence>
+					<xsd:element ref="ConnectionTimetableServiceCapabilities" minOccurs="0"/>
+					<xsd:element name="ConnectionTimetablePermissions" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Participant's permissions to use the service, Only returned if requested</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="PermissionsStructure">
+									<xsd:sequence>
+										<xsd:element name="ConnectionTimetablePermission" type="ConnectionServicePermissionStructure" minOccurs="0" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>Permission for a single participant or all participants to use an aspect of the service.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:extension>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>
+Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConnectionTimetableCapabilityRequestPolicyStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for capability request.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CapabilityRequestPolicyStructure">
+				<xsd:sequence>
+					<xsd:element name="ForeignJourneysOnly" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Whether results returns foreign journeys only</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ConnectionTimetableServiceCapabilities" type="ConnectionTimetableServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Capabilities of Connection Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ConnectionTimetableServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Connection Timetable Capabilities.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractCapabilitiesStructure">
+				<xsd:sequence>
+					<xsd:element name="TopicFiltering" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Filtering Capabilities. </xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="FilterByLineRef"/>
+								<xsd:element ref="FilterByConnectionLinkRef">
+									<xsd:annotation>
+										<xsd:documentation>Whether results can be filtered by Connection  link. Default true</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RequestPolicy" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Request Policy capabilities.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="CapabilityRequestPolicyStructure">
+									<xsd:sequence>
+										<xsd:element name="ForeignJourneysOnly" type="xsd:boolean" default="false" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Whether service returns only foreign journeys. Default is false.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:extension>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="SubscriptionPolicy" type="CapabilitySubscriptionPolicyStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Subscription Policy capabilities.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AccessControl" type="ConnectionCapabilityAccessControlStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Optional Access control capabilities.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+</xsd:schema>

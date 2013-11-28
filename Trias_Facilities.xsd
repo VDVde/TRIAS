@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation>====================================================Request definitions====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="FacilityRequest" type="FacilityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request to retrieve current facility status information.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FacilityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Structure to retrieve current facility status information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="FacilityDataFilterGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FacilityStructure">
+		<xs:annotation>
+			<xs:documentation>Structure of Facility and its Status</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="VehicleFacility"/>
+				<xs:element ref="InfrastructureFacility"/>
+			</xs:choice>
+			<xs:element name="Condition" type="FacilityStatusStructure">
+				<xs:annotation>
+					<xs:documentation>The current condition/status of the facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FacilityStatusReport" type="FacilityStatusReportStructure">
+		<xs:annotation>
+			<xs:documentation>Report to update the status of a facility. Report the current status of a facility.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FacilityStatusReportStructure">
+		<xs:annotation>
+			<xs:documentation>Structure to report the status of a facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="VehicleFacility"/>
+				<xs:element ref="InfrastructureFacility"/>
+			</xs:choice>
+			<xs:element name="Condition" type="FacilityStatusStructure">
+				<xs:annotation>
+					<xs:documentation>The current condition/status of the facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="VehicleFacility" type="VehicleFacilityStructure">
+		<xs:annotation>
+			<xs:documentation>A vehicle facility.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VehicleFacilityStructure">
+		<xs:annotation>
+			<xs:documentation>Model of a vehicle facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="VehicleFacilityRefGroup"/>
+			<xs:group ref="ServiceFacilityGroup"/>
+			<xs:element name="FacilityDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name or text describing the facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocationDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description where the facility is located.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InfrastructureFacility" type="InfrastructureFacilityStructure">
+		<xs:annotation>
+			<xs:documentation>An infrastructure facility.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="InfrastructureFacilityStructure">
+		<xs:annotation>
+			<xs:documentation>Model of a infrastructure facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="InfrastructureFacilityRefGroup"/>
+			<xs:group ref="StopFacilityGroup"/>
+			<xs:element name="FacilityDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name or text describing the facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="GeoPositionStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Coordinate position of the facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocationDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description where the facility is located.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FacilityStatusTypeEnumeration">
+		<xs:annotation>
+			<xs:documentation>Possible status values.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="dirty"/>
+			<xs:enumeration value="destroyed"/>
+			<xs:enumeration value="damaged"/>
+			<xs:enumeration value="stolen"/>
+			<xs:enumeration value="out of order"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FacilityAvailabilityEnumeration">
+		<xs:annotation>
+			<xs:documentation>Possible availability values.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="unknown"/>
+			<xs:enumeration value="available"/>
+			<xs:enumeration value="notAvailable"/>
+			<xs:enumeration value="partiallyAvailable"/>
+			<xs:enumeration value="added"/>
+			<xs:enumeration value="removed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FacilityStatusStructure">
+		<xs:annotation>
+			<xs:documentation>Status and description.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Availability" type="FacilityAvailabilityEnumeration">
+				<xs:annotation>
+					<xs:documentation>Availability value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="FacilityStatusTypeEnumeration">
+				<xs:annotation>
+					<xs:documentation>Status value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatusDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Further description of the status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="VehicleFacilityRefGroup">
+		<xs:annotation>
+			<xs:documentation>Group to reference a vehicle facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FacilityRef" minOccurs="0"/>
+			<xs:element ref="OwnerRef" minOccurs="0"/>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
+			<xs:element ref="LineRef" minOccurs="0"/>
+			<xs:element ref="JourneyRef" minOccurs="0"/>
+			<xs:element ref="VehicleRef" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="InfrastructureFacilityRefGroup">
+		<xs:annotation>
+			<xs:documentation>Group to reference a infrastructure facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FacilityRef" minOccurs="0"/>
+			<xs:element ref="OwnerRef" minOccurs="0"/>
+			<xs:element ref="StopPointRef" minOccurs="0"/>
+			<xs:element ref="StopPlaceRef" minOccurs="0"/>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
+			<xs:element ref="LineRef" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="FacilityDataFilterGroup">
+		<xs:annotation>
+			<xs:documentation>Object references for selection of facilities.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FacilityRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="OwnerRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="StopPointRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="StopPlaceRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="OperatorRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="LineRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="JourneyRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="VehicleRef" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>====================================================Response definitions====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="FacilityStatusReportResponse" type="FacilityStatusReportResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response to FacilityStatusReport.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FacilityStatusReportResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response structure to FacilityStatusReport.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure">
+				<xs:annotation>
+					<xs:documentation>Message indicating whether the FacilityStatusReport could be processed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FacilityResponse" type="FacilityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response to FacilityRequest.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FacilityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages that refer to this facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FacilityResult" type="FacilityResultStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Possibly multiple facilities that match the query and their status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FacilityResultStructure">
+		<xs:annotation>
+			<xs:documentation>Result structure for a single facility status information element.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages that refer to this facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Facility" type="FacilityStructure">
+				<xs:annotation>
+					<xs:documentation>FacilityContent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

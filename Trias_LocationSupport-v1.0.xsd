@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation>========================================= Stop Points =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="StopPointCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifier of a Stop Point</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="StopPointRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Stop Point</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StopPointCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="StopPointRef" type="StopPointRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Stop Point</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:group name="StopPointGroup">
+		<xs:annotation>
+			<xs:documentation>a stop point with id and name</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="StopPointRef"/>
+			<xs:element name="StopPointName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Name or description of stop point for use in passenger information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional description of the stop point that may be appended to the name if enough space is available. F.e. "opposite main entrance".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PlannedBay" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the bay where to board/alight from the vehicle. According to planned timetable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EstimatedBay" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the bay where to board/alight from the vehicle. As to the latest realtime status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="StopPointStructure">
+		<xs:annotation>
+			<xs:documentation>Complete model of a stop point.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="StopPointGroup"/>
+			<xs:element name="PrivateCode" type="PrivateCodeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Code of this stop point in private/foreign/proprietary coding schemes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParentRef" type="StopPlaceRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference to the stop place to which this stop point belongs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="LocalityRef" minOccurs="0"/>
+			<xs:group ref="StopAttributesGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>========================================= Stop Places =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="StopPlaceCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifier of a Stop Place</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="StopPlaceRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Stop Place</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StopPlaceCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="StopPlaceRef" type="StopPlaceRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Stop Place</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:group name="StopPlaceGroup">
+		<xs:annotation>
+			<xs:documentation>a stop place with id and name</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="StopPlaceRef"/>
+			<xs:element name="StopPlaceName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Name of this stop place for use in passenger information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional description of the stop place that may be appended to the name if enough space is available. F.e. "Exhibition Center".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="StopPlaceStructure">
+		<xs:annotation>
+			<xs:documentation>Complete Model of a stop place.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="StopPlaceGroup"/>
+			<xs:element name="PrivateCode" type="PrivateCodeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Code of this stop place in private/foreign/proprietary coding schemes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="LocalityRef" minOccurs="0"/>
+			<xs:group ref="StopAttributesGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>========================================= Attributes ==============================================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="StopAttributesGroup">
+		<xs:annotation>
+			<xs:documentation>Properties of a stop.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WheelchairAccessible" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this stop is accessible for wheelchair users.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lighting" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this stop is lit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Covered" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this stop offers protection from weather conditions like rain, snow, storm etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>========================================= Locality =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="LocalityCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifier of a Locality</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="LocalityRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Locality</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocalityCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="LocalityRef" type="LocalityRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Locality</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LocalityStructure">
+		<xs:annotation>
+			<xs:documentation>Complete model of a locality</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LocalityCode" type="LocalityCodeType">
+				<xs:annotation>
+					<xs:documentation>Locality ID.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocalityName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Name or description of locality for use in passenger information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrivateCode" type="PrivateCodeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Code of this locality in private/foreign/proprietary coding schemes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParentRef" type="LocalityRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference to a parent locality.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Area" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Area covered by the locality described as a polygon.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Points" type="GeoPositionStructure" minOccurs="3" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>========================================= Point of Interest  =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="PointOfInterestCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifier of a Point of Interest</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="PointOfInterestRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Point of Interest</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PointOfInterestCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="PointOfInterestRef" type="PointOfInterestRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a Point of Interest</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PointOfInterestStructure">
+		<xs:annotation>
+			<xs:documentation>Complete model of a Point of Interest</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PointOfInterestCode" type="PointOfInterestCodeType">
+				<xs:annotation>
+					<xs:documentation>ID of this Point of Interest.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointOfInterestName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Name or description of point of interest for use in passenger information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional description of the point of interest that may be appended to the name if enough space is available. F.e. "Exhibition Center".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrivateCode" type="PrivateCodeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Code of this point of interest in private/foreign/proprietary coding schemes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="LocalityRef" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>========================================= Addresses =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="AddressCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifier of an Address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="AddressRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to an Address</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AddressCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="AddressRef" type="AddressRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to an Address</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:group name="AddressDetailGroup">
+		<xs:annotation>
+			<xs:documentation>An address with its name entities</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country of the address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postal code of the address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocalityName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Locality name of the address. If set it should at least contain the city name.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="LocalityRef" minOccurs="0"/>
+			<xs:element name="StreetName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Street name of the address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HouseNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>House number of the address. If none is given, either a crossing street can be given, or the whole street is meant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CrossingStreet" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Crossing. This can be used to be more specific without using house numbers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>Complete model of an Address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AddressCode" type="AddressCodeType">
+				<xs:annotation>
+					<xs:documentation>ID of this address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrivateCode" type="PrivateCodeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Code of this address in private/foreign/proprietary coding schemes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddressName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Name or description of address for use in passenger information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional description of the address that may be appended to the name if enough space is available. F.e. "Crossing with Peterstraße".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="AddressDetailGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>========================================= Locations ==============================================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="LocationStructure">
+		<xs:annotation>
+			<xs:documentation>Base for all types of locations</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="StopPoint" type="StopPointStructure"/>
+				<xs:element name="StopPlace" type="StopPlaceStructure"/>
+				<xs:element name="Locality" type="LocalityStructure">
+					<xs:annotation>
+						<xs:documentation>Locality, village or city.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PointOfInterest" type="PointOfInterestStructure"/>
+				<xs:element name="Address" type="AddressStructure"/>
+			</xs:choice>
+			<xs:element name="LocationName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Public name of the location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GeoPosition" type="GeoPositionStructure"/>
+			<xs:element name="Attribute" type="GeneralAttributeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Attribute associated with this location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a stop, address, POI, locality</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="StopPointRef"/>
+				<xs:element ref="StopPlaceRef"/>
+				<xs:element name="GeoPosition" type="GeoPositionStructure">
+					<xs:annotation>
+						<xs:documentation>WGS84 coordinates position.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="LocalityRef"/>
+				<xs:element ref="PointOfInterestRef"/>
+				<xs:element ref="AddressRef"/>
+			</xs:choice>
+			<xs:element name="LocationName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Public name of the location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

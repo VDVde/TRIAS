@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Folder FolderName="schema">
+		<Folder FolderName="SIRI top">
+			<File FilePath="siri.xsd" HomeFolder="Yes"/>
+			<File FilePath="siriSg.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI services">
+			<File FilePath="siri_connectionMonitoring_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_connectionTimetable_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_discovery.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_estimatedTimetable_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_facilityMonitoring_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_generalMessage_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_productionTimetable_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_situationExchange_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_stopMonitoring_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_stopTimetable_service.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri_vehicleMonitoring_service.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="siri">
+			<File FilePath="datex2\DATEXIISchema_1_0_1_0.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_all-v1.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_allBasic-v1.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_base-v1.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_common-v1.4.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_facilities-v1.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_facility-v1.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_feature-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_journey-v1.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_location-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_modes-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_operator-v1.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_participant-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_permissions-v1.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_reference-v1.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_requests-v1.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situation-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situationActions-v1.0.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situationAffects-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situationClassifiers-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situationIdentity-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situationReasons-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_situationServiceTypes-v1.0.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_time-v1.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_types-v1.1.xsd" HomeFolder="Yes"/>
+			<File FilePath="siri\siri_utility-v1.1.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="acsb">
+			<File FilePath="acsb\acsb_accessibility-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="acsb\acsb_all-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="acsb\acsb_limitations-v0.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="acsb\acsb_passengerMobility-v0.3.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="ifopt">
+			<File FilePath="ifopt\ifopt_administration-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_allStopPlace-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_checkpoint-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_countries-v0.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_equipment-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_feature-v0.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_location-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_modes-v0.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_modification-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_path-v0.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_stop-v0.3.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_time-v0.2.xsd" HomeFolder="Yes"/>
+			<File FilePath="ifopt\ifopt_types-v0.2.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="datex2"/>
+		<Folder FolderName="xml">
+			<File FilePath="xml\xml.xsd" HomeFolder="Yes"/>
+		</Folder>
+	</Folder>
+	<Folder FolderName="wsdl">
+		<File FilePath="siri_wsConsumer.wsdl" HomeFolder="Yes"/>
+		<File FilePath="siri_wsProducer.wsdl" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="examples">
+		<Folder FolderName="SIRI Generic framework Examples">
+			<File FilePath="examples\exa_checkStatus_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_checkStatus_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_dataReady_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_dataReady_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_dataReceived_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_dataSupply_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_heartbeat_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_requestSubscription_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_terminateSubscription_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_terminateSubscription_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exa_terminateSubscription_response_err.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-SM Stop Monitoring Examples">
+			<File FilePath="examples\exp_stopMonitoring_permissions.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopMonitoring_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopMonitoring_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopMonitoring_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopMonitoring_response_equip.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopMonitoring_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-ST Stop Timetable Examples">
+			<File FilePath="examples\exs_stopTimetable_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopTimetable_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopTimetable_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exs_stopTimetable_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-VM Vehicle Monitoring Examples">
+			<File FilePath="examples\exv_vehicleMonitoring_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exv_vehicleMonitoring_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exv_vehicleMonitoring_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exv_vehicleMonitoring_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-SX Situation Exchange Examples">
+			<File FilePath="examples\exx_situationExchange_capabilityResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exx_situationExchange_Pt.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exx_situationExchange_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exx_situationExchange_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exx_situationExchange_road.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exx_situationExchange_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-GM General Message Examples">
+			<File FilePath="examples\exm_generalMessage_capabilityResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exm_generalMessage_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exm_generalMessage_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exm_generalMessage_response_embed.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exm_generalMessage_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-CT Connection Timetable Examples">
+			<File FilePath="examples\exc_connectionTimetable_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionTimetable_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionTimetable_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionTimetable_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-CM Connection Monitoring Examples">
+			<File FilePath="examples\exc_connectionMonitoring_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionMonitoring_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionMonitoring_subscriptionRequest.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionMonitoringDistributor_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exc_connectionMonitoringFeeder_response.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-ET Estimated Timetable Examples">
+			<File FilePath="examples\ext_estimatedTimetable_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\ext_estimatedTimetable_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\ext_estimatedTimetable_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\ext_estimatedTimetable_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-PT Production Timetable Examples">
+			<File FilePath="examples\ext_productionTimetable_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\ext_productionTimetable_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\ext_productionTimetable_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\ext_productionTimetable_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI-FM Facility Monitoring Examples">
+			<File FilePath="examples\exf_facilityMonitoring_capabilitiesResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exf_facilityMonitoring_request.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exf_facilityMonitoring_response.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exf_facilityMonitoring_subscriptionRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI Discovery Examples">
+			<File FilePath="examples\exd_lines_discoveryRequest.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_lines_discoveryResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_productCategories_discoveryRequest.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_productCategories_discoveryResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_serviceFeatures_discoveryRequest.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_serviceFeatures_discoveryResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_stopPoints_discoveryRequest.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_stopPoints_discoveryResponse.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_vehicleFeatures_discoveryRequest.xml" HomeFolder="Yes"/>
+			<File FilePath="examples\exd_vehicleFeatures_discoveryResponse.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="SIRI Capabilitiy Discovery Examples">
+			<File FilePath="examples\exd_allServices_capabilitiesRequest.xml" HomeFolder="Yes"/>
+		</Folder>
+	</Folder>
+</Project>

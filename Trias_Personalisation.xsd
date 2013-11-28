@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:simpleType name="ValueIdType">
+		<xs:annotation>
+			<xs:documentation>This type represents identifiers for stored values.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--== Top Level Request/Response Structures ================================================-->
+	<xs:element name="PersonalisationRequest" type="PersonalisationRequestStructure"/>
+	<xs:complexType name="PersonalisationRequestStructure">
+		<xs:choice>
+			<xs:element name="SaveValue" type="PersonalisationSaveValueRequestStructure"/>
+			<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueRequestStructure"/>
+			<xs:element name="DeleteValue" type="PersonalisationDeleteValueRequestStructure"/>
+			<xs:element name="EnumerateValue" type="PersonalisationEnumerateValuesRequestStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="PersonalisationResponse" type="PersonalisationResponseStructure"/>
+	<xs:complexType name="PersonalisationResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice>
+				<xs:element name="SaveValue" type="PersonalisationSaveValueResponseStructure"/>
+				<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueResponseStructure"/>
+				<xs:element name="DeleteValue" type="PersonalisationDeleteValueResponseStructure"/>
+				<xs:element name="EnumerateValue" type="PersonalisationEnumerateValuesResponseStructure"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!--
+== Function SaveValue  =================================================================
+  -->
+	<xs:element name="PersonalisationSaveValueRequest" type="PersonalisationSaveValueRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to save a user-defined value.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationSaveValueRequestStructure">
+		<xs:sequence>
+			<xs:element name="ValueId" type="ValueIdType">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the value to store.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>This element contains the value to store.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PersonalisationSaveValueResponse" type="PersonalisationSaveValueResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to express a response for the SaveValueRequestStructure command.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationSaveValueResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the stored value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains the stored value, if a value was stored.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--
+== Function RetrieveValue===============================================================
+  -->
+	<xs:element name="PersonalisationRetrieveValueRequest" type="PersonalisationRetrieveValueRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to retrieve a user-defined value.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationRetrieveValueRequestStructure">
+		<xs:sequence>
+			<xs:element name="ValueId" type="ValueIdType">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the value to retrieve.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PersonalisationRetrieveValueResponse" type="PersonalisationRetrieveValueResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to express a response for the RetrieveValueRequestStructure command.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationRetrieveValueResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Value" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains the retrieved value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--
+== Function DeleteValue =================================================================
+  -->
+	<xs:element name="PersonalisationDeleteValueRequest" type="PersonalisationDeleteValueRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to delete a user-defined value.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationDeleteValueRequestStructure">
+		<xs:sequence>
+			<xs:element name="ValueId" type="ValueIdType">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the value to delete.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PersonalisationDeleteValueResponse" type="PersonalisationDeleteValueResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to express a response for the DeleteValueRequestStructure command.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationDeleteValueResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--
+== Function EnumerateValues =============================================================
+  -->
+	<xs:element name="PersonalisationEnumerateValuesRequest" type="PersonalisationEnumerateValuesRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to enumerate all user-defined values.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationEnumerateValuesRequestStructure"/>
+	<xs:element name="PersonalisationEnumerateValuesResponse" type="PersonalisationEnumerateValuesResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This element is used to express a response for the EnumerateValuesRequestStructure command.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PersonalisationEnumerateValuesResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ValueId" minOccurs="0" maxOccurs="unbounded" type="ValueIdType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

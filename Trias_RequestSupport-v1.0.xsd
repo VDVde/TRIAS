@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri.xsd"/>
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri/siri_requests-v1.3.xsd"/>
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri/siri_common-v1.4.xsd"/>
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation>====================================================Simple Types ====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="DataVersionType">
+		<xs:annotation>
+			<xs:documentation>Type definition to identify data versions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:simpleType name="CalcTimeType">
+		<xs:annotation>
+			<xs:documentation>Type definition for calculation time in msecs.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="SignatureType">
+		<xs:annotation>
+			<xs:documentation>Type definition for authorisation signatures.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CertificateIdType">
+		<xs:annotation>
+			<xs:documentation>Type definition for certificate IDs.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:group name="MessageIntegrityPropertiesGroup">
+		<xs:annotation>
+			<xs:documentation>Properties that allow checks for message integrity.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Signature" type="SignatureType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Authorisation signature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateId" type="CertificateIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Certificate ID to retrieve the  corresponding public key.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>====================================================Contexts ====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="ServiceRequestContextGroup">
+		<xs:annotation>
+			<xs:documentation>Generic context for all request messages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DataVersion" type="DataVersionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Data version</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language" type="xs:language" default="en" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Preferred language in which to return  text  values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="MessageIntegrityPropertiesGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ServiceResponseContextGroup">
+		<xs:annotation>
+			<xs:documentation>Generic context for all response messages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DataVersion" type="DataVersionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Data version</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language" type="xs:language" default="en" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Default language in which text  values are returned.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CalcTime" type="CalcTimeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Calculation time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="MessageIntegrityPropertiesGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="SubscriptionRequestContextGroup">
+		<xs:annotation>
+			<xs:documentation>Generic context for all subscription requests.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DataVersion" type="DataVersionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Data version</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language" type="xs:language" default="en" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Preferred language in which to return  text  values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="MessageIntegrityPropertiesGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>====================================================Request definitions====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AbstractTriasServiceRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Basic request structure common for all TRIAS service requests.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="siri:ContextualisedRequestStructure">
+				<xs:group ref="ServiceRequestContextGroup"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbstractTriasSubscriptionRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Basic structure common for all TRIAS subscription requests.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="siri:AbstractSubscriptionRequestStructure">
+				<xs:group ref="SubscriptionRequestContextGroup"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="DeliveryRequestGroup">
+		<xs:annotation>
+			<xs:documentation>Wrapper for SIRI delivery request group.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="siri:DeliveryRequestGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="StatusRequestGroup">
+		<xs:annotation>
+			<xs:documentation>Wrapper for SIRI status request group.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="siri:StatusRequestGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="TerminateSubscriptionRequest" type="siri:TerminateSubscriptionRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request element for terminating subscriptions (from SIRI).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>====================================================Response definitions====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="ServiceResponseGroup">
+		<xs:annotation>
+			<xs:documentation>Wrapper for SIRI service response group.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="siri:ServiceResponseGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="AbstractTriasResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Basic response structure common for all TRIAS service responses.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="siri:ProducerResponseStructure">
+				<xs:sequence>
+					<xs:group ref="ResponseStatusGroup"/>
+					<xs:group ref="ServiceResponseContextGroup"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="StatusResponseGroup">
+		<xs:annotation>
+			<xs:documentation>Wrapper for SIRI status response group.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="siri:StatusResponseGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ResponseStatusGroup">
+		<xs:annotation>
+			<xs:documentation>Status of the response (error conditions, more data available)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="siri:ServiceDeliveryRequestStatusGroup"/>
+			<xs:element name="MoreData" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether there is a further delivery message with more current updates  that follows this one. Default is false.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="DataReadyAcknowledgement" type="siri:DataReadyResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response element to Data Ready message (from SIRI).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DataReceivedAcknowledgement" type="siri:DataReceivedResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response element to Data Received message (from SIRI).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

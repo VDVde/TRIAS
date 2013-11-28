@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation>======================= IpkomServices ==================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="TriasServiceIdType">
+		<xs:annotation>
+			<xs:documentation>ID of a TRIAS service instance.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:simpleType name="InterfaceVersionType">
+		<xs:annotation>
+			<xs:documentation>Interface version number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:simpleType name="TriasServiceTypeEnumeration">
+		<xs:annotation>
+			<xs:documentation>TRIAS service type.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Alerts"/>
+			<xs:enumeration value="BookingInfo"/>
+			<xs:enumeration value="ConnectionDemand"/>
+			<xs:enumeration value="Facilities"/>
+			<xs:enumeration value="Fares"/>
+			<xs:enumeration value="IndividualRoutes"/>
+			<xs:enumeration value="Locations"/>
+			<xs:enumeration value="Maps"/>
+			<xs:enumeration value="Positioning"/>
+			<xs:enumeration value="ServiceRegister"/>
+			<xs:enumeration value="StopEvents"/>
+			<xs:enumeration value="TripInfo"/>
+			<xs:enumeration value="Trips"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceAddressType">
+		<xs:annotation>
+			<xs:documentation>Address of an online service.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceUsageEnumeration">
+		<xs:annotation>
+			<xs:documentation>Indication whether the service is provided or consumed.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Consumer"/>
+			<xs:enumeration value="Provider"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="TriasServicePropertiesGroup">
+		<xs:annotation>
+			<xs:documentation>Group of TRIAS service properties.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceType" type="TriasServiceTypeEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of TRIAS service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Version" type="InterfaceVersionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Version number of service interface definition.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceAddress" type="ServiceAddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Address (URI) where service can be accessed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ParticipantRef" minOccurs="0"/>
+			<xs:element name="ServiceUsage" type="ServiceUsageEnumeration" default="Provider" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication whether service is provided or consumed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="TriasServiceStructure">
+		<xs:annotation>
+			<xs:documentation>Definition of TRIAS service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceId" type="TriasServiceIdType">
+				<xs:annotation>
+					<xs:documentation>ID of this service instance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="TriasServicePropertiesGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================== Request Structures ==============================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ServiceRegisterRequest" type="ServiceRegisterRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Service register top-level request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ServiceRegisterRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Service register request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="RegisterRequest" type="ServiceRegisterRegisterRequestStructure">
+					<xs:annotation>
+						<xs:documentation>Sub-request to register a new service.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UpdateRequest" type="ServiceRegisterUpdateRequestStructure">
+					<xs:annotation>
+						<xs:documentation>Sub-request to update an already registered service.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LookupRequest" type="ServiceRegisterLookupRequestStructure">
+					<xs:annotation>
+						<xs:documentation>Sub-request to lookup a service in the register.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UnregisterRequest" type="ServiceRegisterUnregisterRequestStructure">
+					<xs:annotation>
+						<xs:documentation>Sub-request to dellete a service from the register.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Params" type="ServiceRegisterParamStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Request parameters.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterParamStructure">
+		<xs:annotation>
+			<xs:documentation>Service register request parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterRegisterRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request to register a service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="TriasServicePropertiesGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterUpdateRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request to update a registered service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceId" type="TriasServiceIdType">
+				<xs:annotation>
+					<xs:documentation>ID of the service that is to be updated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="TriasServicePropertiesGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterLookupRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request to lookup a service in the register.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceId" type="TriasServiceIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Id of the service to be looked up.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="TriasServicePropertiesGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterUnregisterRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request to delete a service from the register.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceId" type="TriasServiceIdType">
+				<xs:annotation>
+					<xs:documentation>ID of the service to be deleted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================== Response Structures ==============================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ServiceRegisterResponse" type="ServiceRegisterResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Service register response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ServiceRegisterResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Service register response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to the service register service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceRegisterResult" type="ServiceRegisterResultStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Result wrapper eleement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterResultStructure">
+		<xs:annotation>
+			<xs:documentation>Service register result structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResultId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>ID of this result for ffurther reference.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to this specific request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="RegisterResponse" type="ServiceRegisterRegisterResponseStructure">
+					<xs:annotation>
+						<xs:documentation>Response to register sub-request.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UpdateResponse" type="ServiceRegisterUpdateResponseStructure">
+					<xs:annotation>
+						<xs:documentation>Response to update sub-request.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LookupResponse" type="ServiceRegisterLookupResponseStructure">
+					<xs:annotation>
+						<xs:documentation>Response to lookup sub-request.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UnregisterResponse" type="ServiceRegisterUnregisterResponseStructure">
+					<xs:annotation>
+						<xs:documentation>Response to unregister sub-request.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterRegisterResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response to register sub-request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceId" type="TriasServiceIdType">
+				<xs:annotation>
+					<xs:documentation>ID of the service as it has  been registered. This ID must be used for subsequent requests to the register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterUpdateResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response to update sub-request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceId" type="TriasServiceIdType">
+				<xs:annotation>
+					<xs:documentation>ID of the service as it has  been registered or after update. This ID must be used for subsequent requests to the register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterLookupResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response to lookup sub-request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Service" type="TriasServiceStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>One or more matches.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRegisterUnregisterResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Response to unregister sub-request. Content ist empty.</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+</xs:schema>

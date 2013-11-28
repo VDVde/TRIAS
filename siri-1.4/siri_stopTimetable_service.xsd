@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<!-- 2005 12 07 Correct Spelling of StopMonitorPermissionTag  -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.siri.org.uk/siri" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4" id="siri_stopTimetable_service">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>CEN TC278 WG3 SG7 Team</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>Drafted for version 1.0  CEN TC278 WG3 SG7 Editor Nicholas Knowles, Kizoom. mailto:schemer@siri.org.uk</Creator>
+				<Date>
+					<Created>2004-09-29</Created>
+				</Date>
+				<Date>
+					<Modified>2004-10-01</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-14</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-20</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-05-11</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-12-12</Modified>
+				</Date>
+				<Date>
+					<Modified>2007-04-17</Modified>
+					<!-- Name Space changes -->
+				</Date>
+				<Date>
+					<Modified>2007-03-26</Modified>
+					<!-- Drop separate flatten  structure on response for  stopVisit  -->
+				</Date>
+				<Date>
+					<Modified>2008-11-17</Modified>
+					<!-- Revise to support substitution groups -->
+				</Date>
+				<Description>
+					<p>SIRI is a European CEN standard for the exchange of Public Transport real time information.</p>
+					<p>This sub-schema describes the Stop Timetable Service.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.siri.org.uk/schemas/1.3}siri_stopTmetable_service.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_requests-v1.3.xsd</Requires>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_journey-v1.1.xsd</Requires>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_permissions-v1.2.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+                            <Copyright>CEN, VDV, RTIG  2004,2005, 2007</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the VDV, RTIG XML and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.1 Draft for approval</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and road transport
+</Category>
+					<Project>CEN TC278 WG3 SG7</Project>
+				</Subject>
+				<Title>SIRI XML schema. Service Interface for Real Time Information. Subschema for Stop Timetable Service.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="siri/siri_requests-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri/siri_journey-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri/siri_permissions-v1.2.xsd"/>
+	<xsd:group name="SiriStopTimetableIndexGroup">
+		<xsd:annotation>
+			<xsd:documentation>Convenience artifact to pick out main elements of the Stop Timetable  Service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StopTimetableRequest"/>
+			<xsd:element ref="StopTimetableSubscriptionRequest"/>
+			<xsd:element ref="StopTimetableDelivery"/>
+			<xsd:sequence>
+				<xsd:element ref="StopTimetableCapabilitiesRequest"/>
+				<xsd:element ref="StopTimetableCapabilitiesResponse"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="StopTimetableRequest" type="StopTimetableRequestStructure" substitutionGroup="AbstractFunctionalServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Stop Visits, i.e. arrival and departure  at a stop.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="StopTimetableRequestStructure">
+		<xsd:annotation>
+			<xsd:documentation>Service Request Type for Stop Timetables</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractFunctionalServiceRequestStructure">
+				<xsd:sequence>
+					<xsd:group ref="StopTimetableTopicGroup"/>
+					<xsd:group ref="StopTimetableRequestPolicyGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of request. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StopTimetableTopicGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that specify the content to be returned.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DepartureWindow" type="ClosedTimestampRangeStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Earliest and latest departure time. If absent, default to the data horizon of the service.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>The stop monitoring point about which data is requested. May be a stop point, timing point or other display point.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LineRef" type="LineRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only data for journeys for the given line.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DirectionRef" type="DirectionRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only data  for journeys running in a specific relative direction,  for example, "inbound" or "outbound". </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopTimetableRequestPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the request processing. Mostly act to reduce the number of stops returned.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Language" type="xsd:language" default="en" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Preferred language in which to return text values.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="StopTimetableSubscriptionRequest" type="StopTimetableSubscriptionStructure" substitutionGroup="AbstractFunctionalServiceSubscriptionRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for a subscription to Stop TimetablesService.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:group name="StopTimetableSubscriptionPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the subscription publishing and notification processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IncrementalUpdates" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the producer should return the complete set of current data, or only provide updates to the last data returned, i.e. additions, modifications and deletions.
+If false each subscription response will contain the full information as specified in this request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ChangeBeforeUpdates" type="PositiveDurationType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The amount of change to the arrival or departure time  that can happen before an update is sent (i.e. if ChangeBeforeUpdate is set to 2 minutes, the subscriber will not be told that a bus is 30 seconds delayed - an update will only be sent when the bus is at least 2 minutes delayed). Default is zero - all changes will be sent regardless. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="StopTimetableSubscriptionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Subscription Request for Stop Timetables</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSubscriptionStructure">
+				<xsd:sequence>
+					<xsd:element ref="StopTimetableRequest"/>
+					<xsd:group ref="StopTimetableSubscriptionPolicyGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="StopTimetableDelivery" type="StopTimetableDeliveryStructure" substitutionGroup="AbstractFunctionalServiceDelivery">
+		<xsd:annotation>
+			<xsd:documentation>Delivery for Stop Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopTimetableDeliveryStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type Delivery for Stop Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceDeliveryStructure">
+				<xsd:sequence>
+					<xsd:group ref="StopTimetablePayloadGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StopTimetablePayloadGroup">
+		<xsd:annotation>
+			<xsd:documentation>Payload part of Stop Timetable delivery.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TimetabledStopVisit" type="TimetabledStopVisitStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A visit to a stop by a vehicle as an arrival and /or departure, as timetabled in the production timetable</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TimetabledStopVisitCancellation" type="TimetabledStopVisitCancellationStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A cancellation of a previously issued stop visit </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="TimetabledStopVisitStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Timetabled Visit of a vehicle to a stop. May provide information about the arrival, the departure or both.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractIdentifiedItemStructure">
+				<xsd:sequence>
+					<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of stop monitoring point that  Stop Visit applies.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="TargetedVehicleJourney" type="TargetedVehicleJourneyStructure">
+						<xsd:annotation>
+							<xsd:documentation>Timetabled vehicle journey</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TimetabledStopVisitCancellationStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Cancellation of Timetabled Visit of a vehicle to a stop. May provide information about the arrival, the departure or both.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractReferencingItemStructure">
+				<xsd:sequence>
+					<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of stop monitoring point that  Stop Visit applies to </xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="VisitNumber" minOccurs="0"/>
+					<xsd:group ref="JourneyIdentityGroup"/>
+					<xsd:group ref="JourneyPatternInfoGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="StopTimetableCapabilitiesRequest" type="ServiceCapabilitiesRequestStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Stop Timetable Service Capabilities Answered with a StopTimetableCapabilitiesResponse.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StopTimetableCapabilitiesResponse" type="StopTimetableCapabilitiesResponseStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesResponse">
+		<xsd:annotation>
+			<xsd:documentation>Delivery for Stop Timetable Service. Answers a StopTimetableCapabilitiesRequest.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopTimetableCapabilitiesResponseStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Delivery for Stop Timetable Service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceCapabilitiesResponseStructure">
+				<xsd:sequence>
+					<xsd:element ref="StopTimetableServiceCapabilities" minOccurs="0"/>
+					<xsd:element ref="StopTimetablePermissions" minOccurs="0"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="StopTimetableServiceCapabilities" type="StopTimetableServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation> Capabilities of Stop Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopTimetableServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Capabilities of Stop Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractCapabilitiesStructure">
+				<xsd:sequence>
+					<xsd:element name="TopicFiltering" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available Filtering Capabilities </xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="FilterByMonitoringRef"/>
+								<xsd:element ref="FilterByLineRef"/>
+								<xsd:element ref="FilterByDirectionRef" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RequestPolicy" type="StopMonitoringCapabilityRequestPolicyStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available request policy options.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AccessControl" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Access control that can be used.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="CapabilityAccessControlStructure">
+									<xsd:sequence>
+										<xsd:element ref="CheckOperatorRef" minOccurs="0"/>
+										<xsd:element ref="CheckLineRef" minOccurs="0"/>
+										<xsd:element ref="CheckMonitoringRef" minOccurs="0"/>
+									</xsd:sequence>
+								</xsd:extension>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="StopTimetablePermissions">
+		<xsd:annotation>
+			<xsd:documentation>Participant's permissions to use the service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="PermissionsStructure">
+					<xsd:sequence>
+						<xsd:element name="StopTimetablePermission" type="StopMonitoringServicePermissionStructure" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Permission for a single participant or all participants to use an aspect of the service.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="TargetedVehicleJourneyStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a targeted vehicle journey</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="JourneyIdentityGroup"/>
+			<xsd:group ref="JourneyPatternInfoGroup"/>
+			<xsd:group ref="VehicleJourneyInfoGroup"/>
+			<xsd:element ref="TargetedCall" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="TargetedCallGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a targeted call.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StopPointRef" type="StopPointRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of stop point. Normally this will omitted as will be the same as the monitoring point.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="VisitNumber"/>
+			<xsd:element ref="Order" minOccurs="0"/>
+			<xsd:element ref="TimingPoint" minOccurs="0"/>
+			<xsd:group ref="ServiceInfoGroup"/>
+			<xsd:group ref="AimedCallGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="TargetedCall" type="TargetedCallStructure">
+		<xsd:annotation>
+			<xsd:documentation>Information about the call at the stop</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TargetedCallStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a targeted call.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="TargetedCallGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ==== WSDL=========================================-->
+	<xsd:complexType name="StopTimetableDeliveriesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for stop timetable deliveries. Used in WSDL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StopTimetableDelivery"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ====Capability Request=================================================================== -->
+	<xsd:complexType name="StopMonitoringCapabilityRequestPolicyStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Monitoring Service Capability Request Policy</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CapabilityRequestPolicyStructure">
+				<xsd:sequence>
+					<xsd:element name="UseReferences" type="xsd:boolean" default="true" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Whether results can return references for stops. Default is true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="UseNames" type="xsd:boolean" default="false" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Whether results can return names for stop </xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ====Common Elements =================================================================== -->
+	<xsd:simpleType name="MonitoringCode">
+		<xsd:annotation>
+			<xsd:documentation>Identifier of a Monitoring point. May be a Stop Point Code. Or represent a group of Stops  other Timing Points</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN"/>
+	</xsd:simpleType>
+	<xsd:complexType name="MonitoringRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for reference to a monitoring point.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="MonitoringCode"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ====permissions=================================================================== -->
+	<xsd:complexType name="StopMonitoringServicePermissionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Monitoring Service  Permission</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractPermissionStructure">
+				<xsd:sequence>
+					<xsd:element ref="OperatorPermissions"/>
+					<xsd:element ref="LinePermissions"/>
+					<xsd:element name="StopMonitorPermissions">
+						<xsd:annotation>
+							<xsd:documentation>The monitoring points that the participant may access.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:choice>
+								<xsd:element ref="AllowAll"/>
+								<xsd:element name="StopMonitorPermission" type="StopMonitorPermissionStructure" maxOccurs="unbounded">
+									<xsd:annotation>
+										<xsd:documentation>Participants permission for this Monitoring Point</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:choice>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MonitoringCapabilityAccessControlStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Monitoring Service Capability access control</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CapabilityAccessControlStructure">
+				<xsd:sequence>
+					<xsd:element ref="CheckOperatorRef" minOccurs="0"/>
+					<xsd:element ref="CheckLineRef" minOccurs="0"/>
+					<xsd:element ref="CheckMonitoringRef" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StopMonitorPermissionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Monitoring Point Permission</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractTopicPermissionStructure">
+				<xsd:sequence>
+					<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of Monitoring point to which permission applies.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Katarzyna Piwonska (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (x64) (http://www.altova.com) by Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
+	<xs:annotation>
+		<xs:documentation>FUNCTION 1: Location Identification</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>FUNCTION 2: Object Information</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>FUNCTION 3: Geographical Context</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>FUNCTION 4: Coordinate to Address</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>All functions integrated into one request / response</xs:documentation>
+	</xs:annotation>
+	<xs:element name="LocationInformationRequest" type="LocationInformationRequestStructure"/>
+	<xs:complexType name="LocationInformationRequestStructure">
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>A location information request either consists of an initial request for locations (by name and/or coordinates, with restrictions), or of an follow up request in which a location object is further refined.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="InitialInput" type="InitialLocationInputStructure">
+					<xs:annotation>
+						<xs:documentation>Initial input for the location information request. This input defines what is originally looked for.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LocationRef" type="LocationRefStructure">
+					<xs:annotation>
+						<xs:documentation>Location for further refinement. If a location in a previous response was marked as not "complete" it can be refined by putting it here.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Restrictions" type="LocationParamStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>E.g. location types (stops, addresses, POIs) or specific location attributes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LocationInformationResponse" type="LocationInformationResponseStructure"/>
+	<xs:complexType name="LocationInformationResponseStructure">
+		<xs:sequence>
+			<xs:element name="ContinueAt" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If the response returns less results than expected, the value of skip can be used in a follow-up request to get further results. It tells the server to skip the given number of results in its response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Location" type="LocationResultStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>additional declarations</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="InitialLocationInputStructure">
+		<xs:sequence>
+			<xs:element name="LocationName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the location object which is looked after. This is usually the user's input. If not given, the name of the resulting location objects is not relevant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GeoPosition" type="GeoPositionStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Coordinate where to look for locations. If given, the result should prefer location objects near to this geoposition.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GeoRestriction" type="GeoRestrictionsStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Restricts the resulting location objects to the given geographical area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationParamStructure">
+		<xs:sequence>
+			<xs:group ref="LocationDataFilterGroup"/>
+			<xs:group ref="LocationPolicyGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeoRestrictionsStructure">
+		<xs:choice>
+			<xs:element name="Circle" type="GeoCircleStructure"/>
+			<xs:element name="Rectangle" type="GeoRectangleStructure"/>
+			<xs:element name="Area" type="GeoAreaStructure">
+				<xs:annotation>
+					<xs:documentation>Area is defined by a polyline </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="GeoCircleStructure">
+		<xs:sequence>
+			<xs:element name="Center" type="GeoPositionStructure"/>
+			<xs:element name="Radius" type="DistanceType">
+				<xs:annotation>
+					<xs:documentation>Radius in metres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeoRectangleStructure">
+		<xs:sequence>
+			<xs:element name="UpperLeft" type="GeoPositionStructure"/>
+			<xs:element name="LowerRight" type="GeoPositionStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeoAreaStructure">
+		<xs:sequence>
+			<xs:element name="PolylinePoint" type="GeoPositionStructure" minOccurs="3" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationResultStructure">
+		<xs:sequence>
+			<xs:element name="Location" type="LocationStructure"/>
+			<xs:element name="Complete" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>States whether the included location is complete or needs further refinement. Only complete locations are fully resolved and can be used in e.g. trip requests. Incomplete locations have to be refined entering them once again into a LocationInformationRequest.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Probability" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Probability, that this result is the one meant by the user's input. Value should be between 0 and 1.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:float">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Mode" type="ModeStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="LocationPolicyGroup">
+		<xs:sequence>
+			<xs:element name="Language" type="xs:language" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Preferred language in which to return text values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberOfResults" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="ContinueAt" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tells the server to skip the mentioned number of results in its response. Can be used in a follow-up request to get further results. The value is usually taken from the previous response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludePtModes" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tells the service to include the available public transport modes at returned stops.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="LocationDataFilterGroup">
+		<xs:sequence>
+			<xs:element name="Type" type="LocationTypeEnumeration" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Allowed location object types. If none is given, all types are allowed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Usage" type="LocationUsageEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defines, whether location objects for origin, via, or destination are searched.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtModes" type="PtModeFilterStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Allowed public transport modes. Defines, which public transport modes must be available at the returned location objects. Applies only to stops.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocalityRef" type="LocalityRefStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>If at least one is set, only location objects within the given localities are allowed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:simpleType name="LocationTypeEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="stop"/>
+			<xs:enumeration value="address"/>
+			<xs:enumeration value="poi"/>
+			<xs:enumeration value="coord"/>
+			<xs:enumeration value="locality"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationUsageEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="origin"/>
+			<xs:enumeration value="via"/>
+			<xs:enumeration value="destination"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

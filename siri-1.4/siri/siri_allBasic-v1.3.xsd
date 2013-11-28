@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<!-- Crown Copyright 2007
+The Purpose of this file is to overcome a technical limitation in Xerces (and possibly other)    widely used XML processors.
+   
+ Xerces has a limitation in that it only notices the first import for a given namespace that it encounters - all others are effectively ignored. Thus if one imports individual packages as separate packages, only the first is found.  This applies a per-schema basis,   i.e. when processing a complex dependency graph with multiple files referencing the same namespace, once the first import for a namespace has been loaded no further files are imported for that namespace during the whole JAXB run. 
+   
+   The practical effect of this limitation is that you should always import all of the types in a namespace, not just the ones that the current file requires. 
+   
+   This file provides a single declaration of all the siri data elements.
+
+ -->
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:acsb="http://www.ifopt.org.uk/acsb" xmlns:ns1="http://datex2.eu/schema/1_0/1_0" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4" id="siri_all">
+	<!-- ===Global include of all prerequried ACSB namespace elements neeeded to work around XERCES limitation=====-->
+	<xsd:import namespace="http://www.ifopt.org.uk/acsb" schemaLocation="../acsb/acsb_all-v0.3.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="siri_facilities-v1.2.xsd"/>
+	<xsd:include schemaLocation="siri_facility-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri_feature-v1.1.xsd"/>
+	<xsd:include schemaLocation="siri_journey-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri_location-v1.1.xsd"/>
+	<xsd:include schemaLocation="siri_modes-v1.1.xsd"/>
+	<xsd:include schemaLocation="siri_operator-v1.2.xsd"/>
+	<xsd:include schemaLocation="siri_participant-v1.1.xsd"/>
+	<xsd:include schemaLocation="siri_time-v1.2.xsd"/>
+	<xsd:include schemaLocation="siri_types-v1.1.xsd"/>
+	<xsd:include schemaLocation="siri_utility-v1.1.xsd"/>
+</xsd:schema>

@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4" id="siri_estimatedTimetable_service">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>CEN TC278 WG3 SG7 Team</Contributor>
+				<Contributor>Werner Kohl MDV</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>Drafted for version 1.0  CEN TC278 WG3 SG7 Editor Nicholas Knowles, Kizoom. mailto:schemer@siri.org.uk</Creator>
+				<Date>
+					<Created>2003-02-10</Created>
+				</Date>
+				<Date>
+					<Modified>2004-10-31</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-14</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-20</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-05-11</Modified>
+				</Date>
+				<Date>
+					<Modified>2007-04-17</Modified>
+					<!-- Name Space changes -->
+				</Date>
+				<Date>
+					<Modified>2008-03-26</Modified>
+					<!-- Add wrapper tag for Line Direction to help binding to Axis -->
+				</Date>
+				<Date>
+					<Modified>2008-11-17</Modified>
+					<!-- Revise to support substitution groups -->
+				</Date>
+				<Date>
+					<Modified>2011-01-19</Modified>
+					<!-- Drop use of As Flat Groups  for EstimatedCalls -->
+				</Date>
+				<Description>
+					<p>SIRI is a European CEN standard for the exchange of Public Transport real time information.</p>
+					<p>This sub-schema describes the Estimated Timetable Service.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.siri.org.uk/schemas/1.3}siri_estimatedTimetable_service.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_requests-v1.3.xsd</Requires>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_journey-v1.1.xsd</Requires>
+					<Requires>http://www.siri.org.uk/schemas/1.3/siri/siri_permissions-v1.2.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+                            <Copyright>CEN, VDV, RTIG  2004,2005, 2007</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the VDV, RTIG XML and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.1 Draft for approval</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and road transport
+</Category>
+					<Project>CEN TC278 WG3 SG7</Project>
+				</Subject>
+				<Title>SIRI XML schema. Service Interface for Real Time Information. Estimated Timetable Service.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:include schemaLocation="siri/siri_requests-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri/siri_journey-v1.3.xsd"/>
+	<xsd:include schemaLocation="siri/siri_permissions-v1.2.xsd"/>
+	<xsd:group name="SiriEstimatedTimetableIndexGroup">
+		<xsd:annotation>
+			<xsd:documentation>Convenience artifact to pick out main elements of the Estimated Timetable Service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="EstimatedTimetableRequest"/>
+			<xsd:element ref="EstimatedTimetableSubscriptionRequest"/>
+			<xsd:element ref="EstimatedTimetableDelivery"/>
+			<xsd:sequence>
+				<xsd:element ref="EstimatedTimetableCapabilitiesRequest"/>
+				<xsd:element ref="EstimatedTimetableCapabilitiesResponse"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== Production Timetable Delivery =========================================-->
+	<!-- ==== Estimated Timetable Subscription =========================================-->
+	<xsd:element name="EstimatedTimetableRequest" type="EstimatedTimetableRequestStructure" substitutionGroup="AbstractFunctionalServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about the estimated timetable.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EstimatedTimetableRequestStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Service Request Type for Estimated Timetable </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractFunctionalServiceRequestStructure">
+				<xsd:sequence>
+					<xsd:group ref="EstimatedTimetableTopicGroup"/>
+					<xsd:group ref="EstimatedTimetableRequestPolicyGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of request. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="EstimatedTimetableTopicGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that specify the content to be returned.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PreviewInterval" type="PositiveDurationType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Forward duration for which journeys should be  included.  For subscriptions, this duration is a continuously rolling window from the present time. For immediate requests, this duration is measured from the time of the request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TimetableVersionRef" type="VersionRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Communicate only differences to the timetable specified by this version of the timetable.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OperatorRef" type="OperatorRefStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include journeys for only the specified operator(s).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Lines" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only vehicles along the given line(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="LineDirection" type="LineDirectionStructure" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Include only vehicles along the given line.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EstimatedTimetableRequestPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the request processing. Mostly act to reduce the number of messages exchanged.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Language" type="xsd:language" default="en" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Preferred language in which to return  text  values.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== Estimated Timetable Subscription =========================================-->
+	<xsd:element name="EstimatedTimetableSubscriptionRequest" type="EstimatedTimetableSubscriptionStructure" substitutionGroup="AbstractFunctionalServiceSubscriptionRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for a subscription to the Estimated Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:group name="EstimatedTimetableSubscriptionPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the subscription publishing and notification processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IncrementalUpdates" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the producer should return the complete set of data, or only provide updates to the previously returned data i.e. changes to the expected deviation (delay or early time). Default is true. If true only changes at the first stop  will be returned and the client must interpolate the 
+If false each subscription response will contain the full information as specified in this request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ChangeBeforeUpdates" type="DurationType">
+				<xsd:annotation>
+					<xsd:documentation>The amount of change to the arrival or departure time  that can happen before an update is sent (i.e. if ChangeBeforeUpdate is set to 2 minutes, the subscriber will not be told that a timetable is changed by  30 seconds - an update will only be sent when the timetable is changed by at least  least 2 minutes </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="EstimatedTimetableSubscriptionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Subscription Request for Estimated Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSubscriptionStructure">
+				<xsd:sequence>
+					<xsd:element ref="EstimatedTimetableRequest"/>
+					<xsd:sequence>
+						<xsd:group ref="EstimatedTimetableSubscriptionPolicyGroup"/>
+					</xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ==== Estimated Timetable Delivery ============================================-->
+	<xsd:element name="EstimatedTimetableDelivery" type="EstimatedTimetableDeliveryStructure" substitutionGroup="AbstractFunctionalServiceDelivery">
+		<xsd:annotation>
+			<xsd:documentation>Delivery for Estimated Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EstimatedVersionFrameStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for version frame structure.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractItemStructure">
+				<xsd:sequence>
+					<xsd:element ref="VersionRef" minOccurs="0"/>
+					<xsd:element ref="EstimatedVehicleJourney" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="EstimatedTimetablePayloadGroup">
+		<xsd:annotation>
+			<xsd:documentation>Payload part of Estimated Timetable Delivery.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="EstimatedJourneyVersionFrame" type="EstimatedVersionFrameStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Estimated Journey Versions, grouped by timetable  version.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Extensions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== Realtime Timetable Delivery Structures ===================================-->
+	<xsd:complexType name="EstimatedTimetableDeliveryStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Delivery for Real-time Timetable Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceDeliveryStructure">
+				<xsd:sequence>
+					<xsd:group ref="EstimatedTimetablePayloadGroup"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="EstimatedVehicleJourney" type="EstimatedVehicleJourneyStructure">
+		<xsd:annotation>
+			<xsd:documentation>A vehicle journey taking place  on a particular date that will be managed by an AVMS</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:group name="EstimatedTimetableAlterationGroup">
+		<xsd:annotation>
+			<xsd:documentation>If the Journey is an alteration to a timetable, indicates the original journey and the  nature of the difference.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="DatedVehicleJourneyRef" type="DatedVehicleJourneyRefStructure">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a dated Vehicle Journey.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="DatedVehicleJourneyIndirectRef" type="DatedVehicleJourneyIndirectRefStructure">
+					<xsd:annotation>
+						<xsd:documentation>If no vehicle journey reference is available, identify it by origin and destination and the scheduled times at these stops.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="EstimatedVehicleJourneyCode" type="EstimatedVehicleJourneyCodeType">
+					<xsd:annotation>
+						<xsd:documentation>If this is the first message about an extra unplanned vehicle journey, a new and unique code must be given for it. ExtraJourney should be set to 'true'.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:choice>
+				<xsd:element name="ExtraJourney" type="xsd:boolean" default="false" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Whether this vehicle journey is an addition to the planning data already sent. Default is false: i.e. not an additional journey.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="Cancellation" type="xsd:boolean" default="false" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Whether this vehicle journey is a deletion of a previous scheduled journey. Default is false: this is not a vehicle journey that has been cancelled. An Extra Journey may be deleted. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EstimatedJourneyInfoGroup">
+		<xsd:annotation>
+			<xsd:documentation>General properties of the journey.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="HeadwayService" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether this is a Headway Service, that is shown as operating at a prescribed interval rather than to a fixed timetable.  Inherited property: if omitted: same as indicated by (i) any preceding update message, or (ii)  if no preceding update, by the referenced dated vehicle journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EstimatedRealtimeInfoGroup">
+		<xsd:annotation>
+			<xsd:documentation>Real-time properties of the journey.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Monitored" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the vehicle journey is monitored by an AVMS: true if active.   Inherited property: if omitted: same as indicated by (i) any preceding update message,  or (ii) if no preceding update, by the referenced dated vehicle journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PredictionInaccurate" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the prediction for the journey is considered to be of a useful accuracy or not. Default is false.  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>How full the bus is. Enumeration. If omitted: Passenger load is unknown.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="DatedVehicleJourneyIndirectRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Origin and Destination stop of a Vehicle Journey</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OriginRef" type="StopPointRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>The origin is used to help identify the vehicle journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AimedDepartureTime" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Departure Time at Origin stop.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DestinationRef" type="StopPointRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>The destination is used to help identify the vehicle journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AimedArrivalTime" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Arrival Time at Destination stop.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ==== WSDL=========================================-->
+	<xsd:complexType name="EstimatedVehicleJourneyStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Real-time info about a Vehicle Journey.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="LineIdentityGroup"/>
+			<xsd:group ref="EstimatedTimetableAlterationGroup"/>
+			<xsd:group ref="JourneyPatternInfoGroup" minOccurs="0"/>
+			<xsd:group ref="ServiceInfoGroup" minOccurs="0"/>
+			<xsd:group ref="JourneyInfoGroup" minOccurs="0"/>
+			<xsd:group ref="EstimatedJourneyInfoGroup" minOccurs="0"/>
+			<xsd:group ref="DisruptionGroup"/>
+			<xsd:group ref="EstimatedRealtimeInfoGroup" minOccurs="0"/>
+			<xsd:group ref="OperationalInfoGroup"/>
+			<xsd:sequence>
+				<xsd:element name="EstimatedCalls" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="EstimatedCall" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="IsCompleteStopSequence" type="xsd:boolean" default="false" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Whether the above call sequence  is complete, i.e. represents every call  of the route and so can be used to replace a previous call sequence  Default is false.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:element ref="Extensions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EstimatedCall" type="EstimatedCallStructure">
+		<xsd:annotation>
+			<xsd:documentation>Ordered Sequence of stops called at by the journey. If IsCompleteStopSequence is false, may be just those stops that are altered.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EstimatedCallStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Rea-ltime info about a Vehicle Journey Stop.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="StopPointInSequenceGroup"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="ExtraCall" type="xsd:boolean" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>This call is additional and unplanned. If omitted: Call is planned.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="Cancellation" type="xsd:boolean" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>This call is a cancellation of a previously announced call.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:group ref="CallRealTimeInfoGroup"/>
+			<xsd:group ref="CallPropertyGroup"/>
+			<xsd:group ref="CallNoteGroup"/>
+			<xsd:group ref="DisruptionGroup"/>
+			<xsd:group ref="OnwardsCallGroup"/>
+			<xsd:element ref="Extensions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="CallRealTimeInfoGroup">
+		<xsd:annotation>
+			<xsd:documentation>Information relating to real time properties of call </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PredictionInaccurate" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the prediction for the specific stop is considered to be of a useful accuracy or not. Default is false, i.e. prediction is not known to be inaccurate.  {DOUBLE NEGATIVE IS BAD _ BETTER AS PredictionAccurate default is true?]. If prediction is degraded, e.g. because in congestion,  used to 9indicate a lowered quality of data.   Inherited property. {SHOULD THIS JUST BE THE SPECIFIC InCongestion INDICATOR INSTEAD, OR IS IT MORE GENERAL]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>How full the bus is at the stop. Enumeration. If omitted: Passenger load is unknown.  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== WSDL=========================================-->
+	<xsd:complexType name="EstimatedTimetableDeliveriesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Deliveries for Real-time Timetable Service. Used in WSDL.       </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="EstimatedTimetableDelivery" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ====Capability Request=================================================================== -->
+	<xsd:element name="EstimatedTimetableCapabilitiesRequest" type="ServiceCapabilitiesRequestStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Estimated Timetable Service Capabilities.  Answered with a EstimatedTimetableCapabilitiesResponse.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EstimatedTimetableCapabilitiesResponse" type="EstimatedTimetableCapabilitiesResponseStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesResponse">
+		<xsd:annotation>
+			<xsd:documentation>Capabilities for  Estimated Timetable Service. Answers a EstimatedTimetableCapabilitiesRequest.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EstimatedTimetableCapabilitiesResponseStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Delivery for Estimated Timetable Capability</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceCapabilitiesResponseStructure">
+				<xsd:sequence>
+					<xsd:element ref="EstimatedTimetableServiceCapabilities" minOccurs="0"/>
+					<xsd:element ref="EstimatedTimetablePermissions" minOccurs="0"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EstimatedTimetableCapabilityRequestPolicyStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Estimated Timetable Capability Request Policy</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CapabilityRequestPolicyStructure">
+				<xsd:sequence>
+					<xsd:element name="ForeignJourneysOnly" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Whether results returns foreign journeys only</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="EstimatedTimetableServiceCapabilities" type="EstimatedTimetableServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation> Capabilities of Estimated TimetableService.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EstimatedTimetableServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for  Estimated Timetable Capabilities</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractCapabilitiesStructure">
+				<xsd:sequence>
+					<xsd:element name="TopicFiltering" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Filtering Capabilities </xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="FilterByOperatorRef">
+									<xsd:annotation>
+										<xsd:documentation>Whether results can be filtered by Time of Connection. Default true</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element ref="FilterByLineRef">
+									<xsd:annotation>
+										<xsd:documentation>Whether results can be filtered by Journey</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RequestPolicy" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Request Policy capabilities.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="CapabilityRequestPolicyStructure"/>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="SubscriptionPolicy" type="CapabilitySubscriptionPolicyStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Subscription Policy capabilities.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AccessControl" type="ConnectionCapabilityAccessControlStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Optional Access control capabilities</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ====permissions=================================================================== -->
+	<xsd:element name="EstimatedTimetablePermissions">
+		<xsd:annotation>
+			<xsd:documentation>Participant's permissions to use the service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="PermissionsStructure">
+					<xsd:sequence>
+						<xsd:element name="EstimatedTimetablePermission" type="ConnectionServicePermissionStructure" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Permission for a single participant or all participants to use an aspect of the service.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

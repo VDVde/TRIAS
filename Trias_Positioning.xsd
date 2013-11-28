@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_JourneySupport-v1.0.xsd"/>
+	<xs:element name="PositioningRequest" type="PositioningRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Positioning request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PositioningRequestStructure">
+		<xs:annotation>
+			<xs:documentation>A positioning request estimates the passenger's location in relation to stops and/or services.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>The movement pattern of a passenger may be obtained as GPS track (LastPositions) or from the sequence of the most recently passed stops (StopSequence).</xs:documentation>
+				</xs:annotation>
+				<xs:element name="LastPositions" type="TimedPositionStructure" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Sequence of geographic positions.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StopSequence" type="TimedStopStructure" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Sequence of stop positions.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Params" type="PositioningParamStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Parameters to filter and control the result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PositioningParamStructure">
+		<xs:annotation>
+			<xs:documentation>Parameters that control the search.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="PositioningDataFilterGroup">
+				<xs:annotation>
+					<xs:documentation>Filters to narrow the search space.</xs:documentation>
+				</xs:annotation>
+			</xs:group>
+			<xs:group ref="PositioningPolicyGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="PositioningDataFilterGroup">
+		<xs:annotation>
+			<xs:documentation>Filters to narrow the search space. If used, then the position is only searched within the realm of the given lines, modes or operators.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PtModeFilter" type="PtModeFilterStructure" minOccurs="0"/>
+			<xs:element name="LineFilter" type="LineDirectionFilterStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lines/Directions to include/exclude.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperatorFilter" type="OperatorFilterStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Transport operators to include/exclude.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="PositioningPolicyGroup">
+		<xs:annotation>
+			<xs:documentation>Parameters that control the search behaviour.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NumberOfResults" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of ranked positions that should be returned with the response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="TimedPositionStructure">
+		<xs:annotation>
+			<xs:documentation>Geographic position with timestamp.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Timestamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Timestamp when the passenger has passed this position.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Position" type="GeoPositionStructure">
+				<xs:annotation>
+					<xs:documentation>Coordinate position.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Speed" type="SpeedType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Speed with which passenger has passed this position.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Direction" type="AbsoluteBearingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Direction in which passenger has passed this position.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TimedStopStructure">
+		<xs:annotation>
+			<xs:documentation>Stop locations with timestamps.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="StopPointGroup"/>
+			<xs:element name="ArrivalTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival time when the passenger arrived at this stop.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="ServiceTimeGroup"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DepartureTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Departure time when the passenger departed from this stop.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="ServiceTimeGroup"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PositioningResponse" type="PositioningResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Positioning response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PositioningResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Positioning response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to the response as a whole.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PositioningResult" type="PositioningResultStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Result structure.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PositioningResultStructure">
+		<xs:annotation>
+			<xs:documentation>The positioning result including all suggestions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResultId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Result ID for further referencing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Positioning" type="PositioningStructure">
+				<xs:annotation>
+					<xs:documentation>Container for ranked positions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PositioningStructure">
+		<xs:annotation>
+			<xs:documentation>Container for the suggested positions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RankedPosition" type="RankedPositionStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>One or more ranked positions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RankedPositionStructure">
+		<xs:annotation>
+			<xs:documentation>Position suggestion with ranking.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>A position within the Public Transport network may be near a stop/station (StationaryLocation) or on board of a vehicle (TripLocation).</xs:documentation>
+				</xs:annotation>
+				<xs:element name="StationaryLocation" type="LocationRefStructure">
+					<xs:annotation>
+						<xs:documentation>Location outside of Public Transport vehicles.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TripLocation" type="DatedJourneyStructure">
+					<xs:annotation>
+						<xs:documentation>Location in a Public Transport vehicle.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Ranking" type="PercentType">
+				<xs:annotation>
+					<xs:documentation>Probability from 0 to 100. 100 means perfectly sure.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

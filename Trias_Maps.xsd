@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Katarzyna Piwonska (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (x64) (http://www.altova.com) by Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<!--FUNCTION 1: Map service-->
+	<xs:element name="MapServiceRequest" type="MapServiceRequestStructure"/>
+	<xs:complexType name="MapServiceRequestStructure">
+		<xs:sequence>
+			<xs:group ref="MapPropertiesGroup"/>
+			<xs:element name="ImageType" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Image format as media type (formerly known as MIME type). E.g. PNG, GIF, JPEG.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Layer" type="MapLayersEnumeration" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Map layers. Contains background and information layers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Opaqueness" type="PercentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Opaqueness of the background, if no background layer was chosen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BackgroundColor" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Background color of the map, if no background layer was chosen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MapServiceResponse" type="MapServiceResponseStructure"/>
+	<xs:complexType name="MapServiceResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MapResult" type="MapResultStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--FUNCTION 2: Geo-position-to-image-Coordinate service -->
+	<xs:element name="ImageCoordinatesRequest" type="ImageCoordinatesRequestStructure"/>
+	<xs:complexType name="ImageCoordinatesRequestStructure">
+		<xs:sequence>
+			<xs:group ref="MapPropertiesGroup"/>
+			<xs:element name="Point" type="GeoPositionStructure" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ImageCoordinatesResponse" type="ImageCoordinatesResponseStructure"/>
+	<xs:complexType name="ImageCoordinatesResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Result" type="ImagePointResultStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>FUNCTION 3: Image-Coordinates-to-geo-position service</xs:documentation>
+	</xs:annotation>
+	<xs:element name="GeoCoordinatesRequest" type="GeoCoordinatesRequestStructure"/>
+	<xs:complexType name="GeoCoordinatesRequestStructure">
+		<xs:sequence>
+			<xs:group ref="MapPropertiesGroup"/>
+			<xs:element name="ImagePoint" type="MapCoordinateStructure" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GeoCoordinatesResponse" type="GeoCoordinatesResponseStructure"/>
+	<xs:complexType name="GeoCoordinatesResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Result" type="GeoCoordinateResultStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>additional declarations</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="MapLayersEnumeration">
+		<xs:annotation>
+			<xs:documentation>Enumeration of available map layers (e.g. satellite, physical,  routes, railway network, traffic)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="physical"/>
+			<xs:enumeration value="satellite"/>
+			<xs:enumeration value="street"/>
+			<xs:enumeration value="rail"/>
+			<xs:enumeration value="names"/>
+			<xs:enumeration value="stops"/>
+			<xs:enumeration value="traffic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MapAspectStructure">
+		<xs:sequence>
+			<xs:element name="UpperLeft" type="GeoPositionStructure"/>
+			<xs:element name="LowerRight" type="GeoPositionStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MapSizeStructure">
+		<xs:sequence>
+			<xs:element name="Width" type="xs:nonNegativeInteger"/>
+			<xs:element name="Height" type="xs:nonNegativeInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MapCoordinateStructure">
+		<xs:sequence>
+			<xs:element name="X" type="xs:integer"/>
+			<xs:element name="Y" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="MapPropertiesGroup">
+		<xs:sequence>
+			<xs:element name="Aspect" type="MapAspectStructure"/>
+			<xs:element name="Size" type="MapSizeStructure">
+				<xs:annotation>
+					<xs:documentation>Image size of the map.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="MapResultStructure">
+		<xs:sequence>
+			<xs:element name="File" type="xs:base64Binary"/>
+			<xs:element name="ImageType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Media type (formerly known as MIME type) of the returned file. Allowed are only the sub-types of the type "image". The current list of allowed subtypes is defined by the IANA.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Aspect" type="MapAspectStructure">
+				<xs:annotation>
+					<xs:documentation>Defines the geographical area of the map.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeoCoordinateResultStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Point" type="GeoPositionStructure" minOccurs="0"/>
+			<xs:element name="ImagePoint" type="MapCoordinateStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ImagePointResultStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Point" type="GeoPositionStructure"/>
+			<xs:element name="ImagePoint" type="MapCoordinateStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

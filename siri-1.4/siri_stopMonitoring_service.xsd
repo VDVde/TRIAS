@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Nick js Knowles (Kizoom Ltd.) -->
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4" id="siri_stopMonitoring_service">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>CEN TC278 WG3 SG7 Team</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>Drafted for version 1.0  CEN TC278 WG3 SG7 Editor Nicholas Knowles, Kizoom. mailto:schemer@siri.org.uk</Creator>
+				<Date>
+					<Created>2004-09-29</Created>
+				</Date>
+				<Date>
+					<Modified>2004-10-01</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-14</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-02-20</Modified>
+				</Date>
+				<Date>
+					<Modified>2005-05-11</Modified>
+				</Date>
+				<Date>
+					<Modified>2007-04-17</Modified>
+					<!-- Name Space changes -->
+				</Date>
+				<Date>
+					<Modified>2008-03-26</Modified>
+					<!-- Drop separate flatten  structure on response for  stopVisit  -->
+				</Date>
+				<Date>
+					<Modified>2008-05-08</Modified>
+					<!-- (a) Correct missing type on FeatureRef -->
+					<!-- (b) Add optional MonitoringRef on response so that can return the identfiier  even if there are no stop visits.
+						 This allows client to be stateless -->
+					<!-- (a) Add a StopMonitoringMultipleRequest and othe elements top support multiple stops on single request -->
+				</Date>
+				<Date>
+					<Modified>2008-10-06</Modified>
+					<!-- Dropredudnat groups -->
+				</Date>
+				<Date>
+					<Modified>2008-11-17</Modified>
+					<!-- Revise to support substitution groups -->
+				</Date>
+				<Date>
+					<Modified>2009-03-30</Modified>
+					<!-- On SiriRequest change the element type of MaximumNumberOfCalls and MaximumNumberOfCallsOnwards  from xsd:positiveInteger to xsd:nonNegativeInteger -->
+				</Date>
+				<Description>
+					<p>SIRI is a European CEN standard for the exchange of Public Transport real time information.</p>
+					<p>This sub-schema describes the Stop Monitoring Service.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.siri.org.uk/schemas/1.4}siri_stopMonitoring_service.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.siri.org.uk/schemas/1.4/siri/siri_requests-v1.1.xsd</Requires>
+					<Requires>http://www.siri.org.uk/schemas/1.4/siri/siri_journey-v1.1.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+                            <Copyright>CEN, VDV, RTIG  2004,2005, 2007</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the VDV, RTIG XML and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.1 Draft for approval</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and road transport
+</Category>
+					<Project>CEN TC278 WG3 SG7</Project>
+				</Subject>
+				<Title>SIRI XML schema. Service Interface for Real Time Information. Subschema for Stop Monitoring Service.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="siri_stopTimetable_service.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:group name="SiriStopMonitoringServiceIndexGroup">
+		<xsd:annotation>
+			<xsd:documentation>Convenience artifact to pick out main elements of the Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="SiriStopTimetableIndexGroup"/>
+			<xsd:group ref="SiriStopMonitoringIndexGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SiriStopMonitoringIndexGroup">
+		<xsd:annotation>
+			<xsd:documentation>Convenience artifact to pick out main elements of the Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StopMonitoringRequest"/>
+			<xsd:element ref="StopMonitoringMultipleRequest">
+				<xsd:annotation>
+					<xsd:documentation>Request for information about Stop Visits, i.e. arrivals and departures at multiple stops.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="StopMonitoringSubscriptionRequest"/>
+			<xsd:element ref="StopMonitoringDelivery"/>
+			<xsd:sequence>
+				<xsd:element ref="StopMonitoringCapabilitiesRequest"/>
+				<xsd:element ref="StopMonitoringCapabilitiesResponse"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<!-- ====STOP Monitoring Service=============================================== -->
+	<xsd:element name="StopMonitoringRequest" type="StopMonitoringRequestStructure" substitutionGroup="AbstractFunctionalServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Stop Visits, i.e. arrivals and departures at a stop.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopMonitoringRequestStructure">
+		<xsd:annotation>
+			<xsd:documentation>Service Request Type for Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractFunctionalServiceRequestStructure">
+				<xsd:sequence>
+					<xsd:group ref="StopMonitoringTopicGroup"/>
+					<xsd:group ref="StopMonitoringRequestPolicyGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of request. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StopMonitoringTopicGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that specify the content to be returned.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PreviewInterval" type="PositiveDurationType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Forward duration for which Visits  should be included, that is, interval before predicted arrival at the stop for which to include Visits: only journeys which will arrive or depart within this time span will be returned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StartTime" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start time for PreviewInterval. If absent, then current time is assumed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Reference to Monitoring Point(s) about which data is requested. May be a stop point, timing point, or a group of points under a single reference.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OperatorRef" type="OperatorRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only Stop Visits for vehicles run by the specified operator.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LineRef" type="LineRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only Stop Visits for vehicles for the given line.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DirectionRef" type="DirectionRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only Stop Visits for vehicles running in a specific relative direction,  for example, "inbound" or "outbound". (Direction does not specify a destination.)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DestinationRef" type="DestinationRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Filter the results to include only journeys to the destination </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StopVisitTypes" type="StopVisitTypeEnumeration" default="all" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether to include arrival Visits, departure Visits, or all. Default is all,</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopMonitoringRequestPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the request processing. Mostly act to reduce the number of stops returned </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Language" type="xsd:language" default="en" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Preferred language in which to return  text  values.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumStopVisits" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The maximum number of Stop Visits to include in a given delivery. The first n Stop Visits within the  look ahead window are included. Only Visits within the Lookahead Interval are returned. The MinimumStopVisits parameter can be used to reduce the the number of entries for each line within the total returned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumStopVisitsPerLine" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The minimum number of Stop Visits for a given line to include in a given delivery. If there are more Visits within the LookAheadInterval  than allowed by MaximumStopVisits and a MinimumStopVisits value is specified, then at least the minimum number will be delivered for each line. I.e Stop Visits will be included even if the Stop Visits are later than those for some other line for which the minimum number of Stop Visits has already been supplied. This allows the Consumer to obtain at least one entry for every available line with vehicles approaching  the stop.  Only Visits within the Look ahead Interval are returned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumTextLength" type="xsd:positiveInteger" default="30" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum length of text to return for text elements  Default is 30.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StopMonitoringDetailLevel" type="StopMonitoringDetailEnumeration" default="normal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Level of detail to include in response. Default is normal.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumNumberOfCalls" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If calls are to be returned, maximum number of calls to include in response. If absent, exclude all calls. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Previous" type="xsd:nonNegativeInteger" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Maximum number of previous calls to include.  Only applies if MaximumNumberOfCalls  specified. Zero for none. If Maximum Number of Calls specified but  MaximumNumberOfCalls.Previous absent, include all previous calls.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Onwards" type="xsd:nonNegativeInteger" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Maximum number of onwards calls to include. Zero for none. Only applies if MaximumNumberOfCalls  specified. Zero for none. If Maximum Number of Calls specified but  MaximumNumberOfCalls.Onwards absent, include all onwards calls.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="StopMonitoringMultipleRequest" type="StopMonitoringMultipleRequestStructure" substitutionGroup="AbstractFunctionalServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Stop Visits, i.e. arrivals and departures at multiple stops stop.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopMonitoringMultipleRequestStructure">
+		<xsd:annotation>
+			<xsd:documentation>Service Request Type for Stop Monitoring Service on multiple stops.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractFunctionalServiceRequestStructure">
+				<xsd:sequence>
+					<xsd:element name="StopMonitoringFIlter" type="StopMonitoringFilterStructure" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>Request particulars for an individual stop as part of a list of multiple= requests.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StopMonitoringFilterStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for an individual Stop Monitoring  a Multiple Request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="StopMonitoringTopicGroup"/>
+			<xsd:group ref="StopMonitoringRequestPolicyGroup"/>
+			<xsd:element ref="Extensions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="StopMonitoringSubscriptionRequest" type="StopMonitoringSubscriptionStructure" substitutionGroup="AbstractFunctionalServiceSubscriptionRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for a subscription to Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:group name="StopMonitoringSubscriptionPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that affect the subscription publishing and notification processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IncrementalUpdates" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the producer should return the complete set of current data, or only provide updates to the last data returned, i.e. additions, modifications and deletions.
+If false each subscription response will contain the full information as specified in this request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ChangeBeforeUpdates" type="PositiveDurationType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The amount of change to the arrival or departure time  that can happen before an update is sent (i.e. if ChangeBeforeUpdate is set to 2 minutes, the subscriber will not be told that a bus is 30 seconds delayed - an update will only be sent when the bus is at least 2 minutes delayed). Default is zero - all changes will be sent regardless. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="StopMonitoringSubscriptionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Subscription Request for Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSubscriptionStructure">
+				<xsd:sequence>
+					<xsd:element ref="StopMonitoringRequest"/>
+					<xsd:sequence>
+						<xsd:group ref="StopMonitoringSubscriptionPolicyGroup"/>
+					</xsd:sequence>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="StopMonitoringDeliveryStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Delivery for Stop Monitoring Service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceDeliveryStructure">
+				<xsd:sequence>
+					<xsd:group ref="StopMonitoringPayloadGroup"/>
+					<xsd:element name="Note" type="NaturalLanguageStringStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Text associated with whole delivery.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="StopMonitoringDelivery" type="StopMonitoringDeliveryStructure" substitutionGroup="AbstractFunctionalServiceDelivery">
+		<xsd:annotation>
+			<xsd:documentation>Delivery for Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:group name="StopMonitoringPayloadGroup">
+		<xsd:annotation>
+			<xsd:documentation>Payload part of Stop Monitoring Service delivery.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MonitoringRef" type="MonitoringRefStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of stop monitoring point(s) that were requested. This can a be used to return the requested Monitoring ref if there are no stop visits for the stop.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MonitoredStopVisit" type="MonitoredStopVisitStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A visit to a stop by a vehicle as an arrival and /or departure.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MonitoredStopVisitCancellation" type="MonitoredStopVisitCancellationStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Reference to an previously communicated Stop Visit which should now be removed from the arrival/departure board for the stop. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StopLineNotice" type="StopLineNoticeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Line notice for stop</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StopLineNoticeCancellation" type="StopLineNoticeCancellationStructure" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Reference to an previously communicated stop line event which should now be removed from the arrival/departure board for the stop. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopVisitReferenceGroup">
+		<xsd:annotation>
+			<xsd:documentation>External Identifiers of Stop Visit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of stop monitoring point that  Stop Visit applies to </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ClearDownRef" type="ClearDownRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifier associated with Stop Visit for use in direct wireless communication between  bus and  stop display. Cleardown codes are  short arbitrary identifiers suitable for  radio transmission.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:simpleType name="StopVisitTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Visit Types to Return.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="all">
+				<xsd:annotation>
+					<xsd:documentation>Return all Stop Visits.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="arrivals">
+				<xsd:annotation>
+					<xsd:documentation>Return only arrival Stop Visits.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="departures">
+				<xsd:annotation>
+					<xsd:documentation>Return only departure Stop Visits.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="MonitoredStopVisitStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Visit of a vehicle to a stop monitoring point. May provide information about the arrival, the departure or both.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractIdentifiedItemStructure">
+				<xsd:sequence>
+					<xsd:group ref="StopVisitReferenceGroup" minOccurs="0"/>
+					<xsd:element name="MonitoredVehicleJourney" type="MonitoredVehicleJourneyStructure">
+						<xsd:annotation>
+							<xsd:documentation>Provides real-time information about the vehicle journey along which a vehicle is running.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="StopVisitNote" type="NaturalLanguageStringStructure" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>Text associated with Stop Visit.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="StopFacility" type="FacilityRefStructure" minOccurs="0"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="StopMonitoringDetailEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Detail Levels for Stop Monitoring Request.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="minimum">
+				<xsd:annotation>
+					<xsd:documentation>Return only the minimum amount of optional data for each Stop Visit to provide a display, A time at stop, line name  and destination name.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="basic">
+				<xsd:annotation>
+					<xsd:documentation>Return  minimum and other available  basic details for each Stop Visit. Do not include data on times at next stop or destination.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="normal">
+				<xsd:annotation>
+					<xsd:documentation>Return all basic  data, and also origin via points and  destination.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="calls">
+				<xsd:annotation>
+					<xsd:documentation>Return in addition to normal data, the call data for each Stop Visit, including previous and onward calls with passing times.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="full">
+				<xsd:annotation>
+					<xsd:documentation>Return all available data for each Stop Visit, including calls.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ======================================================================= -->
+	<!-- ======================================================================= -->
+	<xsd:complexType name="MonitoredStopVisitCancellationStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Cancellation of an earlier Stop Visit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractReferencingItemStructure">
+				<xsd:sequence>
+					<xsd:group ref="StopVisitCancellationIdentityGroup" minOccurs="0"/>
+					<xsd:element name="ClearDownRef" type="ClearDownRefStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Cleardown identifier of Stop Visit that is being deleted. </xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:group ref="JourneyPatternInfoGroup"/>
+					<xsd:element name="Reason" type="NaturalLanguageStringStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Reason for cancellation.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StopVisitCancellationIdentityGroup">
+		<xsd:annotation>
+			<xsd:documentation>External Identifiers of Cancelled Stop Visit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of stop monitoring point that cancellation applies to </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="VisitNumber"/>
+			<xsd:group ref="LineIdentityGroup"/>
+			<xsd:element name="VehicleJourneyRef" type="FramedVehicleJourneyRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Vehicle journey of Stop Visit that is being cancelled.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="StopLineNoticeStructure">
+		<xsd:annotation>
+			<xsd:documentation>Data type for Visit of a vehicle to a stop. May provide information about the arrival, the departure or both.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractIdentifiedItemStructure">
+				<xsd:sequence>
+					<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of stop monitoring point to which line event applies.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:group ref="LineIdentityGroup"/>
+					<xsd:element name="LineNote" type="NaturalLanguageStringStructure" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>Special text associated with line.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="SituationRef" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StopLineNoticeCancellationStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Cancellation of an earlier Stop Visit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractReferencingItemStructure">
+				<xsd:sequence>
+					<xsd:element name="MonitoringRef" type="MonitoringRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of stop monitoring point to which line event applies.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:group ref="LineIdentityGroup"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ==== WSDL=========================================-->
+	<xsd:complexType name="StopMonitoringDeliveriesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Deliveries for Stop Monitoring Service. Used in WSDL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StopMonitoringDelivery" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Delivery for Stop Event service.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ====Capability Request=================================================================== -->
+	<xsd:element name="StopMonitoringCapabilitiesRequest" type="ServiceCapabilitiesRequestStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request for information about Stop Monitoring Service Capabilities. Answered with StopMonitoringCapabilitiesResponse.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StopMonitoringCapabilitiesResponse" type="StopMonitoringCapabilitiesResponseStructure" substitutionGroup="AbstractFunctionalServiceCapabilitiesResponse">
+		<xsd:annotation>
+			<xsd:documentation>Capabilities for Stop Monitoring Service. Answers a StopMonitoringCapabilitiesRequest.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopMonitoringCapabilitiesResponseStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Delivery for Stop Monitoring Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractServiceCapabilitiesResponseStructure">
+				<xsd:sequence>
+					<xsd:element ref="StopMonitoringServiceCapabilities" minOccurs="0"/>
+					<xsd:element ref="StopMonitoringPermissions" minOccurs="0"/>
+					<xsd:element ref="Extensions" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="VersionString" use="required" fixed="1.4">
+					<xsd:annotation>
+						<xsd:documentation>Version number of response. Fixed 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="StopMonitoringServiceCapabilities" type="StopMonitoringServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Capabilities of StopMonitoring Service.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StopMonitoringServiceCapabilitiesStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Stop Monitoring Capabilities.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractCapabilitiesStructure">
+				<xsd:sequence>
+					<xsd:element name="TopicFiltering" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available Filtering Capabilities. </xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="DefaultPreviewInterval" type="PositiveDurationType" default="PT60M">
+									<xsd:annotation>
+										<xsd:documentation>Default preview interval.  Default is 60 minutes  </xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="ByStartTime" type="xsd:boolean" default="true" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Whether start time other than now can be specified for preview interval. Default True</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element ref="FilterByMonitoringRef"/>
+								<xsd:element ref="FilterByLineRef"/>
+								<xsd:element ref="FilterByDirectionRef" minOccurs="0"/>
+								<xsd:element ref="FilterByDestination" minOccurs="0"/>
+								<xsd:element name="FilterByVisitType" type="xsd:boolean" default="true" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Whether results can be filtered by VistitType, e.g. arrivals, departures. Default True</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RequestPolicy" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available Request Policy capabilities.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="StopMonitoringCapabilityRequestPolicyStructure">
+									<xsd:sequence>
+										<xsd:group ref="StopMonitoringVolumeGroup"/>
+									</xsd:sequence>
+								</xsd:extension>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="SubscriptionPolicy" type="CapabilitySubscriptionPolicyStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available Subscription Policy capabilities.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AccessControl" type="MonitoringCapabilityAccessControlStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available Optional Access control capabilities</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ResponseFeatures" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Available Optional Response capabilities</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="HasLineNotices" type="xsd:boolean" default="true" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Whether result supports line events. Default is true.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="StopMonitoringPermissions">
+		<xsd:annotation>
+			<xsd:documentation>Participants permissions to use the service, Only returned if requested.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="PermissionsStructure">
+					<xsd:sequence>
+						<xsd:element name="StopMonitoringPermission" type="StopMonitoringServicePermissionStructure" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Permission for a single participant or all participants to use an aspect of the service.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:group name="StopMonitoringVolumeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for volume control.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="HasDetailLevel" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether Detail level filtering is supported. Default false</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DefaultDetailLevel" type="StopMonitoringDetailEnumeration" default="normal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Default Detail level if non specified on request. Default Normal.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HasMaximumVisits" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether results can be limited to a maximum number. Default is true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HasMinimumVisitsPerLine" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether results can be limited to include  a minimum number per line. Default is true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HasNumberOfOnwardsCalls" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If system can return detailed calling pattern, whether a number of onwards calls to include can be specified. Default is false.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HasNumberOfPreviousCalls" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If system can return detailed calling pattern, whether a number of previouscalls to include can be specified. Default is false.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>

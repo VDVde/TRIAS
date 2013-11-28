@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_SituationSupport-v1.0.xsd"/>
+	<!-- ===========================================================================================================-->
+	<xs:complexType name="ServiceViaPointStructure">
+		<xs:annotation>
+			<xs:documentation>Stop place or stop point as a via point (in service pattern).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="StopPointGroup"/>
+			<xs:element name="DisplayPriority" type="PriorityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Priority of this via point to be displayed when space is limited.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViaStructure">
+		<xs:annotation>
+			<xs:documentation>Via restrictions for a journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ViaPoint" type="LocationRefStructure">
+				<xs:annotation>
+					<xs:documentation>Reference to specify the via location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DwellTime" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Duration the passenger wants to stay at the via location. Default is 0.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="ServiceJourneyGroup">
+		<xs:annotation>
+			<xs:documentation>Vehicle journey (not dated).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="JourneyRef"/>
+			<xs:group ref="ServiceGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ServiceGroup">
+		<xs:annotation>
+			<xs:documentation>Properties of a service (line and direction).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="LineIdentityGroup"/>
+			<xs:element name="Mode" type="ModeStructure">
+				<xs:annotation>
+					<xs:documentation>Vehicle mode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PublishedLineName" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Line name or service description as known to the public, f.e. "512", "S8" or "Circle Line".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
+			<xs:element name="RouteDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive text for a route, f.e. "Airport via City Centre"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Via" type="ServiceViaPointStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Via points of the service that may help identify the vehicle to the public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Attribute" type="GeneralAttributeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Note or service attribute.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ServiceOriginGroup">
+		<xs:annotation>
+			<xs:documentation>First serviced stop of a vehicle journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OriginStopPointRef" type="StopPointRefStructure">
+				<xs:annotation>
+					<xs:documentation>First stop of the vehicle journey.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginText" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Label for first stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ServiceDestinationGroup">
+		<xs:annotation>
+			<xs:documentation>Last serviced stop of a vehicle journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DestinationStopPointRef" type="StopPointRefStructure">
+				<xs:annotation>
+					<xs:documentation>Last stop of vehicle journey.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestinationText" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Label for last stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="RouteDescriptionGroup">
+		<xs:annotation>
+			<xs:documentation>Descriptive text for a route, f.e. "Airport via City Centre"</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RouteDescriptionText" type="InternationalTextStructure"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="DatedServiceGroup">
+		<xs:annotation>
+			<xs:documentation>Vehicle journey that runs at a specific date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="OperatingDayRef"/>
+			<xs:element ref="VehicleRef" minOccurs="0"/>
+			<xs:group ref="ServiceJourneyGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="DatedJourneyStructure">
+		<xs:annotation>
+			<xs:documentation>Structure for a vehicle journey at a specific date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="DatedServiceGroup"/>
+			<xs:group ref="ServiceOriginGroup" minOccurs="0"/>
+			<xs:group ref="ServiceDestinationGroup"/>
+			<xs:group ref="ServiceStatusGroup"/>
+			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TripLocationStructure">
+		<xs:annotation>
+			<xs:documentation>Location of a passenger currently traveling in a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="OperatingDayRef"/>
+			<xs:element ref="JourneyRef"/>
+			<xs:group ref="LineIdentityGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="OccupancyEnumeration">
+		<xs:annotation>
+			<xs:documentation>Passenger load status of a VEHICLE.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="manySeatsAvailable"/>
+			<xs:enumeration value="fewSeatsAvailable"/>
+			<xs:enumeration value="noSeatsAvailable"/>
+			<xs:enumeration value="standingAvailable"/>
+			<xs:enumeration value="full"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:documentation>========================================= Times, Calls, Time context =================================================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="TimeWindowGroup">
+		<xs:annotation>
+			<xs:documentation>The window of opportunity that the traveller has to perform this leg of the journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TimeWindowStart" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time at which window begins.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeWindowEnd" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time at which window ends.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ServiceTimeGroup">
+		<xs:annotation>
+			<xs:documentation>Contains at least scheduled time, but can contain real time and estimated times</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TimetabledTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>time at point as it is published</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecordedAtTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>time as it was recorded</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EstimatedTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>estimated time (for prognosis)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="EstimatedTimeBandGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="EstimatedTimeBandGroup">
+		<xs:annotation>
+			<xs:documentation>Range for estimated time.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EstimatedTimeLow" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Estimated lower limit for time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EstimatedTimeHigh" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Estimated upper limit for time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="CallAtStopStructure">
+		<xs:annotation>
+			<xs:documentation>The meeting of a vehicle journey with a specific stop.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="StopPointGroup"/>
+			<xs:element name="ServiceArrival" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="ServiceTimeGroup"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ServiceDeparture" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="ServiceTimeGroup"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="StopCallStatusGroup"/>
+			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="StopCallStatusGroup">
+		<xs:annotation>
+			<xs:documentation>Status properties for the vehicle call at this stop.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StopSeqNumber" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Sequence number of this stop in the service pattern of the journey.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DemandStop" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The vehicle journey calls at this stop only on demand.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnplannedStop" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This stop has not been planned by the planning department.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NotServicedStop" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The vehicle will not call at this stop despite earlier planning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="DatedCallAtLocationStructure">
+		<xs:annotation>
+			<xs:documentation>Vehicle call at a general location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="DatedJourneyRefGroup"/>
+			<xs:element name="CallLocation" type="LocationRefStructure">
+				<xs:annotation>
+					<xs:documentation>More general location for a call than stop points. May be used with flexible services or "Area Dial-A-Ride".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceArrival" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="ServiceTimeGroup"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ServiceDeparture" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="ServiceTimeGroup"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="StopCallStatusGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="ServiceStatusGroup">
+		<xs:annotation>
+			<xs:documentation>Service status properties.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Unplanned" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this trip is an additional one that has not been planned. Default is false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cancelled" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this trip is cancelled and will not be run. Default is false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Deviation" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this trip deviates from the planned service pattern. Default is false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>How full the VEHICLE is.  If omitted, not known.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="ContinuousServiceStructure">
+		<xs:annotation>
+			<xs:documentation>A passenger movement on a continuous service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ContinuousMode" type="ContinuousModesEnumeration">
+					<xs:annotation>
+						<xs:documentation>Continuous transport options.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IndividualMode" type="IndividualModesEnumeration">
+					<xs:annotation>
+						<xs:documentation>Individual transport options.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:group ref="DatedServiceGroup" minOccurs="0"/>
+			<xs:group ref="ServiceOriginGroup" minOccurs="0"/>
+			<xs:group ref="ServiceDestinationGroup" minOccurs="0"/>
+			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="VehicleProgressEnumeration">
+		<xs:annotation>
+			<xs:documentation>Vehicle progress relative to timetable service pattern.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Not yet operated"/>
+			<xs:enumeration value="Operation finished"/>
+			<xs:enumeration value="At stop"/>
+			<xs:enumeration value="Between stops"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VehiclePositionStructure">
+		<xs:annotation>
+			<xs:documentation>Geographical and logical position of a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GeoPosition" type="GeoPositionStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Geographic position of vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Progress" type="VehicleProgressEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Logical progress of vehicle relative to service pattern.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Bearing" type="AbsoluteBearingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Bearing in compass degrees in which VEHICLE is heading.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProgressBetweenStops" type="ProgressBetweenStopsStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Provides information about the progress of the VEHICLE along its current link, that is link from previous visited top to current position.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgressBetweenStopsStructure">
+		<xs:annotation>
+			<xs:documentation>Type for Progress between stops.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LinkDistance" type="DistanceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The total distance in metres between the previous stop and the next stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Percentage" type="PercentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Percentage along link that VEHICLE has travelled.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationContextStructure">
+		<xs:annotation>
+			<xs:documentation>A location and access to it by individual transport.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="LocationRef" type="LocationRefStructure">
+					<xs:annotation>
+						<xs:documentation>Spatial location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TripLocation" type="TripLocationStructure">
+					<xs:annotation>
+						<xs:documentation>Location within a (moving) vehicle.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="DepArrTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time when departure/arrival from/to location is required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndvidualTransportOptions" type="IndividualTransportOptionsStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Options how to access/leave the location by individual transport.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractResponseContextStructure">
+		<xs:annotation>
+			<xs:documentation>Abstract structure providing response contexts related to journeys.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Locations" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for location objects.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Location" type="LocationStructure" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Situations" type="SituationsStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for SIRI SX situation objects.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>=========================================== Filter Groups ===========================================================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="NumberOfResultsGroup">
+		<xs:annotation>
+			<xs:documentation>To control the number of trip results before/after a point in time. May NOT be used when departure time at origin AND arrival time at destination are set.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NumberOfResultsBefore" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>The desired number of trip results before the given time (at origin or destination).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberOfResultsAfter" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>The desired number of trip results after the given time (at origin or destination).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="BaseTripPolicyGroup">
+		<xs:annotation>
+			<xs:documentation>Policies that control the trip search behaviour for both public and individual transport.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="NumberOfResults" type="xs:positiveInteger" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The number of trip results that the user wants to see at least.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:group ref="NumberOfResultsGroup" minOccurs="0"/>
+			</xs:choice>
+			<xs:element name="IgnoreRealtimeData" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The trip calculation should not use any realtime or incident data.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImmediateTripStart" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the trip calculation should find a solution that starts immediately (f.e. because the user is already on the way) instead of finding the latest possible start oppurtunity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="BaseTripMobilityFilterGroup">
+		<xs:annotation>
+			<xs:documentation>Base mobility options to be applied for both public and individual transport.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NoSingleStep" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user is not able to climb one step.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NoStairs" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user is not able to walk up/down stairs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NoEscalator" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user is not able to use an escalator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NoElevator" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user is not able to use an elevator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NoRamp" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user is not able to use an ramp.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="BaseTripContentFilterGroup">
+		<xs:annotation>
+			<xs:documentation>Parameters to control the level of detail of both public and individual transport journey results.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IncludeTrackSections" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include TrackSection elements to describe the geographic route of each journey leg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludeLegProjection" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include the geographic projection (coordinates) of each journey leg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludeTurnDescription" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include turn-by-turn instructions for each journey leg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludeAccessibility" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include accessibility information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>=========================================== Leg Attributes =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="LegAttributeStructure">
+		<xs:annotation>
+			<xs:documentation>Attributes that are not valid on the whole service, but only on part of the journey leg.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="GeneralAttributeStructure">
+				<xs:sequence>
+					<xs:element name="FromStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The attribute is valid from the stop point with this sequence number within the leg. If missing it is valid from the beginning of the leg.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ToStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The attribute is valid to the stop point (inclusively) with this sequence number within the leg. If missing it is valid to the end of the leg.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<!--== Top Level Request/Response Structures ================================================-->
+	<xs:element name="PushToDeviceRequest" type="PushToDeviceRequestStructure"/>
+	<xs:complexType name="PushToDeviceRequestStructure">
+		<xs:choice>
+			<xs:element name="Register" type="PushToDeviceRegisterRequestStructure"/>
+			<xs:element name="SendMessage" type="PushToDeviceSendMessageRequestStructure"/>
+			<xs:element name="Unregister" type="PushToDeviceUnregisterRequestStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="PushToDeviceResponse" type="PushToDeviceResponseStructure"/>
+	<xs:complexType name="PushToDeviceResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice>
+				<xs:element name="Register" type="PushToDeviceRegisterResponseStructure"/>
+				<xs:element name="SendMessage" type="PushToDeviceSendMessageResponseStructure"/>
+				<xs:element name="Unregister" type="PushToDeviceUnregisterResponseStructure"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== FUNCTION 1: Register mobile device - REQUEST =====================-->
+	<xs:element name="PushToDeviceRegisterRequest" type="PushToDeviceRegisterRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PushToDeviceRegisterRequestStructure">
+		<xs:sequence>
+			<xs:element name="OSManufacturer" type="xs:string"/>
+			<xs:element name="UniquePushCellPhoneID" type="xs:positiveInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== FUNCTION 1: Register mobile device - RESPONSE ====================-->
+	<xs:element name="PushToDeviceRegisterResponse" type="PushToDeviceRegisterResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PushToDeviceRegisterResponseStructure">
+		<xs:sequence>
+			<xs:element name="UniquePushRegistrationID" type="xs:positiveInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== FUNCTION 2: Send message - REQUEST ===========================-->
+	<xs:element name="PushToDeviceSendMessageRequest" type="PushToDeviceSendMessageRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PushToDeviceSendMessageRequestStructure">
+		<xs:sequence>
+			<xs:element name="UniquePushRegistrationID" type="xs:positiveInteger"/>
+			<xs:element name="PushMessage" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== FUNCTION 2: Send message - RESPONSE ==========================-->
+	<xs:element name="PushToDeviceSendMessageResponse" type="PushToDeviceSendMessageResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PushToDeviceSendMessageResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== FUNCTION 3: Unregister - REQUEST ===============================-->
+	<xs:element name="PushToDeviceUnregisterRequest" type="PushToDeviceUnregisterRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PushToDeviceUnregisterRequestStructure">
+		<xs:sequence>
+			<xs:element name="UniquePushRegistrationID" type="xs:positiveInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== FUNCTION 3: Unregister - RESPONSE ==============================-->
+	<xs:element name="PushToDeviceUnregisterResponse" type="PushToDeviceUnregisterResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PushToDeviceUnregisterResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

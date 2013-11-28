@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Alerts.xsd"/>
+	<xs:include schemaLocation="Trias_Booking.xsd"/>
+	<xs:include schemaLocation="Trias_Connections.xsd"/>
+	<xs:include schemaLocation="Trias_Facilities.xsd"/>
+	<xs:include schemaLocation="Trias_Fares.xsd"/>
+	<xs:include schemaLocation="Trias_IndividualTrips.xsd"/>
+	<xs:include schemaLocation="Trias_Locations.xsd"/>
+	<xs:include schemaLocation="Trias_Maps.xsd"/>
+	<xs:include schemaLocation="Trias_Personalisation.xsd"/>
+	<xs:include schemaLocation="Trias_Positioning.xsd"/>
+	<xs:include schemaLocation="Trias_RequestSupport-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_ServiceRegister.xsd"/>
+	<xs:include schemaLocation="Trias_StopEvents.xsd"/>
+	<xs:include schemaLocation="Trias_TripInfo.xsd"/>
+	<xs:include schemaLocation="Trias_Trips.xsd"/>
+	<xs:include schemaLocation="Trias_VehicleInterface.xsd"/>
+	<xs:element name="Trias">
+		<xs:annotation>
+			<xs:documentation>Root element for TRIAS messages</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:group ref="RequestGroup"/>
+				<xs:group ref="ResponseGroup"/>
+				<xs:element name="Extension" type="xs:anyType"/>
+			</xs:choice>
+			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.0"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>================ Requests =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ServiceRequest" type="ServiceRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Service request element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ServiceRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Request structure - wrapping generic SIRI request elements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AbstractTriasServiceRequestStructure">
+				<xs:sequence>
+					<xs:element name="RequestPayload" type="RequestPayloadStructure">
+						<xs:annotation>
+							<xs:documentation>Service specific request contents.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SubscriptionRequest" type="SubscriptionRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Subscription request element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SubscriptionRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Subscription request structure - wrapping generic SIRI request element.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AbstractTriasSubscriptionRequestStructure">
+				<xs:sequence>
+					<xs:group ref="AlertSettingsGroup"/>
+					<xs:group ref="SubscriptionRequestGroup"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="RequestGroup">
+		<xs:annotation>
+			<xs:documentation>Group of all requests, including Heartbeat, Status, Termination etc.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:group ref="ServiceRequestGroup"/>
+			<xs:group ref="DeliveryRequestGroup"/>
+			<xs:group ref="StatusRequestGroup"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="ServiceRequestGroup">
+		<xs:annotation>
+			<xs:documentation>Group of all service-related requests</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="ServiceRequest"/>
+			<xs:element ref="SubscriptionRequest"/>
+			<xs:element ref="TerminateSubscriptionRequest"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="RequestPayloadStructure">
+		<xs:annotation>
+			<xs:documentation>Choice of payload requests</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="BookingInfoRequest"/>
+			<xs:element ref="ConnectionDemandRequest"/>
+			<xs:element ref="ConnectionDemandDeleteRequest"/>
+			<xs:element ref="ConnectionReportRequest"/>
+			<xs:element ref="ConnectionStatusRequest"/>
+			<xs:element ref="FacilityRequest"/>
+			<xs:element ref="FacilityStatusReport"/>
+			<xs:element ref="FaresRequest"/>
+			<xs:element ref="GeoCoordinatesRequest"/>
+			<xs:element ref="ImageCoordinatesRequest"/>
+			<xs:element ref="IndividualRouteRequest"/>
+			<xs:element ref="LocationInformationRequest"/>
+			<xs:element ref="MapServiceRequest"/>
+			<xs:element ref="PersonalisationRequest"/>
+			<xs:element ref="PositioningRequest"/>
+			<xs:element ref="ServiceRegisterRequest"/>
+			<xs:element ref="StopEventRequest"/>
+			<xs:element ref="StopRequestRequest"/>
+			<xs:element ref="TripInfoRequest"/>
+			<xs:element ref="TripRequest"/>
+			<xs:element ref="VehicleDataRequest"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:group name="SubscriptionRequestGroup">
+		<xs:annotation>
+			<xs:documentation>Group of subscription requests.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="SituationExchangeSubscriptionRequest"/>
+			<xs:element ref="FacilityMonitoringSubscriptionRequest"/>
+			<xs:element ref="TripMonitoringSubscriptionRequest"/>
+		</xs:choice>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>================ Responses =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="ResponseGroup">
+		<xs:annotation>
+			<xs:documentation>Group of all response messages, including Heartbeat, Status, Termination etc.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:group ref="ServiceResponseGroup"/>
+			<xs:group ref="DeliveryResponseGroup"/>
+			<xs:group ref="StatusResponseGroup"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="DeliveryResponseGroup">
+		<xs:annotation>
+			<xs:documentation>Group of all topical response messages</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="ServiceDelivery"/>
+			<xs:element ref="DataReadyAcknowledgement"/>
+			<xs:element ref="DataReceivedAcknowledgement"/>
+		</xs:choice>
+	</xs:group>
+	<xs:element name="ServiceDelivery" type="ServiceDeliveryStructure">
+		<xs:annotation>
+			<xs:documentation>Service delivery element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ServiceDeliveryStructure">
+		<xs:annotation>
+			<xs:documentation>Delivery structure - wrapping generic SIRI response elements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AbstractTriasResponseStructure">
+				<xs:sequence>
+					<xs:element name="DeliveryPayload" type="DeliveryPayloadStructure">
+						<xs:annotation>
+							<xs:documentation>Service specific delivery contents.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DeliveryPayloadStructure">
+		<xs:annotation>
+			<xs:documentation>Choice of delivery payload elements.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="BookingInfoResponse"/>
+			<xs:element ref="ConnectionDemandResponse"/>
+			<xs:element ref="ConnectionDemandDeleteResponse"/>
+			<xs:element ref="ConnectionReportResponse"/>
+			<xs:element ref="ConnectionStatusNotification"/>
+			<xs:element ref="ConnectionStatusResponse"/>
+			<xs:element ref="FacilityMonitoringDelivery"/>
+			<xs:element ref="FacilityResponse"/>
+			<xs:element ref="FacilityStatusReportResponse"/>
+			<xs:element ref="FaresResponse"/>
+			<xs:element ref="GeoCoordinatesResponse"/>
+			<xs:element ref="ImageCoordinatesResponse"/>
+			<xs:element ref="IndividualRouteResponse"/>
+			<xs:element ref="LocationInformationResponse"/>
+			<xs:element ref="MapServiceResponse"/>
+			<xs:element ref="PersonalisationResponse"/>
+			<xs:element ref="PositioningResponse"/>
+			<xs:element ref="ServiceRegisterResponse"/>
+			<xs:element ref="SituationExchangeDelivery"/>
+			<xs:element ref="StopEventResponse"/>
+			<xs:element ref="StopRequestResponse"/>
+			<xs:element ref="TripInfoResponse"/>
+			<xs:element ref="TripMonitoringDelivery"/>
+			<xs:element ref="TripResponse"/>
+			<xs:element ref="VehicleDataResponse"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_FaresSupport-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_Trips.xsd"/>
+	<xs:annotation>
+		<xs:documentation>====================================================Request definitions====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="FaresRequest" type="FaresRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Fares request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FaresRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Fares request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="StopFaresRequest" type="StopFaresRequestStructure">
+					<xs:annotation>
+						<xs:documentation>A request for stop-related fares information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StaticFaresRequest" type="StaticFaresRequestStructure">
+					<xs:annotation>
+						<xs:documentation>A request for general/static fares information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TripFaresRequest" type="TripFaresRequestStructure">
+					<xs:annotation>
+						<xs:documentation>A request to calculate the fares information of a single trip</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MultiTripFaresRequest" type="MultiTripFaresRequestStructure">
+					<xs:annotation>
+						<xs:documentation>A request to calculate aggregated fares information of multiple single trips</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Params" type="FaresParamStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Parameter to filter the response contents.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StopFaresRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Sub-request: stop-related fare information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="StopPointRef"/>
+			<xs:element name="Date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date for which to retrieve fares information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StaticFaresRequestStructure">
+		<xs:annotation>
+			<xs:documentation>General fares information. May depend on date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date for which to retrieve fares information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TripFaresRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Structure of a Single Trip Fares Request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Trip" type="TripStructure">
+				<xs:annotation>
+					<xs:documentation>A complete trip from origin to destination</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultiTripFaresRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Structure of a Multi Trip Fares Request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Trip" type="TripStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Multiple complete trips from multiple origins and multiple destination</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================Response definitions====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="FaresResponse" type="FaresResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Fares response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FaresResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Fares response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Errorr messages related to the request as a whole.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FaresResult" type="FaresResultStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Fares result choice element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FaresResultStructure">
+		<xs:annotation>
+			<xs:documentation>Wrapper eleement for fares results.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResultId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>ID of this result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="StopFaresResult" type="StopFaresResultStructure">
+					<xs:annotation>
+						<xs:documentation>Stop-related fares information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StaticFaresResult" type="StaticFaresResultStructure">
+					<xs:annotation>
+						<xs:documentation>Static fares information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TripFaresResult" type="TripFaresResultStructure" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Fares and tickets for a given trip.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MultiTripFaresResult" type="MultiTripFaresResultStructure" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Fares and tickets for multiple trips.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StopFaresResultStructure">
+		<xs:annotation>
+			<xs:documentation>Stop-related fares information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FareZoneListInArea" type="FareZoneListInAreaStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>One or more lists of fares zones that belong to a fares authority/area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StaticFaresResultStructure">
+		<xs:annotation>
+			<xs:documentation>General fares information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Ticket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>One or more tickets that are available for this area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StaticInfoUrl" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>URL to information page on the web.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TripTicketReferenceStructure">
+		<xs:annotation>
+			<xs:documentation>Element that connects tickets to trips.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TicketRef"/>
+			<xs:element name="FromTripIdRef" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Identifies the "valid from" trip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FromTripLegIdRef" type="xs:NMTOKEN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the "valid from" tripLeg. If missing, then valid from the first leg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToTripIdRef" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Identifies the "valid to" trip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToTripLegIdRef" type="xs:NMTOKEN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the "valid to" tripLeg. If missing, then valid to the last leg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultiTripFaresResultStructure">
+		<xs:annotation>
+			<xs:documentation>Structure of a Multi Trip Fares Request result</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Result-specific error messages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripTicketReference" type="TripTicketReferenceStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>non empty list of trip references in the corresponding MultiTripFaresRequestStructure </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ticket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Zero, one or more tickets that are valid for the referenced trips / part of trips.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PassedZones" type="FareZoneListInAreaStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The set of passed zones.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StaticInfoUrl" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>URL to fares information pages on the web.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

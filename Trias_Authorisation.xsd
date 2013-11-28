@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<!--== Top Level Request/Response Structures ================================================-->
+	<xs:element name="AuthorisationRequest" type="AuthorisationRequestStructure"/>
+	<xs:complexType name="AuthorisationRequestStructure">
+		<xs:choice>
+			<xs:element name="CreateLDAPGroup" type="AuthorisationCreateLDAPGroupRequestStructure"/>
+			<xs:element name="CreateLDAPEntity" type="AuthorisationCreateLDAPEntityRequestStructure"/>
+			<xs:element name="AssignEntityToAGroup" type="AuthorisationAssignEntityToAGroupRequestStructure"/>
+			<xs:element name="RemoveEntityFromAGroup" type="AuthorisationRemoveEntityFromAGroupRequestStructure"/>
+			<xs:element name="DeleteGroup" type="AuthorisationDeleteGroupRequestStructure"/>
+			<xs:element name="DeleteEntity" type="AuthorisationDeleteEntityRequestStructure"/>
+			<xs:element name="CheckGroupMembershipForAnEntity" type="AuthorisationCheckGroupMembershipForAnEntityRequestStructure"/>
+			<xs:element name="AllAssignedEntitiesToAGroup" type="AuthorisationAllAssignedEntitiesToAGroupRequestStructure"/>
+			<xs:element name="AllGroupsWithEntityAsAMember" type="AuthorisationAllGroupsWithEntityAsAMemberRequestStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="AuthorisationResponse" type="AuthorisationResponseStructure"/>
+	<xs:complexType name="AuthorisationResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice>
+				<xs:element name="CreateLDAPGroup" type="AuthorisationCreateLDAPGroupResposeStructure"/>
+				<xs:element name="CreateLDAPEntity" type="AuthorisationCreateLDAPEntityResponseStructure"/>
+				<xs:element name="AssignEntityToAGroup" type="AuthorisationAssignEntityToAGroupResponseStructure"/>
+				<xs:element name="RemoveEntityFromAGroup" type="AuthorisationRemoveEntityFromAGroupResponseStructure"/>
+				<xs:element name="DeleteGroup" type="AuthorisationDeleteGroupResponseStructure"/>
+				<xs:element name="DeleteEntity" type="AuthorisationDeleteEntityResponseStructure"/>
+				<xs:element name="CheckGroupMembershipForAnEntity" type="AuthorisationCheckGroupMembershipForAnEntityResponseStructure"/>
+				<xs:element name="AllAssignedEntitiesToAGroup" type="AuthorisationAllAssignedEntitiesToAGroupResponseStructure"/>
+				<xs:element name="AllGroupsWithEntityAsAMember" type="AuthorisationAllGroupsWithEntityAsAMemberResponseStructure"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 1: Create LDAP Group - REQUEST ========================================-->
+	<xs:element name="AuthorisationCreateLDAPGroupRequest" type="AuthorisationCreateLDAPGroupRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationCreateLDAPGroupRequestStructure">
+		<xs:sequence>
+			<xs:element name="GroupName" type="xs:string"/>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+			<!-- PARENT GROUP DN -->
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 1: Create LDAP Group - RESPONSE ======================================-->
+	<xs:element name="AuthorisationCreateLDAPGroupResponse" type="AuthorisationCreateLDAPGroupResposeStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationCreateLDAPGroupResposeStructure">
+		<xs:choice>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+		</xs:choice>
+	</xs:complexType>
+	<!--== Function 2: Create LDAP Entity - REQUEST ========================================-->
+	<xs:element name="AuthorisationCreateLDAPEntityRequest" type="AuthorisationCreateLDAPEntityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationCreateLDAPEntityRequestStructure">
+		<xs:sequence>
+			<xs:element name="EntityName" type="xs:string"/>
+			<xs:element name="CertificateID" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 2: Create LDAP Entity - RESPONSE =======================================-->
+	<xs:element name="AuthorisationCreateLDAPEntityResponse" type="AuthorisationCreateLDAPEntityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationCreateLDAPEntityResponseStructure">
+		<xs:choice>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="EntityDistinguishedName" type="xs:string"/>
+		</xs:choice>
+	</xs:complexType>
+	<!--== Function 3: Assign Entity to a LDAP Group - REQUEST ===============================-->
+	<xs:element name="AuthorisationAssignEntityToAGroupRequest" type="AuthorisationAssignEntityToAGroupRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationAssignEntityToAGroupRequestStructure">
+		<xs:sequence>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+			<xs:element name="EntityDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 3: Assign Entity to a LDAP Group - RESPONSE ==============================-->
+	<xs:element name="AuthorisationAssignEntityToAGroupResponse" type="AuthorisationAssignEntityToAGroupResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationAssignEntityToAGroupResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 4: Remove Entity from a LDAP Group - REQUEST ============================-->
+	<xs:element name="AuthorisationRemoveEntityFromAGroupRequest" type="AuthorisationRemoveEntityFromAGroupRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationRemoveEntityFromAGroupRequestStructure">
+		<xs:sequence>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+			<xs:element name="EntityDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 4: Remove Entity from a LDAP Group - RESPONSE ===========================-->
+	<xs:element name="AuthorisationRemoveEntityFromAGroupResponse" type="AuthorisationRemoveEntityFromAGroupResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationRemoveEntityFromAGroupResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 5: Delete LDAP Group - REQUEST ========================================-->
+	<xs:element name="AuthorisationDeleteGroupRequest" type="AuthorisationDeleteGroupRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationDeleteGroupRequestStructure">
+		<xs:sequence>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 5: Delete LDAP Group - RESPONSE =======================================-->
+	<xs:element name="AuthorisationDeleteGroupResponse" type="AuthorisationDeleteGroupResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationDeleteGroupResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 6: Delete LDAP Entity - REQUEST =========================================-->
+	<xs:element name="AuthorisationDeleteEntityRequest" type="AuthorisationDeleteEntityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationDeleteEntityRequestStructure">
+		<xs:sequence>
+			<xs:element name="EntityDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 6: Delete LDAP Entity - RESPONSE ========================================-->
+	<xs:element name="AuthorisationDeleteEntityResponse" type="AuthorisationDeleteEntityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationDeleteEntityResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 7: Check Group membership for an Entity - REQUEST =========================-->
+	<xs:element name="AuthorisationCheckGroupMembershipForAnEntityRequest" type="AuthorisationCheckGroupMembershipForAnEntityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationCheckGroupMembershipForAnEntityRequestStructure">
+		<xs:sequence>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+			<xs:element name="EntityDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 7: Check Group membership for an Entity - RESPONSE ========================-->
+	<xs:element name="AuthorisationCheckGroupMembershipForAnEntityResponse" type="AuthorisationCheckGroupMembershipForAnEntityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationCheckGroupMembershipForAnEntityResponseStructure">
+		<xs:choice>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="GroupMembershipStatus" type="xs:boolean"/>
+		</xs:choice>
+	</xs:complexType>
+	<!--== Function 8: All Entities assigned to a group - REQUEST ================================-->
+	<xs:element name="AuthorisationAllAssignedEntitiesToAGroupRequest" type="AuthorisationAllAssignedEntitiesToAGroupRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationAllAssignedEntitiesToAGroupRequestStructure">
+		<xs:sequence>
+			<xs:element name="GroupDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 8: All Entities assigned to a group - RESPONSE ===============================-->
+	<xs:element name="AuthorisationAllAssignedEntitiesToAGroupResponse" type="AuthorisationAllAssignedEntitiesToAGroupResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationAllAssignedEntitiesToAGroupResponseStructure">
+		<xs:sequence>
+			<xs:element name="EntityDistinguishedName" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- TODO: CHECK -->
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 9: All groups with entity as a member - REQUEST ============================-->
+	<xs:element name="AuthorisationAllGroupsWithEntityAsAMemberRequest" type="AuthorisationAllGroupsWithEntityAsAMemberRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationAllGroupsWithEntityAsAMemberRequestStructure">
+		<xs:sequence>
+			<xs:element name="EntityDistinguishedName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function 9: All groups with entity as a member - RESPONSE ===========================-->
+	<xs:element name="AuthorisationAllGroupsWithEntityAsAMemberResponse" type="AuthorisationAllGroupsWithEntityAsAMemberResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TODO: ADD FUNCTION DESCRIPTION</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AuthorisationAllGroupsWithEntityAsAMemberResponseStructure">
+		<xs:sequence>
+			<xs:element name="GroupDistinguishedName" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- TODO: CHECK -->
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

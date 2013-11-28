@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri_situationExchange_service.xsd"/>
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri_facilityMonitoring_service.xsd"/>
+	<xs:include schemaLocation="Trias_Trips.xsd"/>
+	<xs:include schemaLocation="Trias_Connections.xsd"/>
+	<xs:group name="AlertSettingsGroup">
+		<xs:sequence>
+			<xs:element name="AlertTimeWindow" type="WeekdayTimePeriodStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Time windows when alerts are welcome.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaximumAlertFrequency" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum frequency of subsequent alerts for the same reason.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaximumTimeBeforeEvent" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Earliest time for first alert. Measured as  duration before beginning of event. Only for dated events.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>==================================================== Situation Monitoring ====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="SituationExchangeSubscriptionRequest" type="siri:SituationExchangeSubscriptionStructure">
+		<xs:annotation>
+			<xs:documentation>Request to send current facility status information</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SituationExchangeDelivery" type="siri:SituationExchangeDeliveryStructure"/>
+	<xs:annotation>
+		<xs:documentation>==================================================== Facility Monitoring ====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="FacilityMonitoringSubscriptionRequest" type="siri:FacilityMonitoringSubscriptionStructure">
+		<xs:annotation>
+			<xs:documentation>Request to send current facility status information</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FacilityMonitoringDelivery" type="siri:FacilityMonitoringDeliveryStructure"/>
+	<xs:annotation>
+		<xs:documentation>==================================================== Trip Monitoring ====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TripMonitoringSubscriptionRequest" type="TripMonitoringSubscriptionRequestStructure"/>
+	<xs:complexType name="TripMonitoringSubscriptionRequestStructure">
+		<xs:complexContent>
+			<xs:extension base="siri:AbstractSubscriptionStructure">
+				<xs:sequence>
+					<xs:element name="Trip" type="TripStructure"/>
+					<xs:element ref="TripRequest" minOccurs="0"/>
+					<!-- <xs:element name="MonitoringParameter" type="MonitoringParamStructure" minOccurs="0"/> 
+				verschoben nach Subscription Request -->
+					<xs:element name="MonitoringParameter" type="TripMonitoringParamStructure" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TripMonitoringParamStructure">
+		<xs:annotation>
+			<xs:documentation>IPKOM Monitoring parameters</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="TripMonitoringPolicyGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="TripMonitoringPolicyGroup">
+		<xs:sequence>
+			<xs:element name="Severity" type="siri:SeverityEnumeration" minOccurs="0"/>
+			<!-- Prioritäten von Ereignissen. Werte definieren (vgl. SIRI)? -->
+			<xs:element name="MinimumDelayChangeThreshold" type="xs:duration" minOccurs="0"/>
+			<!-- Verspetungsaenderung, ab der wieder benachrichtigt wird -->
+			<xs:element name="AcceptThirdPartyInformation" type="xs:boolean" minOccurs="0"/>
+			<!-- Gibt an, ob Informationen von anderen Plattformen abgeholt werden sollen -->
+			<!-- bisher nur fuer Trip relevant -->
+			<xs:element name="IncludeAlternatives" type="xs:boolean" minOccurs="0"/>
+			<!-- Gibt an, ob direkt Alternativen mit zurückgegeben werden sollen -->
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="TripMonitoringDelivery" type="TripMonitoringDeliveryStructure"/>
+	<xs:complexType name="TripMonitoringDeliveryStructure">
+		<xs:complexContent>
+			<xs:extension base="siri:AbstractServiceDeliveryStructure">
+				<xs:sequence>
+					<xs:group ref="MonitoringAlertReasonGroup"/>
+					<xs:element name="ConnectionStatus" type="ConnectionStatusStructure" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:group ref="AlternativeTripGroup" minOccurs="0"/>
+					<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="MonitoringAlertReasonGroup">
+		<xs:sequence>
+			<xs:element name="Situations" type="SituationsStructure" minOccurs="0"/>
+			<xs:element name="FacilityCondition" type="siri:FacilityConditionStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="AlternativeTripGroup">
+		<xs:sequence>
+			<xs:element ref="TripResponse"/>
+		</xs:sequence>
+	</xs:group>
+</xs:schema>

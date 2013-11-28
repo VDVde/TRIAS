@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Katarzyna Piwonska (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_JourneySupport-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_Trips.xsd"/>
+	<xs:annotation>
+		<xs:documentation>================= FUNCTION 1: Individual Route Service =====================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="IndividualRouteRequest" type="IndividualRouteRequestStructure"/>
+	<xs:complexType name="IndividualRouteRequestStructure">
+		<xs:sequence>
+			<xs:element name="Origin" type="IndividualRouteLocationContextStructure"/>
+			<xs:element name="Destination" type="IndividualRouteLocationContextStructure"/>
+			<xs:element name="Via" type="ViaStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Mode" type="IndividualTransportOptionsStructure" maxOccurs="unbounded"/>
+			<xs:element name="Params" type="IndividualTripParamStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="IndividualRouteResponse" type="IndividualRouteResponseStructure"/>
+	<xs:complexType name="IndividualRouteResponseStructure">
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="IndividualRouteResponseContext" type="TripResponseContextStructure" minOccurs="0"/>
+			<xs:element name="RouteResult" type="RouteResultStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================== Request sub structures ===========================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="IndividualTripParamStructure">
+		<xs:annotation>
+			<xs:documentation>Individual trip request parameter structure</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="IndividualTripMobilityFilterGroup"/>
+			<xs:group ref="IndividualTripPolicyGroup"/>
+			<xs:group ref="IndividualTripContentFilterGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="IndividualTripPolicyGroup">
+		<xs:sequence>
+			<xs:group ref="BaseTripPolicyGroup"/>
+			<xs:element name="AlgorithmType" type="IndividualTripsAlgorithmTypeEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of algorithm to be used. If not given, "optimal" is the default, which means, that the router uses it's own measures for the optimal route.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BanMotorways" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Disallow motorways.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BanTollRoads" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Disallow toll roads.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BanFerries" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Disallow ferries.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BanTunnels" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Disallow tunnels (not underpasses).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BanBridges" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Disallow larger bridges (not overpasses).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AllowUnpavedRoads" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Allow unpaved roads.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:simpleType name="IndividualTripsAlgorithmTypeEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fastest"/>
+			<xs:enumeration value="shortest"/>
+			<xs:enumeration value="beautiful"/>
+			<xs:enumeration value="optimal"/>
+			<xs:enumeration value="economic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="IndividualTripMobilityFilterGroup">
+		<xs:sequence>
+			<xs:group ref="BaseTripMobilityFilterGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="IndividualTripContentFilterGroup">
+		<xs:sequence>
+			<xs:group ref="BaseTripContentFilterGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="IndividualRouteLocationContextStructure">
+		<xs:sequence>
+			<xs:element name="LocationRef" type="LocationRefStructure"/>
+			<xs:element name="DepArrTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================== Response sub structures ==========================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="RouteStructure">
+		<xs:sequence>
+			<xs:element name="RouteId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Id of this indivdidual route for referencing purposes. Unique within individual route response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Duration" type="xs:duration">
+				<xs:annotation>
+					<xs:documentation>Overall duration of the route.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StartTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Departure time at origin.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Arrival time at destination.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Distance" type="DistanceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Route distance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RouteLeg" type="ContinuousLegStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>There must be exactly one route leg more than via locations were given in the request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RouteResultStructure">
+		<xs:sequence>
+			<xs:element name="ResultId" type="xs:NMTOKEN"/>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Route" type="RouteStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
