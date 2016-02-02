@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Mit XMLSpy v2012 rel. 2 sp1 (http://www.altova.com) von Dirk Weißer (INIT GmbH) bearbeitet -->
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
+	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:element name="VehicleDataRequest" type="VehicleDataRequestStructure"/>
 	<xs:complexType name="VehicleDataRequestStructure">
 		<xs:sequence>
@@ -96,7 +96,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="RouteDeviationEnumeration">
 		<xs:annotation>
-			<xs:documentation>Information whether the vehicle is onroute or offroute</xs:documentation>
+			<xs:documentation>Information whether the vehicle is on route or off route</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="onroute"/>
@@ -193,17 +193,13 @@
 		<xs:sequence>
 			<xs:element name="TimetableDelay" type="xs:int" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Delay to a precision in seconds. Early times are shown as negative values.
-            		</xs:documentation>
-					<xs:documentation>
-            			tbd: what happens, if this value isn't set
-            		</xs:documentation>
+					<xs:documentation>Delay to a precision in seconds. Early times are shown as negative values.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RouteDeviation" type="RouteDeviationEnumeration" minOccurs="0"/>
 			<xs:element name="JourneyMode" type="JourneyModeEnumeration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>   		</xs:documentation>
+					<xs:documentation/>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="ServicePatternPositionGroup" minOccurs="0"/>
@@ -219,12 +215,12 @@
 			</xs:element>
 			<xs:element name="VehicleStopRequested" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Is the Stop-Button inside the vehicle pressed?             		</xs:documentation>
+					<xs:documentation>Is the Stop-Button inside the vehicle pressed?</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="InPanic" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Überfallruf</xs:documentation>
+					<xs:documentation>Security alarm because of an attack.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="VehicleTypeRef" minOccurs="0"/>
@@ -282,7 +278,7 @@
 			</xs:element>
 			<xs:element name="Duration" type="xs:duration">
 				<xs:annotation>
-					<xs:documentation>Time-Value, which defines the part of the Periodtime in which this Sign-Information should be shown</xs:documentation>
+					<xs:documentation>Time-Value, which defines the period of the time in which this Sign-Information should be shown</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

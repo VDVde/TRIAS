@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri_situationExchange_service.xsd"/>
-	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri_facilityMonitoring_service.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri.xsd"/>
 	<xs:include schemaLocation="Trias_Trips.xsd"/>
 	<xs:include schemaLocation="Trias_Connections.xsd"/>
 	<xs:group name="AlertSettingsGroup">
@@ -52,8 +51,6 @@
 				<xs:sequence>
 					<xs:element name="Trip" type="TripStructure"/>
 					<xs:element ref="TripRequest" minOccurs="0"/>
-					<!-- <xs:element name="MonitoringParameter" type="MonitoringParamStructure" minOccurs="0"/> 
-				verschoben nach Subscription Request -->
 					<xs:element name="MonitoringParameter" type="TripMonitoringParamStructure" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
@@ -69,15 +66,26 @@
 	</xs:complexType>
 	<xs:group name="TripMonitoringPolicyGroup">
 		<xs:sequence>
-			<xs:element name="Severity" type="siri:SeverityEnumeration" minOccurs="0"/>
-			<!-- Prioritäten von Ereignissen. Werte definieren (vgl. SIRI)? -->
-			<xs:element name="MinimumDelayChangeThreshold" type="xs:duration" minOccurs="0"/>
-			<!-- Verspetungsaenderung, ab der wieder benachrichtigt wird -->
-			<xs:element name="AcceptThirdPartyInformation" type="xs:boolean" minOccurs="0"/>
-			<!-- Gibt an, ob Informationen von anderen Plattformen abgeholt werden sollen -->
-			<!-- bisher nur fuer Trip relevant -->
-			<xs:element name="IncludeAlternatives" type="xs:boolean" minOccurs="0"/>
-			<!-- Gibt an, ob direkt Alternativen mit zurückgegeben werden sollen -->
+			<xs:element name="Severity" type="siri:SeverityEnumeration" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Priority of events</xs:documentation>
+                </xs:annotation>
+			</xs:element>
+			<xs:element name="MinimumDelayChangeThreshold" type="xs:duration" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Minimum change of delay to send new notifications</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="AcceptThirdPartyInformation" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Whether to fetch information from other systems. Default is false.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="IncludeAlternatives" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Whether alternatives should be part of the response. Default is false.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:element name="TripMonitoringDelivery" type="TripMonitoringDeliveryStructure"/>

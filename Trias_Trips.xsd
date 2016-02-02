@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_JourneySupport-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_FaresSupport-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
+	<xs:include schemaLocation="Trias_FaresSupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>===== Request Structures ===============================================</xs:documentation>
 	</xs:annotation>
@@ -17,12 +17,12 @@
 			<xs:documentation>Trip request structure.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Origin" type="LocationContextStructure">
+			<xs:element name="Origin" type="LocationContextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Specifies the origin situation from where the user wants to start.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Destination" type="LocationContextStructure">
+			<xs:element name="Destination" type="LocationContextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Specifies the destination situation where the user is heading to.</xs:documentation>
 				</xs:annotation>
@@ -115,7 +115,7 @@
 			<xs:group ref="BaseTripMobilityFilterGroup"/>
 			<xs:element name="LevelEntrance" type="xs:boolean" fixed="true" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>The user needs vehilcles with level entrance between  platform and vehicle, f.e. for wheelchair access.</xs:documentation>
+					<xs:documentation>The user needs vehicles with level entrance between  platform and vehicle, f.e. for wheelchair access.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="BikeTransport" type="xs:boolean" fixed="true" minOccurs="0">
@@ -324,7 +324,7 @@
 			</xs:element>
 			<xs:element name="LegIntermediates" type="LegIntermediateStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>information about the intermediate throughpassed stop points.</xs:documentation>
+					<xs:documentation>information about the intermediate passed stop points.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="LegAlight" type="LegAlightStructure">
@@ -345,7 +345,7 @@
 			<xs:group ref="OperatingDaysGroup" minOccurs="0"/>
 			<xs:element name="LegTrack" type="LegTrackStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Geograhpic embedding of this leg.</xs:documentation>
+					<xs:documentation>Geographic embedding of this leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
@@ -635,12 +635,12 @@
 			</xs:element>
 			<xs:element name="TurnDescription" type="InternationalTextStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Textual description of a manoeuver. This should imply the information from Manoeuver, TurnAction, and TrackSection.RoadName.</xs:documentation>
+					<xs:documentation>Textual description of a manoeuvre. This should imply the information from Manoeuvre, TurnAction, and TrackSection.RoadName.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Manoeuver" type="ManoeuverEnumeration" minOccurs="0">
+			<xs:element name="Manoeuvre" type="ManoeuvreEnumeration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Code for manoeuver.</xs:documentation>
+					<xs:documentation>Code for manoeuvre.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TurnAction" type="TurnActionEnumeration" minOccurs="0">
@@ -655,20 +655,20 @@
 			</xs:element>
 			<xs:element name="Bearing" type="AbsoluteBearingType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Absolute bearing after the described manoeuver.</xs:documentation>
+					<xs:documentation>Absolute bearing after the described manoeuvre.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="AccessPath" type="AccessPathStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Description of the type of accessibillity on this navigation section.</xs:documentation>
+					<xs:documentation>Description of the type of accessibility on this navigation section.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SituationFullRef" type="SituationFullRefStructure" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="ManoeuverEnumeration">
+	<xs:simpleType name="ManoeuvreEnumeration">
 		<xs:annotation>
-			<xs:documentation>Types of manoeuvers</xs:documentation>
+			<xs:documentation>Types of manoeuvres.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="origin"/>
@@ -712,7 +712,7 @@
 			</xs:element>
 			<xs:element name="BufferTime" type="xs:duration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Buffer time as part of the overall interchange duration. Buffer times, f.e. check in/out times, sometimes are mandatory for using certain services as f.e. airplanes,  ferrys or highspeed trains.</xs:documentation>
+					<xs:documentation>Buffer time as part of the overall interchange duration. Buffer times, f.e. check in/out times, sometimes are mandatory for using certain services as f.e. airplanes, ferries or highspeed trains.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

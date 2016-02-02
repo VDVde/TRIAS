@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Katarzyna Piwonska (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
-<!-- edited with XMLSpy v2010 rel. 3 sp1 (x64) (http://www.altova.com) by Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>FUNCTION 1: Location Identification</xs:documentation>
 	</xs:annotation>
@@ -58,7 +58,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>
-		<xs:documentation>additional declarations</xs:documentation>
+		<xs:documentation>Additional declarations</xs:documentation>
 	</xs:annotation>
 	<xs:complexType name="InitialLocationInputStructure">
 		<xs:sequence>
@@ -69,7 +69,7 @@
 			</xs:element>
 			<xs:element name="GeoPosition" type="GeoPositionStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Coordinate where to look for locations. If given, the result should prefer location objects near to this geoposition.</xs:documentation>
+					<xs:documentation>Coordinate where to look for locations. If given, the result should prefer location objects near to this GeoPosition.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="GeoRestriction" type="GeoRestrictionsStructure" minOccurs="0">
@@ -91,7 +91,7 @@
 			<xs:element name="Rectangle" type="GeoRectangleStructure"/>
 			<xs:element name="Area" type="GeoAreaStructure">
 				<xs:annotation>
-					<xs:documentation>Area is defined by a polyline </xs:documentation>
+					<xs:documentation>Area is defined by a polyline</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -176,9 +176,19 @@
 					<xs:documentation>Allowed public transport modes. Defines, which public transport modes must be available at the returned location objects. Applies only to stops.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="OperatorFilter" type="OperatorFilterStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Filter for locations that are operated by certain organisations.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="LocalityRef" type="LocalityRefStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>If at least one is set, only location objects within the given localities are allowed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointOfInterestFilter" type="PointOfInterestFilterStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Filter to narrow down POI searches.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

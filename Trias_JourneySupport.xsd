@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_SituationSupport-v1.0.xsd"/>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
+	<xs:include schemaLocation="Trias_SituationSupport.xsd"/>
 	<!-- ===========================================================================================================-->
 	<xs:complexType name="ServiceViaPointStructure">
 		<xs:annotation>
@@ -83,7 +83,7 @@
 			<xs:documentation>First serviced stop of a vehicle journey.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="OriginStopPointRef" type="StopPointRefStructure">
+			<xs:element name="OriginStopPointRef" type="StopPointRefStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>First stop of the vehicle journey.</xs:documentation>
 				</xs:annotation>
@@ -100,7 +100,7 @@
 			<xs:documentation>Last serviced stop of a vehicle journey.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="DestinationStopPointRef" type="StopPointRefStructure">
+			<xs:element name="DestinationStopPointRef" type="StopPointRefStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Last stop of vehicle journey.</xs:documentation>
 				</xs:annotation>
@@ -154,7 +154,7 @@
 	</xs:complexType>
 	<xs:simpleType name="OccupancyEnumeration">
 		<xs:annotation>
-			<xs:documentation>Passenger load status of a VEHICLE.</xs:documentation>
+			<xs:documentation>Passenger load status of a vehicle.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="manySeatsAvailable"/>
@@ -304,7 +304,7 @@
 			</xs:element>
 			<xs:element name="ServiceDeparture" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
@@ -337,7 +337,7 @@
 			</xs:element>
 			<xs:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>How full the VEHICLE is.  If omitted, not known.</xs:documentation>
+					<xs:documentation>Level of occupancy in the vehicle. If omitted, not known.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -359,7 +359,10 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
-			<xs:group ref="DatedServiceGroup" minOccurs="0"/>
+			<xs:choice>
+				<xs:group ref="DatedServiceGroup" minOccurs="0"/>
+				<xs:element name="SharingService" type="SharingServiceStructure" minOccurs="0"/>
+			</xs:choice>
 			<xs:group ref="ServiceOriginGroup" minOccurs="0"/>
 			<xs:group ref="ServiceDestinationGroup" minOccurs="0"/>
 			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
@@ -393,12 +396,12 @@
 			</xs:element>
 			<xs:element name="Bearing" type="AbsoluteBearingType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Bearing in compass degrees in which VEHICLE is heading.</xs:documentation>
+					<xs:documentation>Bearing in compass degrees in which vehicle is heading.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ProgressBetweenStops" type="ProgressBetweenStopsStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Provides information about the progress of the VEHICLE along its current link, that is link from previous visited top to current position.</xs:documentation>
+					<xs:documentation>Provides information about the progress of the vehicle along its current link, that is link from previous visited top to current position.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -415,7 +418,7 @@
 			</xs:element>
 			<xs:element name="Percentage" type="PercentType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Percentage along link that VEHICLE has travelled.</xs:documentation>
+					<xs:documentation>Percentage along link that vehicle has travelled.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -442,7 +445,7 @@
 					<xs:documentation>Time when departure/arrival from/to location is required.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IndvidualTransportOptions" type="IndividualTransportOptionsStructure" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="IndividualTransportOptions" type="IndividualTransportOptionsStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Options how to access/leave the location by individual transport.</xs:documentation>
 				</xs:annotation>
@@ -511,7 +514,7 @@
 			</xs:element>
 			<xs:element name="ImmediateTripStart" type="xs:boolean" fixed="true" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Whether the trip calculation should find a solution that starts immediately (f.e. because the user is already on the way) instead of finding the latest possible start oppurtunity.</xs:documentation>
+					<xs:documentation>Whether the trip calculation should find a solution that starts immediately (f.e. because the user is already on the way) instead of finding the latest possible start opportunity.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

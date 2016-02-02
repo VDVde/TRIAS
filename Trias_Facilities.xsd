@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_LocationSupport-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>====================================================Request definitions====================================================</xs:documentation>
 	</xs:annotation>

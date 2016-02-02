@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:simpleType name="TravelClassEnumeration">
 		<xs:annotation>
 			<xs:documentation>Enumeration of travel classes.</xs:documentation>
@@ -47,6 +47,19 @@
 			<xs:documentation>Reference to a Fares Authority.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:group name="FaresAuthorityGroup">
+		<xs:annotation>
+			<xs:documentation>Group of Fares Authority code and text.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FaresAuthorityRef"/>
+			<xs:element name="FaresAuthorityText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Textual description or name of fares authority.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
 	<xs:annotation>
 		<xs:documentation>========================================= Zones ================================================</xs:documentation>
 	</xs:annotation>
@@ -69,9 +82,35 @@
 			<xs:documentation>Reference to a fare zone.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="FareZoneStructure">
+		<xs:annotation>
+			<xs:documentation>Model of a fare zone</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FareZoneRef"/>
+			<xs:element name="FareZoneText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Text describing the fare zone. Passengers will recognize the fare zone by this text. Often published on Fare Zone Maps.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="FareZoneListInAreaStructure">
 		<xs:annotation>
 			<xs:documentation>List of fare zones within the area of a Fares Authority.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="FaresAuthorityGroup"/>
+			<xs:element name="FareZone" type="FareZoneStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Fare zone in area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FareZoneRefListStructure">
+		<xs:annotation>
+			<xs:documentation>List of fare zones references within the area of a Fares Authority.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="FaresAuthorityRef"/>
@@ -185,7 +224,7 @@
 					<xs:documentation>printable ticket name</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="FaresAuthorityRef"/>
+			<xs:group ref="FaresAuthorityGroup"/>
 			<xs:group ref="TicketPriceGroup"/>
 			<xs:group ref="TicketValidityGroup"/>
 			<xs:group ref="TicketBookingGroup"/>
@@ -236,7 +275,27 @@
 			</xs:element>
 			<xs:element name="ValidFor" type="PassengerCategoryEnumeration" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>sequence of all passenger categories, for which this ticket is valid</xs:documentation>
+					<xs:documentation>Sequence of all passenger categories for which this ticket is valid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidityDuration" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum duration of ticket validity starting with purchase of ticket or begin of journey (ticket validation).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidityDurationText" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Textual description of maximum validity duration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidityFareZones" type="FareZoneListInAreaStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Spatial validity of ticket defined as list of fare zones.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidityAreaText" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Textual description of spatial validity.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -246,12 +305,12 @@
 			<xs:documentation>Group of information elements related to booking (f.e. links to static information or to the online shop).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="InfoUrl" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="InfoUrl" type="WebLinkStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>URL to information for this ticket</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SaleUrl" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="SaleUrl" type="WebLinkStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>URL to buy the ticket online</xs:documentation>
 				</xs:annotation>
@@ -300,7 +359,7 @@
 					<xs:documentation>One ore more tickets that are valid for this part of the trip.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StaticInfoUrl" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="StaticInfoUrl" type="WebLinkStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>URL to static information page on the web.</xs:documentation>
 				</xs:annotation>
@@ -332,6 +391,18 @@
 					<xs:documentation>One or more traveller cards that the passenger can make use of.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="ZonesAlreadyPaid" type="FareZoneRefListStructure">
+					<xs:annotation>
+						<xs:documentation>Fare zones for which the passenger already has a valid ticket.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OwnedTicket" type="TicketRefStructure" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Id of a ticket that the passenger already holds and that may be used for the travel or parts of it.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:group name="FaresDataFilterGroup">

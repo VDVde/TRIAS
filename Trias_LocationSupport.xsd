@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:annotation>
 		<xs:documentation>========================================= Stop Points =============================================</xs:documentation>
 	</xs:annotation>
@@ -26,7 +26,7 @@
 	</xs:element>
 	<xs:group name="StopPointGroup">
 		<xs:annotation>
-			<xs:documentation>a stop point with id and name</xs:documentation>
+			<xs:documentation>A stop point with id and name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="StopPointRef"/>
@@ -96,7 +96,7 @@
 	</xs:element>
 	<xs:group name="StopPlaceGroup">
 		<xs:annotation>
-			<xs:documentation>a stop place with id and name</xs:documentation>
+			<xs:documentation>A stop place with id and name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="StopPlaceRef"/>
@@ -253,12 +253,60 @@
 					<xs:documentation>Additional description of the point of interest that may be appended to the name if enough space is available. F.e. "Exhibition Center".</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PointOfInterestCategory" type="PointOfInterestCategoryStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Categories this POI is associated with. Order indicates descending relevance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="PrivateCode" type="PrivateCodeStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Code of this point of interest in private/foreign/proprietary coding schemes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="LocalityRef" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PointOfInterestCategoryStructure">
+		<xs:annotation>
+			<xs:documentation>List of categories defined by key-value-pairs.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OsmTag" type="OsmTagStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Open Street Map tag structure (key-value)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OsmTagStructure">
+		<xs:annotation>
+			<xs:documentation>Structure of an Open Street Map tag.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Tag" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Name of Open Street Map tag (amenity, leisure, tourism, bike, ...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>Value for Open Street Map tag (charging_station, hostel, yes, ...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PointOfInterestFilterStructure">
+		<xs:sequence>
+			<xs:element name="Exclude" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether categories in list are to include or exclude from search. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointOfInterestCategory" type="PointOfInterestCategoryStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>These can be used to filter POI types of locations even more by additional category filters. If more than one is given the filtering is by logical "OR" (when Exclude=FALSE) and logical "AND" (when Exclude=TRUE).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>

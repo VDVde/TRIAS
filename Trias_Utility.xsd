@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:annotation>
 		<xs:documentation>========================================= General ================================================</xs:documentation>
 	</xs:annotation>
@@ -80,7 +80,23 @@
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
-		<!--         <xsd:attribute name="Lang" type="xsd:language" use="optional"/> -->
+	</xs:complexType>
+	<xs:complexType name="WebLinkStructure">
+		<xs:annotation>
+			<xs:documentation>URL with label.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Label" type="InternationalTextStructure">
+				<xs:annotation>
+					<xs:documentation>Label for link description.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Url" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>URL to resource on web.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>
 		<xs:documentation>========================================= Coordinates ==============================================</xs:documentation>

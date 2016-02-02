@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_ModesSupport-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_FacilitySupport-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_ModesSupport.xsd"/>
+	<xs:include schemaLocation="Trias_FacilitySupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>========================================= General ================================================</xs:documentation>
 	</xs:annotation>
@@ -167,7 +167,7 @@
 	</xs:simpleType>
 	<xs:complexType name="DirectionRefStructure">
 		<xs:annotation>
-			<xs:documentation>Reference to a Direction(Transmodel) </xs:documentation>
+			<xs:documentation>Reference to a Direction (Transmodel)</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="DirectionCodeType"/>
@@ -261,7 +261,7 @@
 	</xs:simpleType>
 	<xs:complexType name="VehicleTypeRefStructure">
 		<xs:annotation>
-			<xs:documentation>Reference to a Vehicle Type (Transmodel) </xs:documentation>
+			<xs:documentation>Reference to a Vehicle Type (Transmodel)</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="VehicleTypeType"/>
@@ -272,6 +272,58 @@
 			<xs:documentation>Reference to a Vehicle Type.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<!-- ========================================== Sharing Services ========================== -->
+	<xs:simpleType name="SharingModelEnumeration">
+		<xs:annotation>
+			<xs:documentation>Sharing service loan and return scheme.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="singleStationBased"/>
+			<xs:enumeration value="multipleStationBased"/>
+			<xs:enumeration value="nonStationBased"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="SharingServiceUsageGroup">
+		<xs:annotation>
+			<xs:documentation>Usage parameters of a sharing service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TimeBufferBefore" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Typical time a user will need  to check in and unlock the vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeBufferAfter" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Typical time a user will need  to lock the vehicle and check out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="SharingServiceStructure">
+		<xs:annotation>
+			<xs:documentation>Service that provides shared vehicles.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="OperatorRef"/>
+			<xs:element name="Name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Public name of the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SharingModel" type="SharingModelEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of the sharing scheme.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="SharingServiceUsageGroup" minOccurs="0"/>
+			<xs:element name="InfoURL" type="WebLinkStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Link to web page providing more details on service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<!-- ========================================== Facilities ============================= -->
 	<xs:simpleType name="FacilityCodeType">
 		<xs:annotation>

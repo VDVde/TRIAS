@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Utility-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Utility.xsd"/>
 	<xs:annotation>
 		<xs:documentation>========================================= Individual Modes ============================</xs:documentation>
 	</xs:annotation>
@@ -27,22 +27,22 @@
 			<xs:element name="Mode" type="IndividualModesEnumeration"/>
 			<xs:element name="MaxDistance" type="DistanceType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Maximal distance in meters. If given, it restricts the maximal distance of routes with the given mode.</xs:documentation>
+					<xs:documentation>Maximum distance in meters. If given, it restricts the maximum distance of routes with the given mode.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MaxDuration" type="xs:duration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Maximal duration. If given, it restricts the maximal time of routes with the given mode.</xs:documentation>
+					<xs:documentation>Maximum duration. If given, it restricts the maximum time of routes with the given mode.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MinDistance" type="DistanceType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Minimal distance in meters. If given, it restricts the minimal distance of routes with the given mode.</xs:documentation>
+					<xs:documentation>Minimum distance in meters. If given, it restricts the minimum distance of routes with the given mode.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MinDuration" type="xs:duration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Minimal duration. If given, it restricts the minimal time of routes with the given mode.</xs:documentation>
+					<xs:documentation>Minimum duration. If given, it restricts the minimum time of routes with the given mode.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Speed" type="OpenPercentType" minOccurs="0">
@@ -124,7 +124,7 @@
 	</xs:group>
 	<xs:simpleType name="PtModesEnumeration">
 		<xs:annotation>
-			<xs:documentation>Allowed values for MODES  : TPEG pti_table 01.</xs:documentation>
+			<xs:documentation>Allowed values for MODES: TPEG pti_table 01.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="all"/>
@@ -170,7 +170,7 @@
 	</xs:element>
 	<xs:simpleType name="RailSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Rail ModesOfTransport: TPEG pti_table_02,  train link loc_table_13. </xs:documentation>
+			<xs:documentation>Values for Rail ModesOfTransport: TPEG pti_table_02,  train link loc_table_13.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>
@@ -178,39 +178,27 @@
 			<xs:enumeration value="local"/>
 			<xs:enumeration value="highSpeedRail">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code: (8 high speed train).
-Long distance train formed by a unit capable for high speed running on high speed or normal lines most modern train unit
-</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (8 high speed train) Long distance train formed by a unit capable for high speed running on high speed or normal lines most modern train unit</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="suburbanRailway">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code:  . (  12
-subUrban)
-Regional train organised by the regional government public transport in and around cities, running on its own freeways underground or overground, operational running with signals
-
-</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (12 subUrban) Regional train organised by the regional government public transport in and around cities, running on its own freeways underground or overground, operational running with signals</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="regionalRail">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code. (11 Regional)
-Regional train organised by the regional government even if formed by a unit capable for high speed running on high speed lines
-</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (11 Regional) Regional train organised by the regional government even if formed by a unit capable for high speed running on high speed lines</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="interregionalRail">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code: (10 Interregional)
-Regional train running in more than one region.
-</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (10 Interregional) Regional train running in more than one region.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="longDistance">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code: (9 Intercity).
-Long distance train formed by a unit capable for high speed or not running on high speed or normal lines modern train unit high quality service restricted stopping pattern
-</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (9 Intercity) Long distance train formed by a unit capable for high speed or not running on high speed or normal lines modern train unit high quality service restricted stopping pattern</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="international"/>
@@ -218,16 +206,12 @@ Long distance train formed by a unit capable for high speed or not running on hi
 			<xs:enumeration value="nightRail"/>
 			<xs:enumeration value="carTransportRailService">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code: ( 14
-Motor rail)
-Service transporting passenger's motor vehicle passengers are admitted either with vehicle only or with or without vehicle
-Service mode
-</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (14 Motor rail) Service transporting passenger's motor vehicle passengers are admitted either with vehicle only or with or without vehicle</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="touristRailway">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code: (16 Historic train)</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (16 Historic train)</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="railShuttle"/>
@@ -236,8 +220,7 @@ Service mode
 			<xs:enumeration value="crossCountryRail"/>
 			<xs:enumeration value="rackAndPinionRailway">
 				<xs:annotation>
-					<xs:documentation>See ERA B.4.7009 - Name: Item description code: (15 Mountain train)
-Local train adapted for running in mountain railway lines</xs:documentation>
+					<xs:documentation>See ERA B.4.7009 - (15 Mountain train) Local train adapted for running in mountain railway lines</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
@@ -250,7 +233,7 @@ Local train adapted for running in mountain railway lines</xs:documentation>
 	</xs:element>
 	<xs:simpleType name="CoachSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Coach ModesOfTransport:  TPEG pti_table_03.</xs:documentation>
+			<xs:documentation>Values for Coach ModesOfTransport: TPEG pti_table_03.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>
@@ -273,7 +256,7 @@ Local train adapted for running in mountain railway lines</xs:documentation>
 	</xs:element>
 	<xs:simpleType name="MetroSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Metro ModesOfTransport:  TPEG pti_table_04.</xs:documentation>
+			<xs:documentation>Values for Metro ModesOfTransport: TPEG pti_table_04.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>
@@ -291,7 +274,7 @@ Local train adapted for running in mountain railway lines</xs:documentation>
 	</xs:element>
 	<xs:simpleType name="BusSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Bus ModesOfTransport: TPEG pti_table_05,  loc_table_10.</xs:documentation>
+			<xs:documentation>Values for Bus ModesOfTransport: TPEG pti_table_05, loc_table_10.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>
@@ -410,7 +393,7 @@ Local train adapted for running in mountain railway lines</xs:documentation>
 	</xs:element>
 	<xs:simpleType name="TelecabinSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Telecabin ModesOfTransport: TPEG pti_table_09,  loc_table_14.</xs:documentation>
+			<xs:documentation>Values for Telecabin ModesOfTransport: TPEG pti_table_09, loc_table_14.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>
@@ -431,7 +414,7 @@ Local train adapted for running in mountain railway lines</xs:documentation>
 	</xs:element>
 	<xs:simpleType name="FunicularSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Funicular ModesOfTransport:  TPEG pti_table_10.</xs:documentation>
+			<xs:documentation>Values for Funicular ModesOfTransport: TPEG pti_table_10.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>
@@ -465,7 +448,7 @@ Local train adapted for running in mountain railway lines</xs:documentation>
 	<!-- ================ Filter ======================================================= -->
 	<xs:complexType name="PtModeFilterStructure">
 		<xs:annotation>
-			<xs:documentation>List of publlic transport modes to include or exclude.</xs:documentation>
+			<xs:documentation>List of public transport modes to include or exclude.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Exclude" type="xs:boolean" minOccurs="0">

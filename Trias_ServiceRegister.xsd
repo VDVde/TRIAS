@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:annotation>
-		<xs:documentation>======================= IpkomServices ==================================</xs:documentation>
+		<xs:documentation>======================= IPKOM Services ==================================</xs:documentation>
 	</xs:annotation>
 	<xs:simpleType name="TriasServiceIdType">
 		<xs:annotation>
@@ -124,7 +124,7 @@
 				</xs:element>
 				<xs:element name="UnregisterRequest" type="ServiceRegisterUnregisterRequestStructure">
 					<xs:annotation>
-						<xs:documentation>Sub-request to dellete a service from the register.</xs:documentation>
+						<xs:documentation>Sub-request to delete a service from the register.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
@@ -209,7 +209,7 @@
 			</xs:element>
 			<xs:element name="ServiceRegisterResult" type="ServiceRegisterResultStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Result wrapper eleement.</xs:documentation>
+					<xs:documentation>Result wrapper element.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -221,7 +221,7 @@
 		<xs:sequence>
 			<xs:element name="ResultId" type="xs:NMTOKEN">
 				<xs:annotation>
-					<xs:documentation>ID of this result for ffurther reference.</xs:documentation>
+					<xs:documentation>ID of this result for further reference.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">

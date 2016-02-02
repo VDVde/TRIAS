@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri.xsd"/>
-	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri/siri_requests-v1.3.xsd"/>
-	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri/siri_common-v1.4.xsd"/>
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:annotation>
 		<xs:documentation>====================================================Simple Types ====================================================</xs:documentation>
 	</xs:annotation>
@@ -16,7 +14,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="CalcTimeType">
 		<xs:annotation>
-			<xs:documentation>Type definition for calculation time in msecs.</xs:documentation>
+			<xs:documentation>Type definition for calculation time in milliseconds.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:integer"/>
 	</xs:simpleType>

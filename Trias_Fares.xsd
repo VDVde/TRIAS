@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="Trias_Common-v1.0.xsd"/>
-	<xs:include schemaLocation="Trias_FaresSupport-v1.0.xsd"/>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_FaresSupport.xsd"/>
 	<xs:include schemaLocation="Trias_Trips.xsd"/>
 	<xs:annotation>
 		<xs:documentation>====================================================Request definitions====================================================</xs:documentation>
@@ -70,6 +70,7 @@
 					<xs:documentation>Date for which to retrieve fares information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element ref="TicketRef" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TripFaresRequestStructure">
@@ -111,7 +112,7 @@
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Errorr messages related to the request as a whole.</xs:documentation>
+					<xs:documentation>Error messages related to the request as a whole.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FaresResult" type="FaresResultStructure" minOccurs="0" maxOccurs="unbounded">
@@ -123,7 +124,7 @@
 	</xs:complexType>
 	<xs:complexType name="FaresResultStructure">
 		<xs:annotation>
-			<xs:documentation>Wrapper eleement for fares results.</xs:documentation>
+			<xs:documentation>Wrapper element for fares results.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ResultId" type="xs:NMTOKEN">
@@ -178,7 +179,7 @@
 					<xs:documentation>One or more tickets that are available for this area.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StaticInfoUrl" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="StaticInfoUrl" type="WebLinkStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>URL to information page on the web.</xs:documentation>
 				</xs:annotation>
@@ -226,7 +227,7 @@
 			</xs:element>
 			<xs:element name="TripTicketReference" type="TripTicketReferenceStructure" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>non empty list of trip references in the corresponding MultiTripFaresRequestStructure </xs:documentation>
+					<xs:documentation>Non-empty list of trip references in the corresponding MultiTripFaresRequestStructure</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Ticket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">

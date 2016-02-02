@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
-<xs:schema xmlns="trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Alerts.xsd"/>
 	<xs:include schemaLocation="Trias_Booking.xsd"/>
 	<xs:include schemaLocation="Trias_Connections.xsd"/>
@@ -11,7 +11,7 @@
 	<xs:include schemaLocation="Trias_Maps.xsd"/>
 	<xs:include schemaLocation="Trias_Personalisation.xsd"/>
 	<xs:include schemaLocation="Trias_Positioning.xsd"/>
-	<xs:include schemaLocation="Trias_RequestSupport-v1.0.xsd"/>
+	<xs:include schemaLocation="Trias_RequestSupport.xsd"/>
 	<xs:include schemaLocation="Trias_ServiceRegister.xsd"/>
 	<xs:include schemaLocation="Trias_StopEvents.xsd"/>
 	<xs:include schemaLocation="Trias_TripInfo.xsd"/>
@@ -27,7 +27,7 @@
 				<xs:group ref="ResponseGroup"/>
 				<xs:element name="Extension" type="xs:anyType"/>
 			</xs:choice>
-			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.0"/>
+			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.1"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:annotation>
