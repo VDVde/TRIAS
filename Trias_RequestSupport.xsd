@@ -60,9 +60,9 @@
 					<xs:documentation>Data version</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Language" type="xs:language" default="en" minOccurs="0">
+			<xs:element name="Language" type="xs:language" default="en" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Preferred language in which to return  text  values.</xs:documentation>
+					<xs:documentation>Preferred languages in which to return text values.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="MessageIntegrityPropertiesGroup"/>
@@ -79,9 +79,9 @@
 					<xs:documentation>Data version</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Language" type="xs:language" default="en" minOccurs="0">
+			<xs:element name="Language" type="xs:language" default="en" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Default language in which text  values are returned.</xs:documentation>
+					<xs:documentation>Languages in which text values are returned.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CalcTime" type="CalcTimeType" minOccurs="0">
@@ -103,9 +103,9 @@
 					<xs:documentation>Data version</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Language" type="xs:language" default="en" minOccurs="0">
+			<xs:element name="Language" type="xs:language" default="en" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Preferred language in which to return  text  values.</xs:documentation>
+					<xs:documentation>Preferred languages in which to return text values.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="MessageIntegrityPropertiesGroup"/>
