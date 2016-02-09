@@ -86,7 +86,7 @@
 			<xs:documentation>URL with label.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Label" type="InternationalTextStructure">
+			<xs:element name="Label" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Label for link description.</xs:documentation>
 				</xs:annotation>

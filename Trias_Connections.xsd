@@ -76,7 +76,7 @@
 			<xs:element name="RequestId" type="xs:NMTOKEN"/>
 			<xs:element name="Connection" type="GeneralizedConnectionStructure"/>
 			<xs:element name="Succeeded" type="xs:boolean"/>
-			<xs:element name="Reason" type="InternationalTextStructure" minOccurs="0"/>
+			<xs:element name="Reason" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -134,7 +134,7 @@
 	<xs:complexType name="RecommendationStructure">
 		<xs:sequence>
 			<xs:element name="RecommendationId" type="xs:NMTOKEN"/>
-			<xs:element name="Text" type="InternationalTextStructure"/>
+			<xs:element name="Text" type="InternationalTextStructure" maxOccurs="unbounded"/>
 			<xs:element name="Type" type="RecommendationTypeEnumeration"/>
 		</xs:sequence>
 	</xs:complexType>

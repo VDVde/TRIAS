@@ -380,7 +380,7 @@
 			</xs:element>
 			<xs:group ref="TimeWindowGroup"/>
 			<xs:group ref="InterchangeDurationGroup"/>
-			<xs:element name="LegDescription" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="LegDescription" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Text that describes this interchange.</xs:documentation>
 				</xs:annotation>
@@ -430,7 +430,7 @@
 					<xs:documentation>Duration of this leg according to user preferences like walk speed.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LegDescription" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="LegDescription" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Title or summary of this leg for overview.</xs:documentation>
 				</xs:annotation>
@@ -633,7 +633,7 @@
 					<xs:documentation>Geographic embedding of this navigation section.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TurnDescription" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="TurnDescription" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Textual description of a manoeuvre. This should imply the information from Manoeuvre, TurnAction, and TrackSection.RoadName.</xs:documentation>
 				</xs:annotation>
@@ -648,7 +648,7 @@
 					<xs:documentation>Code for turn action.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DirectionHint" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="DirectionHint" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Textual direction hint for better understanding, e.g. "follow signs to Hamburg".</xs:documentation>
 				</xs:annotation>

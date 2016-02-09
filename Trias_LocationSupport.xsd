@@ -30,22 +30,22 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="StopPointRef"/>
-			<xs:element name="StopPointName" type="InternationalTextStructure">
+			<xs:element name="StopPointName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name or description of stop point for use in passenger information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional description of the stop point that may be appended to the name if enough space is available. F.e. "opposite main entrance".</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PlannedBay" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="PlannedBay" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name of the bay where to board/alight from the vehicle. According to planned timetable.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EstimatedBay" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="EstimatedBay" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name of the bay where to board/alight from the vehicle. As to the latest realtime status.</xs:documentation>
 				</xs:annotation>
@@ -100,12 +100,12 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="StopPlaceRef"/>
-			<xs:element name="StopPlaceName" type="InternationalTextStructure">
+			<xs:element name="StopPlaceName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name of this stop place for use in passenger information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional description of the stop place that may be appended to the name if enough space is available. F.e. "Exhibition Center".</xs:documentation>
 				</xs:annotation>
@@ -184,7 +184,7 @@
 					<xs:documentation>Locality ID.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LocalityName" type="InternationalTextStructure">
+			<xs:element name="LocalityName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name or description of locality for use in passenger information.</xs:documentation>
 				</xs:annotation>
@@ -243,12 +243,12 @@
 					<xs:documentation>ID of this Point of Interest.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PointOfInterestName" type="InternationalTextStructure">
+			<xs:element name="PointOfInterestName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name or description of point of interest for use in passenger information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional description of the point of interest that may be appended to the name if enough space is available. F.e. "Exhibition Center".</xs:documentation>
 				</xs:annotation>
@@ -384,12 +384,12 @@
 					<xs:documentation>Code of this address in private/foreign/proprietary coding schemes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AddressName" type="InternationalTextStructure">
+			<xs:element name="AddressName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Name or description of address for use in passenger information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="NameSuffix" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional description of the address that may be appended to the name if enough space is available. F.e. "Crossing with Peterstraße".</xs:documentation>
 				</xs:annotation>
@@ -416,7 +416,7 @@
 				<xs:element name="PointOfInterest" type="PointOfInterestStructure"/>
 				<xs:element name="Address" type="AddressStructure"/>
 			</xs:choice>
-			<xs:element name="LocationName" type="InternationalTextStructure">
+			<xs:element name="LocationName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Public name of the location.</xs:documentation>
 				</xs:annotation>
@@ -447,7 +447,7 @@
 				<xs:element ref="PointOfInterestRef"/>
 				<xs:element ref="AddressRef"/>
 			</xs:choice>
-			<xs:element name="LocationName" type="InternationalTextStructure">
+			<xs:element name="LocationName" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Public name of the location.</xs:documentation>
 				</xs:annotation>

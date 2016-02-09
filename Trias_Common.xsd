@@ -16,7 +16,7 @@
 					<xs:documentation>Code of the error situation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Text" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="Text" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Description of the error situation.</xs:documentation>
 				</xs:annotation>
@@ -416,7 +416,7 @@
 					<xs:documentation>Bit string definition of operating days.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OperatingDaysDescription" type="InternationalTextStructure" minOccurs="0">
+			<xs:element name="OperatingDaysDescription" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Textual description of the operation days, e.g. "monday to friday" or "not on holidays".</xs:documentation>
 				</xs:annotation>
@@ -468,7 +468,7 @@
 			<xs:documentation>Structured attribute classification with associated text.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Text" type="InternationalTextStructure">
+			<xs:element name="Text" type="InternationalTextStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Text of the attribute to be shown to the user.</xs:documentation>
 				</xs:annotation>
