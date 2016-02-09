@@ -209,8 +209,7 @@
 		<xs:sequence>
 			<xs:element name="DoorState" type="DoorStateEnumeration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>
-					</xs:documentation>
+					<xs:documentation>Information on the state of the doors in a vehicle</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="VehicleStopRequested" type="xs:boolean" minOccurs="0">
