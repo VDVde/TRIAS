@@ -176,11 +176,6 @@
 	</xs:complexType>
 	<xs:group name="LocationPolicyGroup">
 		<xs:sequence>
-			<xs:element name="Language" type="xs:language" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Preferred language in which to return text values.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="NumberOfResults" type="xs:positiveInteger" minOccurs="0"/>
 			<xs:element name="ContinueAt" type="xs:nonNegativeInteger" minOccurs="0">
 				<xs:annotation>
