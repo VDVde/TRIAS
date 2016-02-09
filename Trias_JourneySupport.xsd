@@ -112,14 +112,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
-	<xs:group name="RouteDescriptionGroup">
-		<xs:annotation>
-			<xs:documentation>Descriptive text for a route, f.e. "Airport via City Centre"</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="RouteDescriptionText" type="InternationalTextStructure"/>
-		</xs:sequence>
-	</xs:group>
 	<xs:group name="DatedServiceGroup">
 		<xs:annotation>
 			<xs:documentation>Vehicle journey that runs at a specific date.</xs:documentation>
