@@ -133,7 +133,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:annotation>
-		<xs:documentation>========================================= Booking  ==============================================</xs:documentation>
+		<xs:documentation>========================================= Booking ==============================================</xs:documentation>
 	</xs:annotation>
 	<xs:complexType name="BookingInfoStructure">
 		<xs:annotation>
@@ -248,7 +248,7 @@
 			</xs:element>
 			<xs:element name="Currency" type="xs:NMTOKEN" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>iso 4217 currency code, e.g. EUR for Euro or GBP for Pound Sterling </xs:documentation>
+					<xs:documentation>iso 4217 currency code, e.g. EUR for Euro or GBP for Pound Sterling</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="VatRate" type="VatRateEnumeration" minOccurs="0">
@@ -345,7 +345,7 @@
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Result-specific error messages </xs:documentation>
+					<xs:documentation>Result-specific error messages</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="TripLegRangeGroup" minOccurs="0"/>

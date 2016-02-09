@@ -75,7 +75,7 @@
 	</xs:annotation>
 	<xs:simpleType name="MapLayersEnumeration">
 		<xs:annotation>
-			<xs:documentation>Enumeration of available map layers (e.g. satellite, physical,  routes, railway network, traffic)</xs:documentation>
+			<xs:documentation>Enumeration of available map layers (e.g. satellite, physical, routes, railway network, traffic)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="physical"/>

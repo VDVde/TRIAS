@@ -260,7 +260,7 @@
 		<xs:sequence>
 			<xs:element name="ServiceId" type="TriasServiceIdType">
 				<xs:annotation>
-					<xs:documentation>ID of the service as it has  been registered. This ID must be used for subsequent requests to the register.</xs:documentation>
+					<xs:documentation>ID of the service as it has been registered. This ID must be used for subsequent requests to the register.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -272,7 +272,7 @@
 		<xs:sequence>
 			<xs:element name="ServiceId" type="TriasServiceIdType">
 				<xs:annotation>
-					<xs:documentation>ID of the service as it has  been registered or after update. This ID must be used for subsequent requests to the register.</xs:documentation>
+					<xs:documentation>ID of the service as it has been registered or after update. This ID must be used for subsequent requests to the register.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

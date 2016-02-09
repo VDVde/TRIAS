@@ -18,7 +18,7 @@
 			</xs:element>
 			<xs:element name="MaximumTimeBeforeEvent" type="xs:duration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Earliest time for first alert. Measured as  duration before beginning of event. Only for dated events.</xs:documentation>
+					<xs:documentation>Earliest time for first alert. Measured as duration before beginning of event. Only for dated events.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -67,25 +67,25 @@
 	<xs:group name="TripMonitoringPolicyGroup">
 		<xs:sequence>
 			<xs:element name="Severity" type="siri:SeverityEnumeration" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Priority of events</xs:documentation>
-                </xs:annotation>
+				<xs:annotation>
+					<xs:documentation>Priority of events</xs:documentation>
+				</xs:annotation>
 			</xs:element>
 			<xs:element name="MinimumDelayChangeThreshold" type="xs:duration" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Minimum change of delay to send new notifications</xs:documentation>
-                </xs:annotation>
-            </xs:element>
+				<xs:annotation>
+					<xs:documentation>Minimum change of delay to send new notifications</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="AcceptThirdPartyInformation" type="xs:boolean" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Whether to fetch information from other systems. Default is false.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
+				<xs:annotation>
+					<xs:documentation>Whether to fetch information from other systems. Default is false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="IncludeAlternatives" type="xs:boolean" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Whether alternatives should be part of the response. Default is false.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
+				<xs:annotation>
+					<xs:documentation>Whether alternatives should be part of the response. Default is false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:element name="TripMonitoringDelivery" type="TripMonitoringDeliveryStructure"/>

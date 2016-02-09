@@ -212,7 +212,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>
-		<xs:documentation>========================================= Point of Interest  =============================================</xs:documentation>
+		<xs:documentation>========================================= Point of Interest =============================================</xs:documentation>
 	</xs:annotation>
 	<xs:simpleType name="PointOfInterestCodeType">
 		<xs:annotation>

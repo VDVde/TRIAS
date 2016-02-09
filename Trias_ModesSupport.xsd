@@ -116,7 +116,7 @@
 		<xs:sequence>
 			<xs:element name="PtMode" type="PtModesEnumeration">
 				<xs:annotation>
-					<xs:documentation>Categorisation of mode </xs:documentation>
+					<xs:documentation>Categorisation of mode</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="PtSubmodeChoiceGroup" minOccurs="0"/>
@@ -170,7 +170,7 @@
 	</xs:element>
 	<xs:simpleType name="RailSubmodeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Values for Rail ModesOfTransport: TPEG pti_table_02,  train link loc_table_13.</xs:documentation>
+			<xs:documentation>Values for Rail ModesOfTransport: TPEG pti_table_02, train link loc_table_13.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="unknown"/>

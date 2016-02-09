@@ -126,12 +126,12 @@
 		<xs:sequence>
 			<xs:element name="Longitude" type="LongitudeType">
 				<xs:annotation>
-					<xs:documentation>Longitude from Greenwich Meridian.  -180  (West) to +180 (East).</xs:documentation>
+					<xs:documentation>Longitude from Greenwich Meridian. -180 (West) to +180 (East).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Latitude" type="LatitudeType">
 				<xs:annotation>
-					<xs:documentation>Latitude from equator. -90 (South)  to +90  (North).</xs:documentation>
+					<xs:documentation>Latitude from equator. -90 (South) to +90 (North).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Altitude" type="AltitudeType" minOccurs="0">
