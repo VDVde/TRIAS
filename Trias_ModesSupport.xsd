@@ -451,7 +451,7 @@
 			<xs:documentation>List of public transport modes to include or exclude.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Exclude" type="xs:boolean" minOccurs="0">
+			<xs:element name="Exclude" type="xs:boolean" default="true" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether modes in list are to include or exclude from search. Default is exclude.</xs:documentation>
 				</xs:annotation>

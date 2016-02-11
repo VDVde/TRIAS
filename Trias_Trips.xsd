@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
@@ -113,12 +113,12 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="BaseTripMobilityFilterGroup"/>
-			<xs:element name="LevelEntrance" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="LevelEntrance" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user needs vehicles with level entrance between platform and vehicle, f.e. for wheelchair access.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BikeTransport" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="BikeTransport" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user wants to carry a bike on public transport.</xs:documentation>
 				</xs:annotation>
@@ -136,17 +136,17 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="BaseTripContentFilterGroup"/>
-			<xs:element name="IncludeIntermediateStops" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeIntermediateStops" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include intermediate stops (between the passenger's board and alight stops).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IncludeFares" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeFares" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include fare information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IncludeOperatingDays" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeOperatingDays" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include operating day information - as encoded bit string and in natural language.</xs:documentation>
 				</xs:annotation>
@@ -480,7 +480,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="MeetsViaRequest" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="MeetsViaRequest" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This stop fulfils one of the via requirements stated in the request data.</xs:documentation>
 				</xs:annotation>
@@ -514,7 +514,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="MeetsViaRequest" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="MeetsViaRequest" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This stop fulfils one of the via requirements stated in the request data.</xs:documentation>
 				</xs:annotation>
@@ -548,7 +548,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="MeetsViaRequest" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="MeetsViaRequest" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This stop fulfils one of the via requirements stated in the request data.</xs:documentation>
 				</xs:annotation>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_ModesSupport.xsd"/>
 	<xs:include schemaLocation="Trias_FacilitySupport.xsd"/>
@@ -89,7 +89,7 @@
 			<xs:documentation>Filter for in/exclusion of transport operators.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Exclude" type="xs:boolean" minOccurs="0">
+			<xs:element name="Exclude" type="xs:boolean" default="true" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether operators in list are to include or exclude from search. Default is exclude.</xs:documentation>
 				</xs:annotation>
@@ -183,7 +183,7 @@
 					<xs:documentation>Reference to line or line/direction.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Exclude" type="xs:boolean" minOccurs="0">
+			<xs:element name="Exclude" type="xs:boolean" default="true" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether lines in list are to include or exclude from search. Default is exclude.</xs:documentation>
 				</xs:annotation>

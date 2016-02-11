@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri.xsd"/>
 	<xs:include schemaLocation="Trias_Trips.xsd"/>
@@ -76,12 +76,12 @@
 					<xs:documentation>Minimum change of delay to send new notifications</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AcceptThirdPartyInformation" type="xs:boolean" minOccurs="0">
+			<xs:element name="AcceptThirdPartyInformation" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether to fetch information from other systems. Default is false.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IncludeAlternatives" type="xs:boolean" minOccurs="0">
+			<xs:element name="IncludeAlternatives" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether alternatives should be part of the response. Default is false.</xs:documentation>
 				</xs:annotation>

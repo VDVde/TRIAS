@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Mit XMLSpy v2012 rel. 2 sp1 (http://www.altova.com) von Dirk Weißer (INIT GmbH) bearbeitet -->
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:element name="VehicleDataRequest" type="VehicleDataRequestStructure"/>
 	<xs:complexType name="VehicleDataRequestStructure">
 		<xs:sequence>
-			<xs:element name="VehicleStatus" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="VehicleActivity" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="VehicleStatus" type="xs:boolean" default="true" minOccurs="0"/>
+			<xs:element name="VehicleActivity" type="xs:boolean" default="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="VehicleDataResponse" type="VehicleDataResponseStructure"/>
@@ -25,7 +25,7 @@
 		<xs:sequence>
 			<xs:element name="StopRef" type="StopPointRefStructure"/>
 			<xs:element name="StopName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="DisabledPerson" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DisabledPerson" type="xs:boolean" default="false" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="StopRequestResponse" type="StopRequestResponseStructure"/>
@@ -212,12 +212,12 @@
 					<xs:documentation>Information on the state of the doors in a vehicle</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="VehicleStopRequested" type="xs:boolean" minOccurs="0">
+			<xs:element name="VehicleStopRequested" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Is the Stop-Button inside the vehicle pressed?</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="InPanic" type="xs:boolean" minOccurs="0">
+			<xs:element name="InPanic" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Security alarm because of an attack.</xs:documentation>
 				</xs:annotation>

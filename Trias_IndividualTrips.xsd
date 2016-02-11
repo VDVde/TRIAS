@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Katarzyna Piwonska (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
@@ -48,32 +48,32 @@
 					<xs:documentation>Type of algorithm to be used. If not given, "optimal" is the default, which means, that the router uses it's own measures for the optimal route.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BanMotorways" type="xs:boolean" minOccurs="0">
+			<xs:element name="BanMotorways" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Disallow motorways.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BanTollRoads" type="xs:boolean" minOccurs="0">
+			<xs:element name="BanTollRoads" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Disallow toll roads.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BanFerries" type="xs:boolean" minOccurs="0">
+			<xs:element name="BanFerries" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Disallow ferries.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BanTunnels" type="xs:boolean" minOccurs="0">
+			<xs:element name="BanTunnels" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Disallow tunnels (not underpasses).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BanBridges" type="xs:boolean" minOccurs="0">
+			<xs:element name="BanBridges" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Disallow larger bridges (not overpasses).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AllowUnpavedRoads" type="xs:boolean" minOccurs="0">
+			<xs:element name="AllowUnpavedRoads" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Allow unpaved roads.</xs:documentation>
 				</xs:annotation>

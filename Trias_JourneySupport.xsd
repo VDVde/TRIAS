@@ -256,17 +256,17 @@
 					<xs:documentation>Sequence number of this stop in the service pattern of the journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DemandStop" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="DemandStop" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The vehicle journey calls at this stop only on demand.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="UnplannedStop" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="UnplannedStop" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This stop has not been planned by the planning department.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NotServicedStop" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="NotServicedStop" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The vehicle will not call at this stop despite earlier planning.</xs:documentation>
 				</xs:annotation>
@@ -312,17 +312,17 @@
 			<xs:documentation>Service status properties.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Unplanned" type="xs:boolean" minOccurs="0">
+			<xs:element name="Unplanned" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether this trip is an additional one that has not been planned. Default is false.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Cancelled" type="xs:boolean" minOccurs="0">
+			<xs:element name="Cancelled" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether this trip is cancelled and will not be run. Default is false.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Deviation" type="xs:boolean" minOccurs="0">
+			<xs:element name="Deviation" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether this trip deviates from the planned service pattern. Default is false.</xs:documentation>
 				</xs:annotation>
@@ -499,12 +499,12 @@
 				</xs:element>
 				<xs:group ref="NumberOfResultsGroup" minOccurs="0"/>
 			</xs:choice>
-			<xs:element name="IgnoreRealtimeData" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IgnoreRealtimeData" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The trip calculation should not use any realtime or incident data.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ImmediateTripStart" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="ImmediateTripStart" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the trip calculation should find a solution that starts immediately (f.e. because the user is already on the way) instead of finding the latest possible start opportunity.</xs:documentation>
 				</xs:annotation>
@@ -516,27 +516,27 @@
 			<xs:documentation>Base mobility options to be applied for both public and individual transport.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="NoSingleStep" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="NoSingleStep" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user is not able to climb one step.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoStairs" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="NoStairs" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user is not able to walk up/down stairs.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoEscalator" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="NoEscalator" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user is not able to use an escalator.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoElevator" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="NoElevator" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user is not able to use an elevator.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoRamp" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="NoRamp" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user is not able to use an ramp.</xs:documentation>
 				</xs:annotation>
@@ -548,22 +548,22 @@
 			<xs:documentation>Parameters to control the level of detail of both public and individual transport journey results.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="IncludeTrackSections" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeTrackSections" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include TrackSection elements to describe the geographic route of each journey leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IncludeLegProjection" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeLegProjection" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include the geographic projection (coordinates) of each journey leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IncludeTurnDescription" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeTurnDescription" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include turn-by-turn instructions for each journey leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IncludeAccessibility" type="xs:boolean" fixed="true" minOccurs="0">
+			<xs:element name="IncludeAccessibility" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include accessibility information.</xs:documentation>
 				</xs:annotation>
