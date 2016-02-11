@@ -72,7 +72,7 @@
 					<xs:documentation>Time window events should lie within. Starting from time given in LocationContext.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StopEventType" type="StopEventTypeEnumeration" minOccurs="0">
+			<xs:element name="StopEventType" type="StopEventTypeEnumeration" default="departure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Only departures or arrivals or both.</xs:documentation>
 				</xs:annotation>
