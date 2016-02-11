@@ -251,9 +251,9 @@
 			<xs:documentation>Status properties for the vehicle call at this stop.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="StopSeqNumber" type="xs:positiveInteger">
+			<xs:element name="StopSeqNumber" type="xs:positiveInteger" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Sequence number of this stop in the service pattern of the journey.</xs:documentation>
+					<xs:documentation>Sequence number of this stop in the service pattern of the journey. Counted from the first stop (number 1) of the journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DemandStop" type="xs:boolean" default="false" minOccurs="0">
