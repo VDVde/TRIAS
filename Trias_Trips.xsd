@@ -556,61 +556,6 @@
 			<xs:group ref="StopCallStatusGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="LegTrackStructure">
-		<xs:annotation>
-			<xs:documentation>The sequence of tracks a journey leg travels along.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="TrackSection" type="TrackSectionStructure" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>One or more track sections that build the journey leg.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="TrackSectionStructure">
-		<xs:annotation>
-			<xs:documentation>A piece of a trip. A trip leg.may consist of multiple TrackSections. Describes the geographic embedding.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="TrackStart" type="LocationRefStructure" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Start location of this track.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="TrackEnd" type="LocationRefStructure" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>End location of this track.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Projection" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Geographic projection as polyline.</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Position" type="GeoPositionStructure" minOccurs="2" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="RoadName" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Name of the road this track section is attached to.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Duration" type="xs:duration" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Duration the passenger needs to travel through this track section.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Length" type="DistanceType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Length of this track section.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="NavigationPathStructure">
 		<xs:annotation>
 			<xs:documentation>Description of a piece of a journey. May include geographic information, turn instructions and accessibility information.</xs:documentation>
