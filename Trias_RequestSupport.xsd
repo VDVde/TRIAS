@@ -62,7 +62,7 @@
 			</xs:element>
 			<xs:element name="Language" type="xs:language" default="en" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Preferred languages in which to return text values.</xs:documentation>
+					<xs:documentation>Preferred languages in which to return text values. The order of languages determines their priority.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="MessageIntegrityPropertiesGroup"/>
@@ -105,7 +105,7 @@
 			</xs:element>
 			<xs:element name="Language" type="xs:language" default="en" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Preferred languages in which to return text values.</xs:documentation>
+					<xs:documentation>Preferred languages in which to return text values. The order of languages determines their priority.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="MessageIntegrityPropertiesGroup"/>
