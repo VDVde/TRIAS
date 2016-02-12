@@ -460,6 +460,18 @@
 			<xs:enumeration value="PublicHoliday"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="GeneralAttributeStatusEnumeration">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the status of a general attribute. Default value is Unknown. Planned means, that the attribute reflects the planned state. AsPlanned indicates, that the value is known as planned. DifferentToPlanned indicates, that the value is known as other than planned. RealtimeUpdate indicates a value change be realtime information.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Planned"/>
+			<xs:enumeration value="AsPlanned"/>
+			<xs:enumeration value="DifferentToPlanned"/>
+			<xs:enumeration value="RealtimeUpdate"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:annotation>
 		<xs:documentation>==================================== General Attributes =============================================</xs:documentation>
 	</xs:annotation>
@@ -494,6 +506,11 @@
 					<xs:documentation>URL to additional information on this general attribute. If available, the whole attribute text has to be used as the marked link.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Status" type="GeneralAttributeStatusEnumeration" default="Unknown" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Determines the status of an attribute e.g. in a refine request call.</xs:documentation>
+				</xs:annotation>
+			</xs:element>            
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

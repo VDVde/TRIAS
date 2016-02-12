@@ -189,6 +189,38 @@
 	<xs:annotation>
 		<xs:documentation>====================================================</xs:documentation>
 	</xs:annotation>
+	<xs:complexType name="TripRefineRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TripRefine request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RefineParams" type="TripRefineParamStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Options to control the refine</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripResult" type="TripResultStructure">
+				<xs:annotation>
+					<xs:documentation>The trip result to be refined by the server.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TripRefineParamStructure">
+		<xs:sequence>
+			<xs:element name="RefineLegRef" type="xs:NMTOKEN" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>refers to a leg to be refined by the server.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="TripContentFilterGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>===================== Response structures ============================================================</xs:documentation>
+	</xs:annotation>
 	<xs:element name="TripResponse" type="TripResponseStructure">
 		<xs:annotation>
 			<xs:documentation>Trip response element</xs:documentation>
@@ -760,6 +792,41 @@
 			<xs:element name="Count" type="xs:positiveInteger" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Number how often the access feature occurs in this AccessPath.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TripRefineResponse" type="TripRefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TripRefine response element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TripRefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TripRefine response structure</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to the trip request as a whole.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripResponseContext" type="TripResponseContextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Context to hold trip response objects that occur frequently.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnknownLegRef" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>refers to a leg that was not found in the data of the server.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripResult" type="TripResultStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The trip result refined by the server.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

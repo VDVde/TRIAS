@@ -19,6 +19,9 @@
 	<xs:annotation>
 		<xs:documentation>All functions integrated into one request / response</xs:documentation>
 	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>===================== Request structures ============================================================</xs:documentation>
+	</xs:annotation>
 	<xs:element name="LocationInformationRequest" type="LocationInformationRequestStructure"/>
 	<xs:complexType name="LocationInformationRequestStructure">
 		<xs:sequence>
@@ -45,6 +48,21 @@
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="LocationInformationRefineRequestStructure">
+		<xs:annotation>
+			<xs:documentation>LocationInformationRefine request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LocationResult" type="LocationResultStructure"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>===================== Response structures ============================================================</xs:documentation>
+	</xs:annotation>
 	<xs:element name="LocationInformationResponse" type="LocationInformationResponseStructure"/>
 	<xs:complexType name="LocationInformationResponseStructure">
 		<xs:sequence>
@@ -58,7 +76,24 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>
-		<xs:documentation>Additional declarations</xs:documentation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="LocationInformationRefineResponse" type="LocationInformationRefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>LocationInformationRefine response element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LocationInformationRefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>LocationInformationRefine response structure</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LocationResult" type="LocationResultStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>===================================== Additional declarations ======================================================</xs:documentation>
 	</xs:annotation>
 	<xs:complexType name="InitialLocationInputStructure">
 		<xs:sequence>
@@ -141,6 +176,11 @@
 	</xs:complexType>
 	<xs:group name="LocationPolicyGroup">
 		<xs:sequence>
+			<xs:element name="Language" type="xs:language" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Preferred language in which to return text values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="NumberOfResults" type="xs:positiveInteger" minOccurs="0"/>
 			<xs:element name="ContinueAt" type="xs:nonNegativeInteger" minOccurs="0">
 				<xs:annotation>
