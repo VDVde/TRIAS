@@ -211,7 +211,7 @@
 		<xs:sequence>
 			<xs:element name="RefineLegRef" type="xs:NMTOKEN" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>refers to a leg to be refined by the server.</xs:documentation>
+					<xs:documentation>Refers to a leg to be refined by the server.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="TripContentFilterGroup"/>
