@@ -79,9 +79,9 @@
 					<xs:documentation>Data version</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Language" type="xs:language" default="en" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Language" type="xs:language">
 				<xs:annotation>
-					<xs:documentation>Languages in which text values are returned.</xs:documentation>
+					<xs:documentation>Default language in which text values are returned, if not specified in the InternationalTextStructure.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CalcTime" type="CalcTimeType" minOccurs="0">
