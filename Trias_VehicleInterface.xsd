@@ -8,7 +8,7 @@
 	<xs:complexType name="VehicleDataRequestStructure">
 		<xs:sequence>
 			<xs:element name="VehicleStatus" type="xs:boolean" default="true" minOccurs="0"/>
-			<xs:element name="VehicleActivity" type="xs:boolean" default="true" minOccurs="0"/>
+			<xs:element name="VehicleActivity" type="xs:boolean" default="false" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="VehicleDataResponse" type="VehicleDataResponseStructure"/>
