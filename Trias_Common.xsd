@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2013 sp1 (x64) (http://www.altova.com) von Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
 <!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_ModesSupport.xsd"/>
@@ -217,6 +218,23 @@
 		<xs:sequence>
 			<xs:element ref="JourneyRef"/>
 			<xs:element ref="OperatingDayRef"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="StopSeqIntervalGroup">
+		<xs:annotation>
+			<xs:documentation>Interval of stop sequence numbers</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BeginStopSeqNumber" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Stop sequence number, where the interval begins (inclusively).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndStopSeqNumber" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Stop sequence number, where the interval ends (inclusively).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<!-- ========================================== Vehicles ============================= -->
@@ -463,6 +481,18 @@
 	<xs:annotation>
 		<xs:documentation>==================================== General Attributes =============================================</xs:documentation>
 	</xs:annotation>
+	<xs:simpleType name="AttributeTypeEnumaration">
+		<xs:annotation>
+			<xs:documentation>Enumaration of attribute types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onRide"/>
+			<xs:enumeration value="atStop"/>
+			<xs:enumeration value="atBoardOnly"/>
+			<xs:enumeration value="atAlightOnly"/>
+			<xs:enumeration value="atBoardAndAlight"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="GeneralAttributeStructure">
 		<xs:annotation>
 			<xs:documentation>Structured attribute classification with associated text.</xs:documentation>
@@ -484,6 +514,11 @@
 					<xs:documentation>Defines whether the attribute has to be shown to the user.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Type" type="AttributeTypeEnumaration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of the attribute. Defines where the attribute references to (on track, at stops, at boarding, at alighting).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Importance" type="PercentType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Importance of the attribute.</xs:documentation>
@@ -494,6 +529,7 @@
 					<xs:documentation>URL to additional information on this general attribute. If available, the whole attribute text has to be used as the marked link.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:group ref="StopSeqIntervalGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

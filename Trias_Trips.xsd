@@ -355,16 +355,7 @@
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="BeginStopSeqNumber" type="xs:positiveInteger">
-							<xs:annotation>
-								<xs:documentation>Stop sequence number of this journey, where the parallel service begins.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="EndStopSeqNumber" type="xs:positiveInteger">
-							<xs:annotation>
-								<xs:documentation>Stop sequence number of this journey, where the parallel service ends.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
+						<xs:group ref="StopSeqIntervalGroup"/>
 						<xs:element name="Service" type="DatedJourneyStructure">
 							<xs:annotation>
 								<xs:documentation>Properties of the parallel service.</xs:documentation>
