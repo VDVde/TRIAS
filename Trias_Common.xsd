@@ -227,12 +227,12 @@
 		<xs:sequence>
 			<xs:element name="BeginStopSeqNumber" type="xs:positiveInteger">
 				<xs:annotation>
-					<xs:documentation>Stop sequence number, where the interval begins (inclusively).</xs:documentation>
+					<xs:documentation>Stop sequence number, where the interval begins (inclusive).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EndStopSeqNumber" type="xs:positiveInteger">
 				<xs:annotation>
-					<xs:documentation>Stop sequence number, where the interval ends (inclusively).</xs:documentation>
+					<xs:documentation>Stop sequence number, where the interval ends (inclusive).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -481,9 +481,9 @@
 	<xs:annotation>
 		<xs:documentation>==================================== General Attributes =============================================</xs:documentation>
 	</xs:annotation>
-	<xs:simpleType name="AttributeTypeEnumaration">
+	<xs:simpleType name="AttributeTypeEnumeration">
 		<xs:annotation>
-			<xs:documentation>Enumaration of attribute types.</xs:documentation>
+			<xs:documentation>Enumeration of attribute types.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="onRide"/>
@@ -514,7 +514,7 @@
 					<xs:documentation>Defines whether the attribute has to be shown to the user.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Type" type="AttributeTypeEnumaration" minOccurs="0">
+			<xs:element name="Type" type="AttributeTypeEnumeration" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Type of the attribute. Defines where the attribute references to (on track, at stops, at boarding, at alighting).</xs:documentation>
 				</xs:annotation>

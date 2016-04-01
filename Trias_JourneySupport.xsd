@@ -683,7 +683,7 @@
 					</xs:element>
 					<xs:element name="ToStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>The attribute is valid to the stop point (inclusively) with this sequence number within the leg. If missing it is valid to the end of the leg.</xs:documentation>
+							<xs:documentation>The attribute is valid to the stop point (inclusive) with this sequence number within the leg. If missing it is valid to the end of the leg.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
