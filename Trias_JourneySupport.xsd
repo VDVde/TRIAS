@@ -36,13 +36,21 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:group name="ServiceJourneyGroup">
+	<xs:group name="StopSeqIntervalGroup">
 		<xs:annotation>
-			<xs:documentation>Vehicle journey (not dated).</xs:documentation>
+			<xs:documentation>Interval of stop sequence numbers</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element ref="JourneyRef"/>
-			<xs:group ref="ServiceGroup"/>
+			<xs:element name="FromStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Stop sequence number, where the interval begins (inclusive). If missing, the interval begins at the beginning of the leg (or at the beginning of the journey for uses in StopEvents and TripInfo).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Stop sequence number, where the interval ends (inclusive). If missing, the interval ends at the end of the leg (or at the end of the journey for uses in StopEvents and TripInfo).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:group name="ServiceGroup">
@@ -72,7 +80,29 @@
 					<xs:documentation>Via points of the service that may help identify the vehicle to the public.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Attribute" type="GeneralAttributeStructure" minOccurs="0" maxOccurs="unbounded">
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="ServiceSectionStructure">
+		<xs:annotation>
+			<xs:documentation>Properties of a service combined with a stop sequence interval.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="StopSeqIntervalGroup"/>
+			<xs:group ref="ServiceGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="ServiceJourneyGroup">
+		<xs:annotation>
+			<xs:documentation>Vehicle journey (not dated).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="JourneyRef"/>
+			<xs:element name="ServiceSection" type="ServiceSectionStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Sequence of stop sequence intervals with respective service properties.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Attribute" type="ServiceAttributeStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Note or service attribute.</xs:documentation>
 				</xs:annotation>
@@ -123,33 +153,19 @@
 			<xs:group ref="ServiceJourneyGroup"/>
 		</xs:sequence>
 	</xs:group>
-	<xs:complexType name="ServiceDetailStructure">
-		<xs:annotation>
-			<xs:documentation>Properties of a service combined with a stop sequence interval.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:group ref="StopSeqIntervalGroup"/>
-			<xs:group ref="ServiceGroup"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="DatedJourneyStructure">
 		<xs:annotation>
 			<xs:documentation>Structure for a vehicle journey at a specific date.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="DatedServiceGroup"/>
-			<xs:element name="ServiceDetail" type="ServiceDetailStructure" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Sequence of stop sequence intervals with respective service properties.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:group ref="ServiceOriginGroup" minOccurs="0"/>
 			<xs:group ref="ServiceDestinationGroup"/>
 			<xs:group ref="ServiceStatusGroup"/>
 			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ParallelDatedJourneyStructure">
+	<xs:complexType name="ParallelServiceStructure">
 		<xs:annotation>
 			<xs:documentation>Strucutre combining a parallel running service with a stop sequnce interval.</xs:documentation>
 		</xs:annotation>
@@ -158,6 +174,11 @@
 			<xs:element name="Service" type="DatedJourneyStructure">
 				<xs:annotation>
 					<xs:documentation>Properties of the parallel service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PassagePossible" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether a passage to and from the parallel service is possible while being on track. Default is false.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -669,23 +690,31 @@
 	<xs:annotation>
 		<xs:documentation>=========================================== Leg Attributes =============================================</xs:documentation>
 	</xs:annotation>
-	<xs:complexType name="LegAttributeStructure">
+	<xs:simpleType name="AttributeTypeEnumeration">
+		<xs:annotation>
+			<xs:documentation>Enumeration of attribute types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onRide"/>
+			<xs:enumeration value="atStop"/>
+			<xs:enumeration value="atBoardOnly"/>
+			<xs:enumeration value="atAlightOnly"/>
+			<xs:enumeration value="atBoardAndAlight"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ServiceAttributeStructure">
 		<xs:annotation>
 			<xs:documentation>Attributes that are not valid on the whole service, but only on part of the journey leg.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="GeneralAttributeStructure">
 				<xs:sequence>
-					<xs:element name="FromStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
+					<xs:element name="Type" type="AttributeTypeEnumeration" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>The attribute is valid from the stop point with this sequence number within the leg. If missing it is valid from the beginning of the leg.</xs:documentation>
+							<xs:documentation>Type of the attribute. Defines where the attribute references to (on track, at stops, at boarding, at alighting).</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="ToStopSeqNumber" type="xs:positiveInteger" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>The attribute is valid to the stop point (inclusive) with this sequence number within the leg. If missing it is valid to the end of the leg.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
+					<xs:group ref="StopSeqIntervalGroup"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>

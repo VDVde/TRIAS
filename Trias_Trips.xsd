@@ -338,20 +338,15 @@
 					<xs:documentation>Service that is used for this trip leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LegAttribute" type="LegAttributeStructure" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Attributes that are not valid on the whole service, but only on parts of the journey leg.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:group ref="OperatingDaysGroup" minOccurs="0"/>
 			<xs:element name="LegTrack" type="LegTrackStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Geographic embedding of this leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ParallelService" type="ParallelDatedJourneyStructure" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="ParallelService" type="ParallelServiceStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Services running combined and in parallel with this journey, e.g. wing trains.</xs:documentation>
+					<xs:documentation>Services running combined  with at least parts of this journey, e.g. wing trains. The contained stop sequence interval refers to the original journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
