@@ -167,7 +167,7 @@
 	</xs:complexType>
 	<xs:complexType name="ParallelServiceStructure">
 		<xs:annotation>
-			<xs:documentation>Strucutre combining a parallel running service with a stop sequnce interval.</xs:documentation>
+			<xs:documentation>Structure combining a parallel running service with a stop sequence interval.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="StopSeqIntervalGroup"/>

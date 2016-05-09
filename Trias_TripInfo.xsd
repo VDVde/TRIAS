@@ -149,7 +149,7 @@
 			<xs:group ref="ServiceFacilityGroup" minOccurs="0"/>
 			<xs:element name="ParallelService" type="ParallelServiceStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Services running combined  with at least parts of this journey, e.g. wing trains. The contained stop sequence interval refers to the original journey.</xs:documentation>
+					<xs:documentation>Services running combined with at least parts of this journey, e.g. wing trains. The contained stop sequence interval refers to the original journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="JourneyTrack" type="LegTrackStructure" minOccurs="0">
