@@ -176,11 +176,6 @@
 					<xs:documentation>Properties of the parallel service.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PassagePossible" type="xs:boolean" default="false" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Whether a passage to and from the parallel service is possible while being on track. Default is false.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TripLocationStructure">
@@ -688,9 +683,9 @@
 		</xs:sequence>
 	</xs:group>
 	<xs:annotation>
-		<xs:documentation>=========================================== Leg Attributes =============================================</xs:documentation>
+		<xs:documentation>=========================================== Service Attributes =============================================</xs:documentation>
 	</xs:annotation>
-	<xs:simpleType name="AttributeTypeEnumeration">
+	<xs:simpleType name="AttributeScopeEnumeration">
 		<xs:annotation>
 			<xs:documentation>Enumeration of attribute types.</xs:documentation>
 		</xs:annotation>
@@ -709,9 +704,9 @@
 		<xs:complexContent>
 			<xs:extension base="GeneralAttributeStructure">
 				<xs:sequence>
-					<xs:element name="Type" type="AttributeTypeEnumeration" minOccurs="0">
+					<xs:element name="Scope" type="AttributeScopeEnumeration" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>Type of the attribute. Defines where the attribute references to (on track, at stops, at boarding, at alighting).</xs:documentation>
+							<xs:documentation>Scope of the attribute. Defines where the attribute references to (on track, at stops, at boarding, at alighting).</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:group ref="StopSeqIntervalGroup"/>
