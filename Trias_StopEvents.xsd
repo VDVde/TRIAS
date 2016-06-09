@@ -2,6 +2,7 @@
 <!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_RequestSupport.xsd"/>
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>===================== Request structures ============================================================</xs:documentation>
@@ -145,6 +146,7 @@
 			<xs:documentation>Request specific parameters</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:group ref="RefineOptionsGroup"/>
 			<xs:group ref="StopEventContentFilterGroup"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>

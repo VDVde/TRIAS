@@ -468,7 +468,7 @@
 			<xs:enumeration value="Unknown"/>
 			<xs:enumeration value="Planned"/>
 			<xs:enumeration value="AsPlanned"/>
-			<xs:enumeration value="DifferentToPlanned"/>
+			<xs:enumeration value="NotAsPlanned"/>
 			<xs:enumeration value="RealtimeUpdate"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -510,7 +510,7 @@
 				<xs:annotation>
 					<xs:documentation>Determines the status of an attribute e.g. in a refine request call.</xs:documentation>
 				</xs:annotation>
-			</xs:element>            
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
