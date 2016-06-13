@@ -83,7 +83,7 @@
 			<xs:element name="RefineParams" type="TripInfoRefineParamStructure" minOccurs="0"/>
 			<xs:element name="TripInfoResult" type="TripInfoResultStructure">
 				<xs:annotation>
-					<xs:documentation>The Tripinfo that should be refined</xs:documentation>
+					<xs:documentation>The TripInfo that should be refined</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
@@ -192,7 +192,7 @@
 			</xs:element>
 			<xs:element name="TripInfoResult" type="TripInfoResultStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>The refined Result structure.</xs:documentation>
+					<xs:documentation>The refined result structure.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
