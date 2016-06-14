@@ -285,7 +285,7 @@
 					<xs:documentation>Container for data that is referenced multiple times.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StopEventResult" type="StopEventResultStructure" minOccurs="0">
+			<xs:element name="StopEventResult" type="StopEventResultStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>The refined StopEvent result.</xs:documentation>
 				</xs:annotation>

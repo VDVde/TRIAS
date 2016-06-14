@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Katarzyna Piwonska (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
-<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Werner Kohl (Mentz Datenverarbeitung GmbH) -->
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
+	<xs:include schemaLocation="Trias_RequestSupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>FUNCTION 1: Location Identification</xs:documentation>
 	</xs:annotation>
@@ -56,7 +57,17 @@
 			<xs:documentation>LocationInformationRefine request structure.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="RefineParams" type="LocationInformationRefineParamStructure" minOccurs="0"/>
 			<xs:element name="LocationResult" type="LocationResultStructure"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationInformationRefineParamStructure">
+		<xs:annotation>
+			<xs:documentation>Request specific parameters</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="RefineOptionsGroup"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

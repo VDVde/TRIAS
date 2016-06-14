@@ -219,9 +219,9 @@
 			<xs:documentation>Options for a Refine request.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="KeepForeignObjectRefs" type="xs:boolean" minOccurs="0">
+			<xs:element name="ForeignObjectRefs" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>If true, then the request may contain object references from another EKAP. These should be repeated in the response. Default is FALSE.</xs:documentation>
+					<xs:documentation>If true, then the request may contain object references from another EKAP. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
