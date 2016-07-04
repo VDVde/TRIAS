@@ -11,6 +11,7 @@
 	<xs:include schemaLocation="Trias_Maps.xsd"/>
 	<xs:include schemaLocation="Trias_Personalisation.xsd"/>
 	<xs:include schemaLocation="Trias_Positioning.xsd"/>
+	<xs:include schemaLocation="Trias_Refine.xsd"/>
 	<xs:include schemaLocation="Trias_RequestSupport.xsd"/>
 	<xs:include schemaLocation="Trias_ServiceRegister.xsd"/>
 	<xs:include schemaLocation="Trias_StopEvents.xsd"/>
@@ -112,6 +113,7 @@
 			<xs:element ref="MapServiceRequest"/>
 			<xs:element ref="PersonalisationRequest"/>
 			<xs:element ref="PositioningRequest"/>
+			<xs:element ref="RefineRequest"/>
 			<xs:element ref="ServiceRegisterRequest"/>
 			<xs:element ref="StopEventRequest"/>
 			<xs:element ref="StopRequestRequest"/>
@@ -196,6 +198,7 @@
 			<xs:element ref="MapServiceResponse"/>
 			<xs:element ref="PersonalisationResponse"/>
 			<xs:element ref="PositioningResponse"/>
+			<xs:element ref="RefineResponse"/>
 			<xs:element ref="ServiceRegisterResponse"/>
 			<xs:element ref="SituationExchangeDelivery"/>
 			<xs:element ref="StopEventResponse"/>

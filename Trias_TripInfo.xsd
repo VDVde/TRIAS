@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Mit XMLSpy v2013 sp1 (x64) (http://www.altova.com) von Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
-<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_RequestSupport.xsd"/>
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
 	<xs:annotation>
 		<xs:documentation>===================== Request structures ============================================================</xs:documentation>
@@ -83,6 +82,33 @@
 		</xs:sequence>
 	</xs:group>
 	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="TripInfoRefineRequestStructure">
+		<xs:annotation>
+			<xs:documentation>TripInfoRefine request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RefineParams" type="TripInfoRefineParamStructure" minOccurs="0"/>
+			<xs:element name="TripInfoResult" type="TripInfoResultStructure">
+				<xs:annotation>
+					<xs:documentation>The TripInfo that should be refined</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TripInfoRefineParamStructure">
+		<xs:annotation>
+			<xs:documentation>TripInfoRefine request parameter structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="RefineOptionsGroup"/>
+			<xs:group ref="TripInfoContentFilterGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
 		<xs:documentation>===================== Response structures ============================================================</xs:documentation>
 	</xs:annotation>
 	<xs:element name="TripInfoResponse" type="TripInfoResponseStructure">
@@ -158,6 +184,36 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TripInfoRefineResponse" type="TripInfoRefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TripInfoRefine response element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TripInfoRefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>TripInfoRefine response structure</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to the response as a whole.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripInfoResponseContext" type="TripInfoResponseContextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Response context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripInfoResult" type="TripInfoResultStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The refined result structure.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

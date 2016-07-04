@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Jutta Schmedding (Mentz Datenverarbeitung GmbH) -->
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_IndividualTrips.xsd"/>
+	<xs:include schemaLocation="Trias_Locations.xsd"/>
+	<xs:include schemaLocation="Trias_StopEvents.xsd"/>
+	<xs:include schemaLocation="Trias_TripInfo.xsd"/>
+	<xs:include schemaLocation="Trias_Trips.xsd"/>
+	<xs:annotation>
+		<xs:documentation>===================== Request structures ============================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RefineRequest" type="RefineRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Refine request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RefineRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Refine request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IndividualRouteRefineRequest" type="IndividualRouteRefineRequestStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LocationInformationRefineRequest" type="LocationInformationRefineRequestStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="StopEventRefineRequest" type="StopEventRefineRequestStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TripInfoRefineRequest" type="TripInfoRefineRequestStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TripRefineRequest" type="TripRefineRequestStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>===================== Response structures ============================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RefineResponse" type="RefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Refine response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RefineResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Refine response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IndividualRouteRefineResponse" type="IndividualRouteRefineResponseStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LocationInformationRefineResponse" type="LocationInformationRefineResponseStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="StopEventRefineResponse" type="StopEventRefineResponseStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TripInfoRefineResponse" type="TripInfoRefineResponseStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TripRefineResponse" type="TripRefineResponseStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

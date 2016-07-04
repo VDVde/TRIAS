@@ -680,6 +680,16 @@
 					<xs:documentation>Whether the result should include accessibility information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="IncludeEstimatedTimes" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include estimated times, stop cancellation, train cancellation, trip deviation etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludeSituationInfo" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include textual situation information etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:annotation>

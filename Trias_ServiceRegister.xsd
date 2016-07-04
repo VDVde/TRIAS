@@ -28,13 +28,18 @@
 			<xs:enumeration value="Facilities"/>
 			<xs:enumeration value="Fares"/>
 			<xs:enumeration value="IndividualRoutes"/>
+			<xs:enumeration value="IndividualRoutesRefine"/>
 			<xs:enumeration value="Locations"/>
+			<xs:enumeration value="LocationsRefine"/>
 			<xs:enumeration value="Maps"/>
 			<xs:enumeration value="Positioning"/>
 			<xs:enumeration value="ServiceRegister"/>
 			<xs:enumeration value="StopEvents"/>
+			<xs:enumeration value="StopEventsRefine"/>
 			<xs:enumeration value="TripInfo"/>
+			<xs:enumeration value="TripInfoRefine"/>
 			<xs:enumeration value="Trips"/>
+			<xs:enumeration value="TripsRefine"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ServiceAddressType">
