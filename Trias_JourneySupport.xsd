@@ -331,6 +331,8 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="DatedJourneyRefGroup"/>
+			<xs:group ref="LineDirectionGroup"/>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
 			<xs:element name="CallLocation" type="LocationRefStructure">
 				<xs:annotation>
 					<xs:documentation>More general location for a call than stop points. May be used with flexible services or "Area Dial-A-Ride".</xs:documentation>
@@ -653,6 +655,29 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
+	<xs:group name="TripMobilityFilterGroup">
+		<xs:annotation>
+			<xs:documentation>Parameters the user can set to restrict the mobility options - particularly for interchanging.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="BaseTripMobilityFilterGroup"/>
+			<xs:element name="LevelEntrance" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user needs vehicles with level entrance between platform and vehicle, e.g. for wheelchair access.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BikeTransport" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to carry a bike on public transport.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkSpeed" type="OpenPercentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Deviation from average walk speed in percent. 100% percent is average speed, less than 100% is slower, greater than 100% is faster.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
 	<xs:group name="BaseTripContentFilterGroup">
 		<xs:annotation>
 			<xs:documentation>Parameters to control the level of detail of both public and individual transport journey results.</xs:documentation>
@@ -686,6 +711,96 @@
 			<xs:element name="IncludeSituationInfo" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether the result should include textual situation information etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>=========================================== Assistance ===========================================================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="PassengerAccessibilityStructure">
+		<xs:annotation>
+			<xs:documentation>Structure with elements to describe the passenger's abilities and accessibility requirements.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="PassengerRequirementsGroup"/>
+			<xs:group ref="PassengerProfileGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="PassengerRequirementsGroup">
+		<xs:annotation>
+			<xs:documentation>Description of passenger's accessibility requirements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="TripMobilityFilterGroup"/>
+			<xs:group ref="AssistanceGroup"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="AssistanceGroup">
+		<xs:annotation>
+			<xs:documentation>Requirement for the driver/staff to assist the passenger when boarding/alighting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BoardingAssistance" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether assistance is required for boarding. Could be offered by the driver or station staff. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AlightingAssistance" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether assistance is required for alighting. Could be offered by the driver or station staff. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="PassengerProfileGroup">
+		<xs:annotation>
+			<xs:documentation>Profile of the passenger's abilities.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WheelchairUser" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a wheelchair. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkingFrame" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a walking frame. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkingStick" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a walking stick. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkingImpaired" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger is (maybe temporarily) walking impaired. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pram" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a pram, stroller or other kind of child/baby pushchair with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeavyLuggage" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has got heavy luggage with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VisuallyImpaired" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger is visually impaired. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HearingImpaired" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger is hearing impaired. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReadingImpaired" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger is reading impaired. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

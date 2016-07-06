@@ -115,10 +115,10 @@
 			<xs:element ref="RefineRequest"/>
 			<xs:element ref="ServiceRegisterRequest"/>
 			<xs:element ref="StopEventRequest"/>
-			<xs:element ref="StopRequestRequest"/>
 			<xs:element ref="TripInfoRequest"/>
 			<xs:element ref="TripRequest"/>
 			<xs:element ref="VehicleDataRequest"/>
+			<xs:element ref="VehicleInteractionRequest"/>
 		</xs:choice>
 	</xs:complexType>
 	<xs:group name="SubscriptionRequestGroup">
@@ -129,6 +129,7 @@
 			<xs:element ref="SituationExchangeSubscriptionRequest"/>
 			<xs:element ref="FacilityMonitoringSubscriptionRequest"/>
 			<xs:element ref="TripMonitoringSubscriptionRequest"/>
+			<xs:element ref="ConnectionProtectionSubscriptionRequest"/>
 		</xs:choice>
 	</xs:group>
 	<xs:annotation>
@@ -201,11 +202,11 @@
 			<xs:element ref="ServiceRegisterResponse"/>
 			<xs:element ref="SituationExchangeDelivery"/>
 			<xs:element ref="StopEventResponse"/>
-			<xs:element ref="StopRequestResponse"/>
 			<xs:element ref="TripInfoResponse"/>
 			<xs:element ref="TripMonitoringDelivery"/>
 			<xs:element ref="TripResponse"/>
 			<xs:element ref="VehicleDataResponse"/>
+			<xs:element ref="VehicleInteractionResponse"/>
 		</xs:choice>
 	</xs:complexType>
 </xs:schema>

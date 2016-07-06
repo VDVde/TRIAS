@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri-1.4/siri.xsd"/>
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
 	<xs:annotation>
@@ -12,6 +13,16 @@
 			<xs:element name="Connection" type="GeneralizedConnectionStructure"/>
 			<xs:element name="NumberOfPersons" type="xs:positiveInteger" minOccurs="0"/>
 			<xs:element name="TravelProbability" type="PercentType" minOccurs="0"/>
+			<xs:element name="RequiredInterchangeDuration" type="xs:duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The amount of time the traveller will approximately need to cover the distance between feeder and distributor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PassengerAccessibilityNeeds" type="PassengerAccessibilityStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>For each person that has special accessibility needs one element PassengerAccessibilityNeeds should be inserted here.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -39,8 +50,23 @@
 	<xs:complexType name="FeederDistributorStructure">
 		<xs:sequence>
 			<xs:group ref="DatedJourneyRefGroup"/>
+			<xs:group ref="LineDirectionGroup"/>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
 			<xs:element name="ConnectionLocation" type="CallAtStopStructure"/>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>== Connection Protection =======================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConnectionProtectionSubscriptionRequest" type="ConnectionProtectionSubscriptionRequestStructure"/>
+	<xs:complexType name="ConnectionProtectionSubscriptionRequestStructure">
+		<xs:complexContent>
+			<xs:extension base="siri:AbstractSubscriptionStructure">
+				<xs:sequence>
+					<xs:element name="Connection" type="ConnectionDemandRequestStructure"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 	<!--== Delete Connection Demand - REQUEST ========================================-->
 	<xs:element name="ConnectionDemandDeleteRequest" type="ConnectionDemandDeleteRequestStructure">

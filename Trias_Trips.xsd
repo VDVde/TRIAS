@@ -107,29 +107,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
-	<xs:group name="TripMobilityFilterGroup">
-		<xs:annotation>
-			<xs:documentation>Parameters the user can set to restrict the mobility options - particularly for interchanging.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:group ref="BaseTripMobilityFilterGroup"/>
-			<xs:element name="LevelEntrance" type="xs:boolean" default="false" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The user needs vehicles with level entrance between platform and vehicle, f.e. for wheelchair access.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="BikeTransport" type="xs:boolean" default="false" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The user wants to carry a bike on public transport.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="WalkSpeed" type="OpenPercentType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Deviation from average walk speed in percent. 100% percent is average speed. Less than 100 % slower, Greater than 150% faster.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:group>
 	<xs:group name="TripContentFilterGroup">
 		<xs:annotation>
 			<xs:documentation>Parameters that control the level of detail of the trip results.</xs:documentation>

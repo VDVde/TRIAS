@@ -2,6 +2,22 @@
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
 	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
+	<xs:element name="VehicleInteractionRequest" type="VehicleInteractionRequestStructure"/>
+	<xs:complexType name="VehicleInteractionRequestStructure">
+		<xs:choice>
+			<xs:element ref="ActivateOutsideSpeakerRequest"/>
+			<xs:element ref="StopRequestRequest"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="VehicleInteractionResponse" type="VehicleInteractionResponseStructure"/>
+	<xs:complexType name="VehicleInteractionResponseStructure">
+		<xs:choice>
+			<xs:element ref="ActivateOutsideSpeakerResponse"/>
+			<xs:element ref="StopRequestResponse"/>
+		</xs:choice>
+	</xs:complexType>
+	<!---->
 	<xs:element name="VehicleDataRequest" type="VehicleDataRequestStructure"/>
 	<xs:complexType name="VehicleDataRequestStructure">
 		<xs:sequence>
@@ -23,7 +39,13 @@
 		<xs:sequence>
 			<xs:element name="StopRef" type="StopPointRefStructure"/>
 			<xs:element name="StopName" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="DisabledPerson" type="xs:boolean" default="false" minOccurs="0"/>
+			<xs:element name="Intention" type="BoardingIntentionEnumeration" minOccurs="0"/>
+			<xs:element name="AssistanceRequired" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs assistance for boarding/alighting. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="PassengerProfileGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="StopRequestResponse" type="StopRequestResponseStructure"/>
@@ -32,6 +54,25 @@
 			<xs:element name="StopRequestReceived" type="xs:boolean"/>
 			<xs:element name="RequestedStop" type="xs:NMTOKEN" minOccurs="0"/>
 			<xs:element name="EstimatedArrivalTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BoardingIntentionEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Boarding"/>
+			<xs:enumeration value="Alighting"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!---->
+	<xs:element name="ActivateOutsideSpeakerRequest" type="ActivateOutsideSpeakerRequestStructure"/>
+	<xs:complexType name="ActivateOutsideSpeakerRequestStructure">
+		<xs:sequence>
+			<xs:element name="ActivateOutsideSpeaker" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ActivateOutsideSpeakerResponse" type="ActivateOutsideSpeakerResponseStructure"/>
+	<xs:complexType name="ActivateOutsideSpeakerResponseStructure">
+		<xs:sequence>
+			<xs:element name="OutsideSpeakerActivated" type="xs:boolean"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!---->
@@ -221,6 +262,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="VehicleTypeRef" minOccurs="0"/>
+			<xs:group ref="ServiceFacilityGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="VehicleTypeStructure">
