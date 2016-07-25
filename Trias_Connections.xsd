@@ -63,7 +63,7 @@
 		<xs:complexContent>
 			<xs:extension base="siri:AbstractSubscriptionStructure">
 				<xs:sequence>
-					<xs:element name="Connection" type="ConnectionDemandRequestStructure"/>
+					<xs:element name="ConnectionDemand" type="ConnectionDemandRequestStructure"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
