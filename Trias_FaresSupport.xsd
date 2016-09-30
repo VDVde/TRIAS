@@ -225,6 +225,7 @@
 			</xs:element>
 			<xs:group ref="FaresAuthorityGroup"/>
 			<xs:group ref="TicketPriceGroup"/>
+			<xs:group ref="TariffLevelGroup"/>
 			<xs:group ref="TicketValidityGroup"/>
 			<xs:group ref="TicketBookingGroup"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
@@ -253,6 +254,23 @@
 			<xs:element name="VatRate" type="VatRateEnumeration" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Rate of value added tax. Default is unknown.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="TariffLevelGroup">
+		<xs:annotation>
+			<xs:documentation>Details on the tariff level.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TariffLevel" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the tariff level (e.g. "10", "10+T").</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TariffLevelLabel" type="InternationalTextStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>General label for tariff levels in this ticket context (e.g. "Fare stage", "Tariff level").</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
