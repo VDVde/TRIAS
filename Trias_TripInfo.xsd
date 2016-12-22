@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2013 sp1 (x64) (http://www.altova.com) von Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_RequestSupport.xsd"/>
@@ -44,7 +45,7 @@
 		<xs:sequence>
 			<xs:element name="UseTimetabledDataOnly" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Do not show any realtime or incident data. Default is false.</xs:documentation>
+					<xs:documentation>Use only timetabled data for identifying the meant journey and generating the repsonse. Default is false.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -59,6 +60,11 @@
 					<xs:documentation>Whether service pattern is to be included. Default is true.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="IncludeEstimatedTimes" type="xs:boolean" default="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include estimated times, stop cancellation, train cancellation, trip deviation etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="IncludePosition" type="xs:boolean" default="true" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether current position is to be included. Default is true.</xs:documentation>
@@ -67,6 +73,11 @@
 			<xs:element name="IncludeService" type="xs:boolean" default="true" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Whether service information is to be included. Default is true.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludeSituationInfo" type="xs:boolean" default="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the result should include textual situation information etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IncludeTrackSections" type="xs:boolean" default="false" minOccurs="0">
