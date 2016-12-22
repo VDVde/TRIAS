@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2013 sp1 (x64) (http://www.altova.com) von Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_LocationSupport.xsd"/>
@@ -241,6 +242,14 @@
 			<xs:group ref="EstimatedTimeBandGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
+	<xs:complexType name="ServiceCallStructure">
+		<xs:annotation>
+			<xs:documentation>Contains information on an arrival or departure of a service, e.g. time.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="ServiceTimeGroup"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:group name="EstimatedTimeBandGroup">
 		<xs:annotation>
 			<xs:documentation>Range for estimated time.</xs:documentation>
@@ -264,25 +273,15 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="StopPointGroup"/>
-			<xs:element name="ServiceArrival" minOccurs="0">
+			<xs:element name="ServiceArrival" type="ServiceCallStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="ServiceTimeGroup"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
-			<xs:element name="ServiceDeparture" minOccurs="0">
+			<xs:element name="ServiceDeparture" type="ServiceCallStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="ServiceTimeGroup"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
 			<xs:group ref="StopCallStatusGroup"/>
 			<xs:element ref="SituationFullRef" minOccurs="0" maxOccurs="unbounded"/>
@@ -338,25 +337,15 @@
 					<xs:documentation>More general location for a call than stop points. May be used with flexible services or "Area Dial-A-Ride".</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ServiceArrival" minOccurs="0">
+			<xs:element name="ServiceArrival" type="ServiceCallStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="ServiceTimeGroup"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
-			<xs:element name="ServiceDeparture" minOccurs="0">
+			<xs:element name="ServiceDeparture" type="ServiceCallStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="ServiceTimeGroup"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
 			<xs:group ref="StopCallStatusGroup"/>
 		</xs:sequence>

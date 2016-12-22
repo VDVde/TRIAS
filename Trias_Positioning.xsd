@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2013 sp1 (x64) (http://www.altova.com) von Peter von Grumbkow (HaCon Ingenieurgesellschaft mbH) bearbeitet -->
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
@@ -110,25 +111,15 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="StopPointGroup"/>
-			<xs:element name="ArrivalTime" minOccurs="0">
+			<xs:element name="ArrivalTime" type="ServiceCallStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Arrival time when the passenger arrived at this stop.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="ServiceTimeGroup"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
-			<xs:element name="DepartureTime" minOccurs="0">
+			<xs:element name="DepartureTime" type="ServiceCallStructure" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Departure time when the passenger departed from this stop.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="ServiceTimeGroup"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
