@@ -181,6 +181,11 @@
 					<xs:documentation>The trip result to be refined by the server.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="TripResponseContext" type="TripResponseContextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Context to hold objects, which are referenced within the response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -709,7 +714,7 @@
 			</xs:element>
 			<xs:element name="TripResponseContext" type="TripResponseContextStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Context to hold trip response objects that occur frequently.</xs:documentation>
+					<xs:documentation>Context to hold objects, which are referenced within the response.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="UnknownLegRef" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded">
