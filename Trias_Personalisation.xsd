@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_Common.xsd"/>
+	<xs:include schemaLocation="Trias_Trips.xsd"/>
 	<xs:simpleType name="ValueIdType">
 		<xs:annotation>
 			<xs:documentation>This type represents identifiers for stored values.</xs:documentation>
@@ -17,6 +18,31 @@
 			<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueRequestStructure"/>
 			<xs:element name="DeleteValue" type="PersonalisationDeleteValueRequestStructure"/>
 			<xs:element name="EnumerateValue" type="PersonalisationEnumerateValuesRequestStructure"/>
+			<xs:element name="SaveTrip" type="PersonalisationSaveTripRequestStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Store trips. The TripId is used as the identifier of each trip. Already stored trips with identical TripId will be overwritten. Each TripId is only allowed once within one request. Otherwise the behaviour of the storing service is undefined.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RetrieveTrip" type="PersonalisationRetrieveTripRequestStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Retrieve trips.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeleteTrip" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Delete trips. Each trip identifier is only allowed once. Otherwise the behaviour of the storing service is undefined.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="PersonalisationDeleteTripRequestStructure"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="EnumerateTrips" type="PersonalisationEnumerateTripsRequestStructure">
+				<xs:annotation>
+					<xs:documentation>Retrieve all identifiers of currently stored trips.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 	<xs:element name="PersonalisationResponse" type="PersonalisationResponseStructure"/>
@@ -28,6 +54,10 @@
 				<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueResponseStructure"/>
 				<xs:element name="DeleteValue" type="PersonalisationDeleteValueResponseStructure"/>
 				<xs:element name="EnumerateValue" type="PersonalisationEnumerateValuesResponseStructure"/>
+				<xs:element name="SaveTrip" type="PersonalisationSaveTripResponseStructure" maxOccurs="unbounded"/>
+				<xs:element name="RetrieveTrip" type="PersonalisationRetrieveTripResponseStructure" maxOccurs="unbounded"/>
+				<xs:element name="DeleteTrip" type="PersonalisationDeleteTripResponseStructure" maxOccurs="unbounded"/>
+				<xs:element name="EnumerateTrips" type="PersonalisationEnumerateTripsResponseStructure"/>
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -141,6 +171,108 @@
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="ValueId" type="ValueIdType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function SaveTrip ===================================================================-->
+	<xs:complexType name="PersonalisationSaveTripRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This structure is used to store a trip.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Trip" type="TripStructure"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonalisationSaveTripResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This structure contains the response to a store trip request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contains error messages, e.g. if the trip could not be stored.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the stored trip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function RetrieveTrip =================================================================-->
+	<xs:complexType name="PersonalisationRetrieveTripRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This structure is used to retrieve a trip.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TripId" type="xs:NMTOKEN"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonalisationRetrieveTripResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This structure contains the response to a retrieve trip request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contains error messages, e.g. if the trip could not be retrieved.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the stored trip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Trip" type="TripStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains the retrieved trip, if it could be successfully retrieved.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function DeleteTrip ==================================================================-->
+	<xs:complexType name="PersonalisationDeleteTripRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This structure is used to delete a trip.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TripId" type="xs:NMTOKEN"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonalisationDeleteTripResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This structure contains the response to a delete trip request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contains error messages, e.g. if the trip could not be deleted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TripId" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the deleted trip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--== Function EnumerateTrips ==============================================================-->
+	<xs:complexType name="PersonalisationEnumerateTripsRequestStructure">
+		<xs:annotation>
+			<xs:documentation>This structure is used to enumerate all trip identifiers.</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="PersonalisationEnumerateTripsResponseStructure">
+		<xs:annotation>
+			<xs:documentation>This structure contains the response to a enumerate trips request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TripId" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>All identifiers of currently stored trips.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
