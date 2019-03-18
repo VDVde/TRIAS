@@ -14,10 +14,26 @@
 	<xs:element name="PersonalisationRequest" type="PersonalisationRequestStructure"/>
 	<xs:complexType name="PersonalisationRequestStructure">
 		<xs:choice>
-			<xs:element name="SaveValue" type="PersonalisationSaveValueRequestStructure"/>
-			<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueRequestStructure"/>
-			<xs:element name="DeleteValue" type="PersonalisationDeleteValueRequestStructure"/>
-			<xs:element name="EnumerateValue" type="PersonalisationEnumerateValuesRequestStructure"/>
+			<xs:element name="SaveValue" type="PersonalisationSaveValueRequestStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Store values. Already stored values with identical identifiers will be overwritten. Each value identifier is only allowed once. Otherwise the behaviour of the storing service is undefined.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueRequestStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Retrieve values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeleteValue" type="PersonalisationDeleteValueRequestStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Delete values. Each value identifier is only allowed once. Otherwise the behaviour of the storing service is undefined.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EnumerateValues" type="PersonalisationEnumerateValuesRequestStructure">
+				<xs:annotation>
+					<xs:documentation>Retrieve all identifiers of currently stored values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="SaveTrip" type="PersonalisationSaveTripRequestStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Store trips. The TripId is used as the identifier of each trip. Already stored trips with identical TripId will be overwritten. Each TripId is only allowed once within one request. Otherwise the behaviour of the storing service is undefined.</xs:documentation>
@@ -50,10 +66,10 @@
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:choice>
-				<xs:element name="SaveValue" type="PersonalisationSaveValueResponseStructure"/>
-				<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueResponseStructure"/>
-				<xs:element name="DeleteValue" type="PersonalisationDeleteValueResponseStructure"/>
-				<xs:element name="EnumerateValue" type="PersonalisationEnumerateValuesResponseStructure"/>
+				<xs:element name="SaveValue" type="PersonalisationSaveValueResponseStructure" maxOccurs="unbounded"/>
+				<xs:element name="RetrieveValue" type="PersonalisationRetrieveValueResponseStructure" maxOccurs="unbounded"/>
+				<xs:element name="DeleteValue" type="PersonalisationDeleteValueResponseStructure" maxOccurs="unbounded"/>
+				<xs:element name="EnumerateValues" type="PersonalisationEnumerateValuesResponseStructure"/>
 				<xs:element name="SaveTrip" type="PersonalisationSaveTripResponseStructure" maxOccurs="unbounded"/>
 				<xs:element name="RetrieveTrip" type="PersonalisationRetrieveTripResponseStructure" maxOccurs="unbounded"/>
 				<xs:element name="DeleteTrip" type="PersonalisationDeleteTripResponseStructure" maxOccurs="unbounded"/>
@@ -90,12 +106,12 @@
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>This element contains the identifier of the stored value.</xs:documentation>
+					<xs:documentation>Contains error messages, e.g. if the value could not be stored.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Value" type="xs:string" minOccurs="0">
+			<xs:element name="ValueId" type="ValueIdType">
 				<xs:annotation>
-					<xs:documentation>This element contains the stored value, if a value was stored.</xs:documentation>
+					<xs:documentation>This element contains the identifier of the stored value.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -122,10 +138,19 @@
 	</xs:element>
 	<xs:complexType name="PersonalisationRetrieveValueResponseStructure">
 		<xs:sequence>
-			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contains error messages, e.g. if the value could not be retrieved.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValueId" type="ValueIdType">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the retrieved value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Value" type="xs:string" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>This element contains the retrieved value.</xs:documentation>
+					<xs:documentation>This element contains the retrieved value, if it could be retrieved.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -152,7 +177,16 @@
 	</xs:element>
 	<xs:complexType name="PersonalisationDeleteValueResponseStructure">
 		<xs:sequence>
-			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contains error messages, e.g. if the value could not be deleted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValueId" type="ValueIdType">
+				<xs:annotation>
+					<xs:documentation>This element contains the identifier of the deleted value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<!--== Function EnumerateValues =============================================================-->
@@ -170,7 +204,11 @@
 	<xs:complexType name="PersonalisationEnumerateValuesResponseStructure">
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="ValueId" type="ValueIdType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ValueId" type="ValueIdType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>All identifiers of currently stored values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<!--== Function SaveTrip ===================================================================-->
