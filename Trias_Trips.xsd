@@ -105,6 +105,11 @@
 					<xs:documentation>For each mode in this list a separate monomodal trip shall be found - in addition to inter-modal solutions.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="MultiPointType" type="MultiPointTypeEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether a solution for any one of multiple origin/destination points is sufficient or a distinct solution for each of the origin/destination points has to be found.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:group name="TripContentFilterGroup">
@@ -139,6 +144,28 @@
 			<xs:enumeration value="minChanges"/>
 			<xs:enumeration value="leastWalking"/>
 			<xs:enumeration value="leastCost"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MultiPointTypeEnumeration">
+		<xs:annotation>
+			<xs:documentation>How the multiple origin/destination points should be considered.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="anyPoint">
+				<xs:annotation>
+					<xs:documentation>"anyPoint" means, that the requested number of results should be returned, no matter which or how many of the origin or destination locations they use.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="eachOrigin">
+				<xs:annotation>
+					<xs:documentation>"eachOrigin" means, that for all origin locations the requested number of results should be returned.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="eachDestination">
+				<xs:annotation>
+					<xs:documentation>"eachDestination" means the same as "eachOrigin" for all destination locations.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="NotViaStructure">
