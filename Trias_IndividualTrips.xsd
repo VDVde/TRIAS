@@ -27,6 +27,11 @@
 		<xs:sequence>
 			<xs:element name="RefineParams" type="IndividualTripRefineParamStructure" minOccurs="0"/>
 			<xs:element name="IndividualRouteResult" type="RouteResultStructure"/>
+			<xs:element name="IndividualRouteResponseContext" type="TripResponseContextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Context to hold objects, which are referenced within the response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -51,11 +56,15 @@
 	</xs:element>
 	<xs:complexType name="IndividualRouteRefineResponseStructure">
 		<xs:annotation>
-			<xs:documentation>IndividualRouteRefine response structure</xs:documentation>
+			<xs:documentation>Context to hold objects, which are referenced within the response.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="IndividualRouteResponseContext" type="TripResponseContextStructure" minOccurs="0"/>
+			<xs:element name="IndividualRouteResponseContext" type="TripResponseContextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Context to hold objects, which are referenced within the response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="IndividualRouteResult" type="RouteResultStructure" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
