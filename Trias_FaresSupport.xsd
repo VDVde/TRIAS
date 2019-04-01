@@ -14,6 +14,29 @@
 			<xs:enumeration value="economy"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="UsageValidityTypeEnumeration">
+		<xs:annotation>
+			<xs:documentation>Enumeration of usage validity types for a ticket.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="singleTrip"/>
+			<xs:enumeration value="returnTrip"/>
+			<xs:enumeration value="connectingPass"/>
+			<xs:enumeration value="multiRidePass"/>
+			<xs:enumeration value="carnet"/>
+			<xs:enumeration value="dayPass"/>
+			<xs:enumeration value="24HourPass"/>
+			<xs:enumeration value="weeklyPass"/>
+			<xs:enumeration value="weekendPass"/>
+			<xs:enumeration value="monthlyPass"/>
+			<xs:enumeration value="halfYearPass"/>
+			<xs:enumeration value="annualPass"/>
+			<xs:enumeration value="seasonTicket"/>
+			<xs:enumeration value="profileMembership"/>
+			<xs:enumeration value="openEnded"/>
+			<xs:enumeration value="other"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="VatRateEnumeration">
 		<xs:annotation>
 			<xs:documentation>Enumeration of Value Added Tax rates.</xs:documentation>
@@ -315,6 +338,7 @@
 					<xs:documentation>Textual description of spatial validity.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="UsageValidityType" type="UsageValidityTypeEnumeration" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
 	<xs:group name="TicketBookingGroup">
