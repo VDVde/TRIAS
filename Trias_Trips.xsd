@@ -719,6 +719,11 @@
 					<xs:documentation>Number how often the access feature occurs in this AccessPath.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element ref="FacilityRef" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Reference to facility used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>
