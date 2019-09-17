@@ -46,7 +46,7 @@
 		<xs:annotation>
 			<xs:documentation>Participant identifier</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="ParticipantRefStructure">
 		<xs:annotation>
@@ -68,7 +68,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of an Operator</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="OperatorRefStructure">
 		<xs:annotation>
@@ -143,7 +143,7 @@
 		<xs:annotation>
 			<xs:documentation>Line identifier.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="LineRefStructure">
 		<xs:annotation>
@@ -162,7 +162,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of a Direction.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="DirectionRefStructure">
 		<xs:annotation>
@@ -194,7 +194,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of a Journey</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="JourneyRefStructure">
 		<xs:annotation>
@@ -223,7 +223,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of a Vehicle.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="VehicleRefStructure">
 		<xs:annotation>
@@ -328,7 +328,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of a Facility.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="FacilityRefStructure">
 		<xs:annotation>
@@ -348,7 +348,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of an Owner.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="OwnerRefStructure">
 		<xs:annotation>
@@ -368,7 +368,7 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of an Operating Day</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NMTOKEN"/>
+		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
 	<xs:complexType name="OperatingDayRefStructure">
 		<xs:annotation>
