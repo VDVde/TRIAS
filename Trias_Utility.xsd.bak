@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>========================================= General ================================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="PercentType">
+		<xs:annotation>
+			<xs:documentation>Percent value as integer, limited to max value 100.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OpenPercentType">
+		<xs:annotation>
+			<xs:documentation>Percent value as integer, no upper limit.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="PriorityType">
+		<xs:annotation>
+			<xs:documentation>Data type for priority values, from 1 (highest) to 5 (lowest).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BitStringType">
+		<xs:annotation>
+			<xs:documentation>String that consists of only zeros and ones.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[01]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DistanceType">
+		<xs:annotation>
+			<xs:documentation>Data type for distances, in meters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="LengthType">
+		<xs:annotation>
+			<xs:documentation>Data type for lengths, in meters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="SpeedType">
+		<xs:annotation>
+			<xs:documentation>Data type for speed, in meter per second.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="PhoneNumberType">
+		<xs:annotation>
+			<xs:documentation>Type definition for phone numbers</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="InternationalTextStructure">
+		<xs:annotation>
+			<xs:documentation>Text with id and language code.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Text" type="xs:normalizedString">
+				<xs:annotation>
+					<xs:documentation>Text content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TextId" type="xs:NMTOKEN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Id of this text. May be used for matching to pre-recorded audio files.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language" type="xs:language" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Language in which Text is formulated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WebLinkStructure">
+		<xs:annotation>
+			<xs:documentation>URL with label.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Label" type="InternationalTextStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Label for link description.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Url" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>URL to resource on web.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>========================================= Coordinates ==============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="LongitudeType">
+		<xs:annotation>
+			<xs:documentation>Longitude from Greenwich.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="LatitudeType">
+		<xs:annotation>
+			<xs:documentation>Latitude from equator.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="AltitudeType">
+		<xs:annotation>
+			<xs:documentation>Altitude metres from sea level.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:complexType name="GeoPositionStructure">
+		<xs:annotation>
+			<xs:documentation>Expressed as WGS84</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Longitude" type="LongitudeType">
+				<xs:annotation>
+					<xs:documentation>Longitude from Greenwich Meridian. -180 (West) to +180 (East).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Latitude" type="LatitudeType">
+				<xs:annotation>
+					<xs:documentation>Latitude from equator. -90 (South) to +90 (North).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Altitude" type="AltitudeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Altitude metres from sea level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AbsoluteBearingType">
+		<xs:annotation>
+			<xs:documentation>The absolute compass bearing in degrees.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxExclusive value="360"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

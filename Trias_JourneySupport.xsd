@@ -107,6 +107,50 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
+	<xs:complexType name="ServiceJourneyPropertiesStructure">
+		<xs:annotation>
+			<xs:documentation>Vehicle journey (not dated), no mandatory elements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="JourneyRef" minOccurs="0"/>
+			<xs:element name="LineRef" type="LineRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Line Reference.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DirectionRef" type="DirectionRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the line direction, typically outward or return.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mode" type="ModeStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vehicle mode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PublishedLineName" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Line name or service description as known to the public, f.e. "512", "S8" or "Circle Line".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
+			<xs:element name="RouteDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive text for a route, f.e. "Airport via City Centre"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Via" type="ServiceViaPointStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Via points of the service that may help identify the vehicle to the public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Attribute" type="GeneralAttributeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Note or service attribute.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:group name="ServiceOriginGroup">
 		<xs:annotation>
 			<xs:documentation>First serviced stop of a vehicle journey.</xs:documentation>
@@ -216,6 +260,15 @@
 					<xs:documentation>Time at which window ends.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="MinMaxTimeBandGroup">
+		<xs:annotation>
+			<xs:documentation>Earliest possible departure time from a start location and latest possible arrival at a different destination location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EarliestDepartureTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="LatestArrivalTime" type="xs:dateTime" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
 	<xs:group name="ServiceTimeGroup">
@@ -347,6 +400,30 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="StopCallStatusGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProvisionedCallAtLocationStructure">
+		<xs:annotation>
+			<xs:documentation>Provisioned vehicle call at a general location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="DatedJourneyRefGroup" minOccurs="0"/>
+			<xs:element name="CallLocation" type="LocationRefStructure">
+				<xs:annotation>
+					<xs:documentation>More general location for a call than stop points. May be used with flexible services or "Area Dial-A-Ride".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceArrival" type="ServiceCallStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceDeparture" type="ServiceCallStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="StopCallStatusGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:group name="ServiceStatusGroup">
@@ -666,6 +743,16 @@
 					<xs:documentation>The user wants to carry a bike on public transport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="DogTransport" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to take a dog on public transport.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuaranteedConnection" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user requires connection guarantee.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="WalkSpeed" type="OpenPercentType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Deviation from average walk speed in percent. 100% percent is average speed, less than 100% is slower, greater than 100% is faster.</xs:documentation>
@@ -758,6 +845,16 @@
 					<xs:documentation>Passenger uses a wheelchair. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="MotorizedWheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a motorized wheelchair. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FoldableWheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a foldable wheelchair. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="WalkingFrame" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger uses a walking frame. Default is FALSE.</xs:documentation>
@@ -783,9 +880,44 @@
 					<xs:documentation>Passenger has got heavy luggage with him/her. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="CarriesChildSeat" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a child seat with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsChildSeat" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a child seat to be in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesBabyCarrier" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a baby carrier with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsBabyCarrier" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a baby carrier to be in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesSeatBooster" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a seat booster with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsSeatBooster" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a seat booster to be in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="VisuallyImpaired" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger is visually impaired. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuideDog" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger is visually impaired and has a guide dog with him/her. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="HearingImpaired" type="xs:boolean" minOccurs="0">

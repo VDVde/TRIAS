@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
+	<xs:include schemaLocation="Trias_FaresSupport.xsd"/>
+	<xs:element name="BookingInfoRequest" type="BookingInfoRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking info request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingInfoRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking info request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Service" type="DatedJourneyStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of a public transport service on a particular operating day.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="OperatorRef"/>
+			</xs:choice>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingInfoResponse" type="BookingInfoResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking info response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingInfoResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking info response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookingInfoResult" type="BookingInfoResultStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Result structure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BookingInfoResultStructure">
+		<xs:annotation>
+			<xs:documentation>Booking info result structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BookingInfo" type="BookingInfoStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>One or more booking opportunities.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
