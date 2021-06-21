@@ -58,6 +58,12 @@
 		</xs:annotation>
 		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
+	<xs:simpleType name="EMailAddressType">
+		<xs:annotation>
+			<xs:documentation>Type definition for e-mail addresses.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
 	<xs:complexType name="InternationalTextStructure">
 		<xs:annotation>
 			<xs:documentation>Text with id and language code.</xs:documentation>

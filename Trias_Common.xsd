@@ -62,6 +62,41 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:annotation>
+		<xs:documentation>========================================= System users =============================================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="UserCodeType">
+		<xs:annotation>
+			<xs:documentation>User identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:complexType name="UserRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a User</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="UserCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="UserRef" type="UserRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to a User</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:group name="UserIdGroup">
+		<xs:annotation>
+			<xs:documentation>Reference to a user of a participating system.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemRef" type="ParticipantRefStructure">
+				<xs:annotation>
+					<xs:documentation>Ref to partnering system that issued the user id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="UserRef"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
 		<xs:documentation>========================================= Operators =============================================</xs:documentation>
 	</xs:annotation>
 	<xs:simpleType name="OperatorCodeType">
