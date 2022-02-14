@@ -3,7 +3,7 @@
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
 	<xs:include schemaLocation="Trias_FaresSupport.xsd"/>
 	<xs:annotation>
-		<xs:documentation>========================================= Booking codes =============================================</xs:documentation>
+		<xs:documentation>========================== Booking codes ==============================</xs:documentation>
 	</xs:annotation>
 	<xs:simpleType name="BookingCodeType">
 		<xs:annotation>
@@ -13,24 +13,15 @@
 	</xs:simpleType>
 	<xs:group name="BookingCodeGroup">
 		<xs:annotation>
-			<xs:documentation>Group of booking code and associated participating system.</xs:documentation>
+			<xs:documentation>Group of booking code and associated booking system.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="SystemRef" type="ParticipantRefStructure">
 				<xs:annotation>
-					<xs:documentation>Ref to partnering system that issued the booking code.</xs:documentation>
+					<xs:documentation>Reference to booking system that issued the booking code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="BookingCode" type="BookingCodeType"/>
-		</xs:sequence>
-	</xs:group>
-	<xs:group name="BookingProcessGroup">
-		<xs:sequence>
-			<xs:element name="ReserveOnly" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>If TRUE the booking is only a reservation and needs further confirmation.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:annotation>
@@ -120,7 +111,7 @@
 			</xs:choice>
 			<xs:element name="MobilityUser" type="BookingUserStructure" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Passenger(s) for whom the service needs to be booked.</xs:documentation>
+					<xs:documentation>Passenger(s) for whom the service needs to be booked, one MobilityUser per passenger.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="MinMaxTimeBandGroup" minOccurs="0"/>
@@ -144,7 +135,7 @@
 			</xs:element>
 			<xs:element name="Service" type="ServiceJourneyPropertiesStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Service of which the availability is being checked.</xs:documentation>
+					<xs:documentation>Vehicle journey data like journey, line, direction, attribute(s). No mandatory elements, although specifying at least PublishedLineName is desirable. Provided data will be used as part of availability check.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
@@ -152,7 +143,7 @@
 	</xs:complexType>
 	<xs:complexType name="BookingUserStructure">
 		<xs:annotation>
-			<xs:documentation>User(s) for whom the service needs to be booked.</xs:documentation>
+			<xs:documentation>Passenger(s) for whom the trip needs to be booked</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Age" type="xs:nonNegativeInteger" minOccurs="0">
@@ -160,11 +151,10 @@
 					<xs:documentation>Age of the passenger on the day of travel.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:group ref="PassengerProfileGroup"/>
-			<xs:group ref="PassengerRequirementsGroup"/>
+			<xs:group ref="OnDemandRequirementsGroup"/>
 			<xs:element name="PassengerTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Zero, one or more tickets or surcharges to book. If price is greater zero: the passenger wants/needs to buy that ticket in the car, if zero: already purchased/virtual ticket</xs:documentation>
+					<xs:documentation>Zero, one or more tickets or surcharges, one passenger carries and/or wants to book. If price is greater zero: the passenger wants/needs to buy that ticket in the vehicle, if zero: the passenger carries an already purchased/virtual ticket (examples for virtual tickets: free transportation for children under 6 years of age or police officers in uniform or an id card for severely handicapped persons with the required implementary sheet with valid token). Remark for implementation: only those tickets are bookable, that have been provided in prior AvailabilityResponse as Element BookableTicket. If this List contains surcharges, it is mandatory to carry/book a surcharge.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -219,28 +209,111 @@
 		<xs:documentation>==================== ticket and service information =====================</xs:documentation>
 	</xs:annotation>
 	<xs:group name="BookableTicketAndServiceInformationGroup">
+		<xs:annotation>
+			<xs:documentation>Lists those tickets or surcharges and service characteristics such as the transport of wheelchairs, prams, luggage etc. or the provision of required child seats or booster seats that are offered in the trips transport company to be booked for the trip.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="BookableTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Sequence of bookable tickets or surcharges for this part of the trip. If ticket price is zero: an already purchased ticket of this type presented to the driver would be accepted</xs:documentation>
+					<xs:documentation>Sequence of bookable tickets or surcharges for this part of the trip. If ticket price is zero: an already purchased/virtual ticket of this type presented to the driver would be accepted.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BookableServiceInformation" type="BookableServiceInformationStructure" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>All service characteristics that can actually be booked in the actual transport company</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element name="BookableServiceInformation" type="BookableServiceInformationStructure" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
 	<xs:complexType name="BookableServiceInformationStructure">
 		<xs:annotation>
-			<xs:documentation>Actually a selection of elements from PassengerProfileGroup and TripMobilityFilterGroup, that really might be considered as service for or during transportation. All service characteristics that can actually be booked in the actual transport company are set to true.</xs:documentation>
+			<xs:documentation>Possible service characteristics that can be booked in the actual booking system (defined by the traffic company of charge). Only those elements with value TRUE are bookable. Caution: list can vary widely from one traffic company to another.</xs:documentation>
+		</xs:annotation>
+		<xs:group ref="OnDemandRequirementsGroup"/>
+	</xs:complexType>
+	<xs:group name="OnDemandRequirementsGroup">
+		<xs:annotation>
+			<xs:documentation>Service characteristics such as the transport of wheelchair, pram, luggage... or the provision of required child seat or booster seat that are supported by the responsable booking system (defined by the traffic company of charge) to be booked for the trip. Remark for implementation: group is also used in Element BookableServiceInformation in AvailabilityResponse. Only those elements are bookable, that have been provided as TRUE in prior AvailabilityResponse.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:group ref="PassengerProfileGroup"/>
-			<xs:group ref="TripMobilityFilterGroup"/>
+			<xs:element name="Wheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a non foldable wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MotorizedWheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a motorized wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FoldableWheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a foldable wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkingFrame" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a walking frame. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pram" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a pram, stroller or other kind of child/baby pushchair with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeavyLuggage" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has got heavy luggage with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesChildSeat" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a child seat with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsChildSeat" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a child seat to be provided in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesBabyCarrier" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a baby carrier with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsBabyCarrier" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a baby carrier to be provided in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesSeatBooster" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a seat booster with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsSeatBooster" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a seat booster to be provided in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuideDog" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger is visually impaired and has a guide dog with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BikeTransport" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to carry a bike on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DogTransport" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to take a dog on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuaranteedConnection" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user requires the connection guarantee offered by the traffic company of charge. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
-	</xs:complexType>
+	</xs:group>
 	<xs:annotation>
 		<xs:documentation>====================================================</xs:documentation>
 	</xs:annotation>
@@ -251,7 +324,7 @@
 	</xs:element>
 	<xs:complexType name="BookingRequestStructure">
 		<xs:annotation>
-			<xs:documentation>Booking request structure.</xs:documentation>
+			<xs:documentation>Booking request structure. If BookingCodeGroup is provided, this will be understood as final confirmation of a former reservation booking request.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:choice>
@@ -289,7 +362,7 @@
 			<xs:group ref="MinMaxTimeBandGroup" minOccurs="0"/>
 			<xs:element name="CustomerDetail" type="CustomerDetailStructure" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Details on the customer that is doing the booking transaction.</xs:documentation>
+					<xs:documentation>Details of the customer doing the booking transaction. No mandatory elements, although some specification is desirable.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="BookingProcessGroup"/>
@@ -298,7 +371,7 @@
 	</xs:complexType>
 	<xs:complexType name="CustomerDetailStructure">
 		<xs:annotation>
-			<xs:documentation>Structure for customer details.</xs:documentation>
+			<xs:documentation>Structure for customer details. No mandatory elements.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="UserIdGroup" minOccurs="0"/>
@@ -312,9 +385,24 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:group name="BookingProcessGroup">
+		<xs:annotation>
+			<xs:documentation>Markes a booking reservation (needs further confirmation with a second BookingRequest containing BookingCodeGroup)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReserveOnly" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If TRUE, the booking is only a reservation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>==================== customer identification =====================</xs:documentation>
+	</xs:annotation>
 	<xs:complexType name="CustomerIdentificationType">
 		<xs:annotation>
-			<xs:documentation>Some UserId or app-code to identify the Customer as the one who booked, required especially for verification of booking cancellation requests</xs:documentation>
+			<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
 			<xs:group ref="UserIdGroup"/>
@@ -323,13 +411,13 @@
 	</xs:complexType>
 	<xs:simpleType name="AppCodeType">
 		<xs:annotation>
-			<xs:documentation>app identifier</xs:documentation>
+			<xs:documentation>App identifier. Should be an unique value.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN"/>
 	</xs:simpleType>
 	<xs:complexType name="AppRefStructure">
 		<xs:annotation>
-			<xs:documentation>Reference to an app as representation for a User</xs:documentation>
+			<xs:documentation>Reference to an app as representation for a customer. Should be a fix and unique value connected to a specific customer.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="AppCodeType"/>
@@ -362,15 +450,15 @@
 			</xs:choice>
 			<xs:element name="ExpiresAfter" type="xs:dateTime" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>If this element is given the booking is only valid until this date/time. If it is not confirmed until this time it will be rejected.</xs:documentation>
+					<xs:documentation>If this element is given, the booking is only valid until this date/time. If it is not confirmed until this time, it will be rejected.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChangeableUntil" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If this element is given, returned trip is not fix until this date/time. Until this date/time the trip may change because of bookings by other users.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
-			<xs:element name="ChangeableUntil" type="xs:dateTime" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>If this element is given  returned trip is not fixed until this date/time. Until this date/time the trip may change because of bookings by other users.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:annotation>
@@ -412,6 +500,9 @@
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
 	<xs:element name="BookingUpdateRequest" type="BookingUpdateRequestStructure">
 		<xs:annotation>
 			<xs:documentation>Booking update request element.</xs:documentation>
@@ -423,6 +514,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="BookingCodeGroup"/>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
