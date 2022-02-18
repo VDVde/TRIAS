@@ -191,11 +191,9 @@
 			<xs:documentation>Passenger load status of a vehicle.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:NMTOKEN">
-			<xs:enumeration value="manySeatsAvailable"/>
-			<xs:enumeration value="fewSeatsAvailable"/>
-			<xs:enumeration value="noSeatsAvailable"/>
-			<xs:enumeration value="standingAvailable"/>
-			<xs:enumeration value="full"/>
+			<xs:enumeration value="low"/>
+			<xs:enumeration value="moderate"/>
+			<xs:enumeration value="high"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:annotation>
@@ -321,6 +319,11 @@
 					<xs:documentation>Alighting will not be allowed at this stop of this journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Level of occupancy in the vehicle in the moment of leaving the stop. If omitted, not known.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:complexType name="DatedCallAtLocationStructure">
@@ -371,7 +374,7 @@
 			</xs:element>
 			<xs:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Level of occupancy in the vehicle. If omitted, not known.</xs:documentation>
+					<xs:documentation>Level of maximum occupancy in the vehicle. If omitted, not known.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
