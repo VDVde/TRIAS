@@ -324,6 +324,11 @@
 					<xs:documentation>Trip distance.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Occupancy" type="OccupancyEnumeration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Level of occupancy during the trip. The maximum during the trip should be considered. If omitted, not known.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TripLeg" type="TripLegStructure" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Legs of the trip</xs:documentation>
