@@ -21,7 +21,11 @@
 					<xs:documentation>Reference to booking system that issued the booking code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BookingCode" type="BookingCodeType"/>
+			<xs:element name="BookingCode" type="BookingCodeType">
+				<xs:annotation>
+					<xs:documentation>Booking code, issued by the system specified under SystemRef, corresponds to the data type xs:NMTOKEN, unique in the system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:annotation>
@@ -331,7 +335,11 @@
 				<xs:group ref="BookingCodeGroup"/>
 				<xs:element name="BookingRequestContent" type="BookingRequestContentStructure"/>
 			</xs:choice>
-			<xs:element name="CustomerIdentification" type="CustomerIdentificationType"/>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="BookingRequestContentStructure">
@@ -406,7 +414,11 @@
 		</xs:annotation>
 		<xs:choice>
 			<xs:group ref="UserIdGroup"/>
-			<xs:element name="AppCode" type="AppRefStructure"/>
+			<xs:element name="AppCode" type="AppRefStructure">
+				<xs:annotation>
+					<xs:documentation>A unique value for the booking system to verify cancellation requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 	<xs:simpleType name="AppCodeType">
@@ -475,7 +487,11 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="BookingCodeGroup"/>
-			<xs:element name="CustomerIdentification" type="CustomerIdentificationType"/>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -514,7 +530,11 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="BookingCodeGroup"/>
-			<xs:element name="CustomerIdentification" type="CustomerIdentificationType"/>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
