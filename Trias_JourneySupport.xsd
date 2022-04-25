@@ -743,16 +743,6 @@
 					<xs:documentation>The user wants to carry a bike on public transport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DogTransport" type="xs:boolean" fixed="true" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The user wants to take a dog on public transport.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="GuaranteedConnection" type="xs:boolean" fixed="true" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The user requires connection guarantee.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="WalkSpeed" type="OpenPercentType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Deviation from average walk speed in percent. 100% percent is average speed, less than 100% is slower, greater than 100% is faster.</xs:documentation>
@@ -845,16 +835,6 @@
 					<xs:documentation>Passenger uses a wheelchair. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MotorizedWheelchair" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger uses a motorized wheelchair. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="FoldableWheelchair" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger uses a foldable wheelchair. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="WalkingFrame" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger uses a walking frame. Default is FALSE.</xs:documentation>
@@ -880,44 +860,9 @@
 					<xs:documentation>Passenger has got heavy luggage with him/her. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CarriesChildSeat" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger has a child seat with him/her. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="NeedsChildSeat" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger needs a child seat to be in the car. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="CarriesBabyCarrier" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger has a baby carrier with him/her. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="NeedsBabyCarrier" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger needs a baby carrier to be in the car. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="CarriesSeatBooster" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger has a seat booster with him/her. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="NeedsSeatBooster" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger needs a seat booster to be in the car. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="VisuallyImpaired" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger is visually impaired. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="GuideDog" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger is visually impaired and has a guide dog with him/her. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="HearingImpaired" type="xs:boolean" minOccurs="0">
