@@ -13,17 +13,17 @@
 	</xs:simpleType>
 	<xs:group name="BookingCodeGroup">
 		<xs:annotation>
-			<xs:documentation>Group of booking code and associated booking system.</xs:documentation>
+			<xs:documentation>Group of booking code and associated on-demand booking system.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="SystemRef" type="ParticipantRefStructure">
 				<xs:annotation>
-					<xs:documentation>Reference to booking system that issued the booking code.</xs:documentation>
+					<xs:documentation>Reference to on-demand booking system that issued the booking code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="BookingCode" type="BookingCodeType">
 				<xs:annotation>
-					<xs:documentation>Booking code, issued by the system specified under SystemRef, corresponds to the data type xs:NMTOKEN, unique in the system.</xs:documentation>
+					<xs:documentation>Booking code, issued by the system specified under SystemRef, corresponds to the data type xs:NMTOKEN, unique in that system.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -145,6 +145,74 @@
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="ServiceJourneyPropertiesStructure">
+		<xs:annotation>
+			<xs:documentation>Vehicle journey (not dated), no mandatory elements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="JourneyRef" minOccurs="0"/>
+			<xs:element name="LineRef" type="LineRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Line Reference.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DirectionRef" type="DirectionRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the line direction, typically outward or return.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mode" type="ModeStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vehicle mode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PublishedLineName" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Line name or service description as known to the public, f.e. "512", "S8" or "Circle Line".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
+			<xs:element name="RouteDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive text for a route, f.e. "Airport via City Centre"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Via" type="ServiceViaPointStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Via points of the service that may help identify the vehicle to the public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Attribute" type="GeneralAttributeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Note or service attribute.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProvisionedCallAtLocationStructure">
+		<xs:annotation>
+			<xs:documentation>Provisioned vehicle call at a more general location for a call than stop points. May be used with flexible services.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="DatedJourneyRefGroup" minOccurs="0"/>
+			<xs:element name="CallLocation" type="LocationRefStructure">
+				<xs:annotation>
+					<xs:documentation>More general location for a call than stop points. May be used with flexible services or "Area Dial-A-Ride".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceArrival" type="ServiceCallStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceDeparture" type="ServiceCallStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="StopCallStatusGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="BookingUserStructure">
 		<xs:annotation>
 			<xs:documentation>Passenger(s) for whom the trip needs to be booked</xs:documentation>
@@ -203,7 +271,11 @@
 				<xs:annotation>
 					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
 				</xs:annotation>
-				<xs:element name="PublicTransport" type="BookingPTLegStructure"/>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:choice>
 			<xs:group ref="BookableTicketAndServiceInformationGroup"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
@@ -227,13 +299,13 @@
 	</xs:group>
 	<xs:complexType name="BookableServiceInformationStructure">
 		<xs:annotation>
-			<xs:documentation>Possible service characteristics that can be booked in the actual booking system (defined by the traffic company of charge). Only those elements with value TRUE are bookable. Caution: list can vary widely from one traffic company to another.</xs:documentation>
+			<xs:documentation>Possible service characteristics that can be booked in the actual on-demand booking system (defined by the traffic company of charge). Only those elements with value TRUE are bookable. Caution: list can vary widely from one traffic company to another.</xs:documentation>
 		</xs:annotation>
 		<xs:group ref="OnDemandRequirementsGroup"/>
 	</xs:complexType>
 	<xs:group name="OnDemandRequirementsGroup">
 		<xs:annotation>
-			<xs:documentation>Service characteristics such as the transport of wheelchair, pram, luggage... or the provision of required child seat or booster seat that are supported by the responsable booking system (defined by the traffic company of charge) to be booked for the trip. Remark for implementation: group is also used in Element BookableServiceInformation in AvailabilityResponse. Only those elements are bookable, that have been provided as TRUE in prior AvailabilityResponse.</xs:documentation>
+			<xs:documentation>Service characteristics such as the transport of wheelchair, pram, luggage... or the provision of required child seat or booster seat that are supported by the responsable on-demand booking system (defined by the traffic company of charge) to be booked for the trip. Remark for implementation: group is also used in Element BookableServiceInformation in AvailabilityResponse. Only those elements are bookable, that have been provided as TRUE in prior AvailabilityResponse.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Wheelchair" type="xs:boolean" minOccurs="0">
@@ -301,14 +373,14 @@
 					<xs:documentation>Passenger is visually impaired and has a guide dog with him/her. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DogTransport" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The user wants to take a dog on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="BikeTransport" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The user wants to carry a bike on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DogTransport" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to take a dog on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="GuaranteedConnection" type="xs:boolean" minOccurs="0">
@@ -377,6 +449,15 @@
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:group name="MinMaxTimeBandGroup">
+		<xs:annotation>
+			<xs:documentation>Earliest possible departure time from a start location and latest possible arrival at a different destination location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EarliestDepartureTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="LatestArrivalTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
 	<xs:complexType name="CustomerDetailStructure">
 		<xs:annotation>
 			<xs:documentation>Structure for customer details. No mandatory elements.</xs:documentation>
@@ -414,11 +495,7 @@
 		</xs:annotation>
 		<xs:choice>
 			<xs:group ref="UserIdGroup"/>
-			<xs:element name="AppCode" type="AppRefStructure">
-				<xs:annotation>
-					<xs:documentation>A unique value for the booking system to verify cancellation requests.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element name="AppCode" type="AppRefStructure"/>
 		</xs:choice>
 	</xs:complexType>
 	<xs:simpleType name="AppCodeType">
@@ -458,7 +535,11 @@
 				<xs:annotation>
 					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
 				</xs:annotation>
-				<xs:element name="PublicTransport" type="BookingPTLegStructure"/>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:choice>
 			<xs:element name="ExpiresAfter" type="xs:dateTime" minOccurs="0">
 				<xs:annotation>
@@ -556,7 +637,16 @@
 					<xs:documentation>Error messages.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PublicTransport" type="BookingPTLegStructure"/>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

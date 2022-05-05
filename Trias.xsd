@@ -27,7 +27,7 @@
 				<xs:group ref="ResponseGroup"/>
 				<xs:element name="Extension" type="xs:anyType"/>
 			</xs:choice>
-			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.3"/>
+			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.4"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:annotation>
@@ -97,8 +97,8 @@
 			<xs:documentation>Choice of payload requests</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
-			<xs:element ref="BookingInfoRequest"/>
 			<xs:element ref="AvailabilityRequest"/>
+			<xs:element ref="BookingInfoRequest"/>
 			<xs:element ref="BookingRequest"/>
 			<xs:element ref="BookingCancellationRequest"/>
 			<xs:element ref="BookingUpdateRequest"/>
@@ -185,8 +185,8 @@
 			<xs:documentation>Choice of delivery payload elements.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
-			<xs:element ref="BookingInfoResponse"/>
 			<xs:element ref="AvailabilityResponse"/>
+			<xs:element ref="BookingInfoResponse"/>
 			<xs:element ref="BookingResponse"/>
 			<xs:element ref="BookingCancellationResponse"/>
 			<xs:element ref="BookingUpdateResponse"/>
