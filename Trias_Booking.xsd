@@ -220,13 +220,13 @@
 		<xs:sequence>
 			<xs:element name="Age" type="xs:nonNegativeInteger" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Age of the passenger on the day of travel.</xs:documentation>
+					<xs:documentation>Age of the passenger on the day of travel. Can be requested to verify access to special kind of transportation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="OnDemandRequirementsGroup"/>
 			<xs:element name="PassengerTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Zero, one or more tickets or surcharges, one passenger carries and/or wants to book. If price is greater zero: the passenger wants/needs to buy that ticket in the vehicle, if zero: the passenger carries an already purchased/virtual ticket (examples for virtual tickets: free transportation for children under 6 years of age or police officers in uniform or an id card for severely handicapped persons with the required implementary sheet with valid token). Remark for implementation: only those tickets are bookable, that have been provided in prior AvailabilityResponse as Element BookableTicket. If this List contains surcharges, it is mandatory to carry/book a surcharge.</xs:documentation>
+					<xs:documentation>Zero, one or more tickets or surcharges, one passenger carries and/or wants to book. If price is greater zero: the passenger wants/needs to buy that ticket in the vehicle, if zero: the passenger carries an already purchased/virtual ticket (examples for virtual tickets: free transportation for children under 6 years of age or police officers in uniform or an id card for severely handicapped persons with the required implementary sheet with valid token). Ignored with AvailabilityRequest. Remark for implementation of BookingRequest: only those tickets are bookable, that have been provided in prior AvailabilityResponse as Element BookableTicket. If this List contains surcharges, it is mandatory to carry/book a surcharge.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -549,6 +549,11 @@
 			<xs:element name="ChangeableUntil" type="xs:dateTime" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>If this element is given, returned trip is not fix until this date/time. Until this date/time the trip may change because of bookings by other users.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellableUntil" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Until this date/time the trip may be cancelled by the customer who booked.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
