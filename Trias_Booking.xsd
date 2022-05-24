@@ -223,10 +223,15 @@
 					<xs:documentation>Age of the passenger on the day of travel. Can be requested to verify access to special kind of transportation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:group ref="OnDemandRequirementsGroup"/>
+			<xs:group ref="OnDemandRequirementsGroup">
+				<xs:annotation>
+					<xs:documentation>Service characteristics such as the transportation of wheelchair, pram, luggage... or the provision of required child seat or booster seat that are supported by the responsable on-demand booking system (defined by the traffic company of charge) to be booked for the trip. Remark for implementation: group is also used in BookableServiceInformation in AvailabilityResponse. Only those elements are bookable, that have been provided as TRUE in prior AvailabilityResponse.</xs:documentation>
+				</xs:annotation>
+			</xs:group>
 			<xs:element name="PassengerTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Zero, one or more tickets or surcharges, one passenger carries and/or wants to book. If price is greater zero: the passenger wants/needs to buy that ticket in the vehicle, if zero: the passenger carries an already purchased/virtual ticket (examples for virtual tickets: free transportation for children under 6 years of age or police officers in uniform or an id card for severely handicapped persons with the required implementary sheet with valid token). Ignored with AvailabilityRequest. Remark for implementation of BookingRequest: only those tickets are bookable, that have been provided in prior AvailabilityResponse as Element BookableTicket. If this List contains surcharges, it is mandatory to carry/book a surcharge.</xs:documentation>
+					<xs:documentation>Zero, one or more tickets or surcharges, one passenger carries and/or wants to book. If price is greater zero: the passenger wants/needs to buy that ticket in the vehicle, if zero: the passenger carries an already purchased/virtual ticket (examples for virtual tickets: free transportation for children under 6 years of age or police officers in uniform or an id card for severely handicapped persons with the required implementary sheet with valid token). 
+Should be provided for BookingRequest. Remark for implementation: only those tickets are bookable, that have been provided in prior AvailabilityResponse as BookableTicket. If this list contains surcharges, it is mandatory to carry/book a surcharge.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -286,7 +291,7 @@
 	</xs:annotation>
 	<xs:group name="BookableTicketAndServiceInformationGroup">
 		<xs:annotation>
-			<xs:documentation>Lists those tickets or surcharges and service characteristics such as the transport of wheelchairs, prams, luggage etc. or the provision of required child seats or booster seats that are offered in the trips transport company to be booked for the trip.</xs:documentation>
+			<xs:documentation>Lists those tickets or surcharges and service characteristics such as the transportation of wheelchairs, prams, luggage etc. or the provision of required child seats or booster seats that are offered in the trips transport company to be booked for the trip.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="BookableTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
@@ -305,7 +310,7 @@
 	</xs:complexType>
 	<xs:group name="OnDemandRequirementsGroup">
 		<xs:annotation>
-			<xs:documentation>Service characteristics such as the transport of wheelchair, pram, luggage... or the provision of required child seat or booster seat that are supported by the responsable on-demand booking system (defined by the traffic company of charge) to be booked for the trip. Remark for implementation: group is also used in Element BookableServiceInformation in AvailabilityResponse. Only those elements are bookable, that have been provided as TRUE in prior AvailabilityResponse.</xs:documentation>
+			<xs:documentation>Service characteristics such as the transportation of wheelchair, pram, luggage... or the provision of required child seat or booster seat that are supported by the responsable on-demand booking system (defined by the traffic company of charge) to be booked for the trip. Remark for implementation: group is also used in Element BookableServiceInformation in AvailabilityResponse. Only those elements are bookable, that have been provided as TRUE in prior AvailabilityResponse.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Wheelchair" type="xs:boolean" minOccurs="0">
@@ -440,11 +445,6 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="MinMaxTimeBandGroup" minOccurs="0"/>
-			<xs:element name="CustomerDetail" type="CustomerDetailStructure" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Details of the customer doing the booking transaction. No mandatory elements, although some specification is desirable.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:group ref="BookingProcessGroup"/>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
@@ -458,22 +458,6 @@
 			<xs:element name="LatestArrivalTime" type="xs:dateTime" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
-	<xs:complexType name="CustomerDetailStructure">
-		<xs:annotation>
-			<xs:documentation>Structure for customer details. No mandatory elements.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:group ref="UserIdGroup" minOccurs="0"/>
-			<xs:element name="Name" type="xs:normalizedString" minOccurs="0"/>
-			<xs:element name="EMailAddress" type="EMailAddressType" minOccurs="0"/>
-			<xs:element name="MobilePhone" type="PhoneNumberType" minOccurs="0"/>
-			<xs:element name="IdentificationText" type="xs:normalizedString" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Text used by the customer to identify himself as the one who booked</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:group name="BookingProcessGroup">
 		<xs:annotation>
 			<xs:documentation>Markes a booking reservation (needs further confirmation with a second BookingRequest containing BookingCodeGroup)</xs:documentation>
@@ -491,12 +475,25 @@
 	</xs:annotation>
 	<xs:complexType name="CustomerIdentificationType">
 		<xs:annotation>
-			<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+			<xs:documentation>Structure to identify the customer doing the booking transaction and to provide other voluntarily given customer data as name or contact data.</xs:documentation>
 		</xs:annotation>
-		<xs:choice>
-			<xs:group ref="UserIdGroup"/>
-			<xs:element name="AppCode" type="AppRefStructure"/>
-		</xs:choice>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>A user reference or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+				<xs:group ref="UserIdGroup"/>
+				<xs:element name="AppCode" type="AppRefStructure"/>
+			</xs:choice>
+			<xs:element name="Name" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="EMailAddress" type="EMailAddressType" minOccurs="0"/>
+			<xs:element name="MobilePhone" type="PhoneNumberType" minOccurs="0"/>
+			<xs:element name="IdentificationText" type="xs:normalizedString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Text used by the customer to identify himself as the one who booked</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="AppCodeType">
 		<xs:annotation>
@@ -543,7 +540,7 @@
 			</xs:choice>
 			<xs:element name="ExpiresAfter" type="xs:dateTime" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>If this element is given, the booking is only valid until this date/time. If it is not confirmed until this time, it will be rejected.</xs:documentation>
+					<xs:documentation>If this element is given, the booking reservation is only valid until this date/time. If that booking reservation is not confirmed until this time, it will expire.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ChangeableUntil" type="xs:dateTime" minOccurs="0">
