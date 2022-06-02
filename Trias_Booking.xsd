@@ -527,7 +527,7 @@ Should be provided for BookingRequest. Remark for implementation: only those tic
 					<xs:documentation>Error messages.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:group ref="BookingCodeGroup" minOccurs="0"/>
+			<xs:group ref="BookingCodeGroup"/>
 			<xs:choice minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
