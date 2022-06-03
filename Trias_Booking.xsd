@@ -13,7 +13,7 @@
 	</xs:simpleType>
 	<xs:group name="BookingCodeGroup">
 		<xs:annotation>
-			<xs:documentation>Group of booking code and associated on-demand booking system.</xs:documentation>
+			<xs:documentation>Group of booking code and associated booking system.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="SystemRef" type="ParticipantRefStructure">
