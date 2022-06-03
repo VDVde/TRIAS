@@ -778,11 +778,6 @@
 					<xs:documentation>Passenger has a pram, stroller or other kind of child/baby pushchair with him/her. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="HeavyLuggage" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger has got heavy luggage with him/her. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="VisuallyImpaired" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger is visually impaired. Default is FALSE.</xs:documentation>
