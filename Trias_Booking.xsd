@@ -305,9 +305,61 @@ Should be provided for BookingRequest. Remark for implementation: only those tic
 			<xs:documentation>Possible service characteristics that can be booked in the actual on-demand booking system (defined by the traffic company of charge). Only those elements with value TRUE are bookable. Caution: list can vary widely from one traffic company to another.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:group ref="PassengerProfileGroup"/>
-			<xs:group ref="SeatingRequirementsGroup"/>
-			<xs:group ref="LuggageRequirementsGroup"/>
+			<xs:element name="Wheelchair" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable wheelchairs. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkingFrame" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable walking frames. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pram" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable prams. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MotorizedWheelchair" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable motorized wheelchairs. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FoldableWheelchair" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable foldable wheelchairs. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildSeat" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable child seats. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BabyCarrier" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable baby carriers. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeatBooster" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable seat boosters. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BikeTransport" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable bikes taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DogTransport" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable dogs taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeavyLuggage" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable pieces of heavy luggage. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:group name="SeatingRequirementsGroup">
