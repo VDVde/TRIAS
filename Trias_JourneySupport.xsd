@@ -805,6 +805,28 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
+	<xs:group name="LuggageRequirementsGroup">
+		<xs:annotation>
+			<xs:documentation>Service characteristics required for the luggage taken along to be booked.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Bike" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to carry a bike on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dog" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The user wants to take a dog on public transport. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeavyLuggage" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has got heavy luggage with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
 	<xs:annotation>
 		<xs:documentation>=========================================== Service Attributes =============================================</xs:documentation>
 	</xs:annotation>
