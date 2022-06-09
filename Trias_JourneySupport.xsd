@@ -758,6 +758,16 @@
 					<xs:documentation>Passenger uses a wheelchair. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="MotorizedWheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a motorized wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FoldableWheelchair" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger uses a foldable wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="WalkingFrame" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger uses a walking frame. Default is FALSE.</xs:documentation>
@@ -791,16 +801,6 @@
 			<xs:element name="ReadingImpaired" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Passenger is reading impaired. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="MotorizedWheelchair" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger uses a motorized wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="FoldableWheelchair" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Passenger uses a foldable wheelchair. The vehicle must have an appropriate transportation capability. Default is FALSE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
