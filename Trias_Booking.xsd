@@ -2,6 +2,35 @@
 <xs:schema xmlns="http://www.vdv.de/trias" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vdv.de/trias" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="Trias_JourneySupport.xsd"/>
 	<xs:include schemaLocation="Trias_FaresSupport.xsd"/>
+	<xs:annotation>
+		<xs:documentation>========================== Booking codes ==============================</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="BookingCodeType">
+		<xs:annotation>
+			<xs:documentation>Booking code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:group name="BookingCodeGroup">
+		<xs:annotation>
+			<xs:documentation>Group of booking code and associated booking system.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemRef" type="ParticipantRefStructure">
+				<xs:annotation>
+					<xs:documentation>Reference to on-demand booking system that issued the booking code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookingCode" type="BookingCodeType">
+				<xs:annotation>
+					<xs:documentation>Booking code, issued by the system specified under SystemRef, corresponds to the data type xs:NMTOKEN, unique in that system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
 	<xs:element name="BookingInfoRequest" type="BookingInfoRequestStructure">
 		<xs:annotation>
 			<xs:documentation>Booking info request element.</xs:documentation>
@@ -58,6 +87,592 @@
 					<xs:documentation>One or more booking opportunities.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AvailabilityRequest" type="AvailabilityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Availabillity request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AvailabilityRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Availability request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="MobilityUser" type="BookingUserStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Passenger(s) for whom the service needs to be booked, one MobilityUser per passenger.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="MinMaxTimeBandGroup" minOccurs="0"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BookingPTLegStructure">
+		<xs:annotation>
+			<xs:documentation>Journey leg by public transport.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PickUpLocation" type="ProvisionedCallAtLocationStructure">
+				<xs:annotation>
+					<xs:documentation>Location where passenger intends to enter the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SetDownLocation" type="ProvisionedCallAtLocationStructure">
+				<xs:annotation>
+					<xs:documentation>Location where passenger intends to leave the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service" type="ServiceJourneyPropertiesStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vehicle journey data like journey, line, direction, attribute(s). No mandatory elements, although specifying at least PublishedLineName is desirable. Provided data will be used as part of availability check.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceJourneyPropertiesStructure">
+		<xs:annotation>
+			<xs:documentation>Vehicle journey (not dated), no mandatory elements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="JourneyRef" minOccurs="0"/>
+			<xs:element name="LineRef" type="LineRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Line Reference.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DirectionRef" type="DirectionRefStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the line direction, typically outward or return.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mode" type="ModeStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vehicle mode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PublishedLineName" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Line name or service description as known to the public, f.e. "512", "S8" or "Circle Line".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="OperatorRef" minOccurs="0"/>
+			<xs:element name="RouteDescription" type="InternationalTextStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive text for a route, f.e. "Airport via City Centre"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Via" type="ServiceViaPointStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Via points of the service that may help identify the vehicle to the public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Attribute" type="GeneralAttributeStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Note or service attribute.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProvisionedCallAtLocationStructure">
+		<xs:annotation>
+			<xs:documentation>Provisioned vehicle call at a more general location for a call than stop points. May be used with flexible services.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="DatedJourneyRefGroup" minOccurs="0"/>
+			<xs:element name="CallLocation" type="LocationRefStructure">
+				<xs:annotation>
+					<xs:documentation>More general location for a call than stop points. May be used with flexible services or "Area Dial-A-Ride".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceArrival" type="ServiceCallStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arrival times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceDeparture" type="ServiceCallStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Departure times of the service at this stop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="StopCallStatusGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BookingUserStructure">
+		<xs:annotation>
+			<xs:documentation>Passenger(s) for whom the trip needs to be booked</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Age" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Age of the passenger on the day of travel. Can be requested to verify access to special kind of transportation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="PassengerProfileGroup"/>
+			<xs:group ref="SeatingRequirementsGroup"/>
+			<xs:group ref="LuggageRequirementsGroup"/>
+			<xs:element name="PassengerTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Zero, one or more tickets or surcharges, one passenger carries and/or wants to book. If price is greater zero: the passenger wants/needs to buy that ticket in the vehicle, if zero: the passenger carries an already purchased/virtual ticket (examples for virtual tickets: free transportation for children under 6 years of age or police officers in uniform or an id card for severely handicapped persons with the required implementary sheet with valid token). 
+Should be provided for BookingRequest. Remark for implementation: only those tickets are bookable, that have been provided in prior AvailabilityResponse as BookableTicket. If this list contains surcharges, it is mandatory to carry/book a surcharge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AvailabilityResponse" type="AvailabilityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Availabillity response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AvailabilityResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Availability response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to the service request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AvailabilityResult" type="AvailabilityResultStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication of the availability of the requested service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AvailabilityResultStructure">
+		<xs:annotation>
+			<xs:documentation>Availability result structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages related to this availability information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:group ref="BookableTicketAndServiceInformationGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>==================== ticket and service information =====================</xs:documentation>
+	</xs:annotation>
+	<xs:group name="BookableTicketAndServiceInformationGroup">
+		<xs:annotation>
+			<xs:documentation>Lists those tickets or surcharges and service characteristics such as the transportation of wheelchairs, prams, luggage etc. or the provision of required child seats or booster seats that are offered in the trips transport company to be booked for the trip.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BookableTicket" type="TicketStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Sequence of bookable tickets or surcharges for this part of the trip. If ticket price is zero: an already purchased/virtual ticket of this type presented to the driver would be accepted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookableServiceInformation" type="BookableServiceInformationStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="BookableServiceInformationStructure">
+		<xs:annotation>
+			<xs:documentation>Possible service characteristics that can be booked in the actual booking system (defined by the traffic company of charge). Only those elements with value greater 0 are bookable. The indicated capacity corresponds to the maximum number that can be booked in one booking. This number does not have to be available for the specific booking and may result in booking failure. Caution: list can vary widely from one traffic company to another.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WheelchairCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable wheelchairs. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MotorizedWheelchairCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable motorized wheelchairs. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FoldableWheelchairCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable foldable wheelchairs. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WalkingFrameCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable walking frames. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PramCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable prams. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeavyLuggageCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable pieces of heavy luggage. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildSeatCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable child seats to be taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildSeatSupply" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable child seats provided in vehicle. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BabyCarrierCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable baby carriers to be taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BabyCarrierSupply" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable baby carriers provided in vehicle. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeatBoosterCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable seat boosters to be taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeatBoosterSupply" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable seat boosters provided in vehicle. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BikeCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable bikes taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuideDogCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable guide dogs taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DogCapacity" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Maximum number of bookable dogs taken along. Default is 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="SeatingRequirementsGroup">
+		<xs:annotation>
+			<xs:documentation>Service characteristics required for the seat to be booked.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CarriesChildSeat" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a child seat with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsChildSeat" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a child seat to be provided in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesBabyCarrier" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a baby carrier with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsBabyCarrier" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a baby carrier to be provided in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriesSeatBooster" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger has a seat booster with him/her. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedsSeatBooster" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passenger needs a seat booster to be provided in the car. Default is FALSE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingRequest" type="BookingRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking request structure. If BookingCodeGroup is provided, this will be understood as final confirmation of a former reservation booking request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:group ref="BookingCodeGroup"/>
+				<xs:element name="BookingRequestContent" type="BookingRequestContentStructure"/>
+			</xs:choice>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BookingRequestContentStructure">
+		<xs:annotation>
+			<xs:documentation>Contents of a booking request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="MobilityUser" type="BookingUserStructure" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Passenger(s) for whom the service needs to be booked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DriverInformation" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>information from the customer to the driver</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="MinMaxTimeBandGroup" minOccurs="0"/>
+			<xs:group ref="BookingProcessGroup"/>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="MinMaxTimeBandGroup">
+		<xs:annotation>
+			<xs:documentation>Earliest possible departure time from a start location and latest possible arrival at a different destination location.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EarliestDepartureTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="LatestArrivalTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="BookingProcessGroup">
+		<xs:annotation>
+			<xs:documentation>Markes a booking reservation (needs further confirmation with a second BookingRequest containing BookingCodeGroup)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReserveOnly" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If TRUE, the booking is only a reservation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:annotation>
+		<xs:documentation>==================== customer identification =====================</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CustomerIdentificationType">
+		<xs:annotation>
+			<xs:documentation>Structure to identify the customer doing the booking transaction and to provide other voluntarily given customer data as name or contact data.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>A user reference or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+				<xs:group ref="UserIdGroup"/>
+				<xs:element name="AppCode" type="AppRefStructure"/>
+			</xs:choice>
+			<xs:element name="Name" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="EMailAddress" type="EMailAddressType" minOccurs="0"/>
+			<xs:element name="MobilePhone" type="PhoneNumberType" minOccurs="0"/>
+			<xs:element name="IdentificationText" type="xs:normalizedString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Text used by the customer to identify himself as the one who booked</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AppCodeType">
+		<xs:annotation>
+			<xs:documentation>App identifier. Should be an unique value.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:complexType name="AppRefStructure">
+		<xs:annotation>
+			<xs:documentation>Reference to an app as representation for a customer. Should be a fix and unique value connected to a specific customer.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AppCodeType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingResponse" type="BookingResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="BookingCodeGroup" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="ExpiresAfter" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If this element is given, the booking reservation is only valid until this date/time. If that booking reservation is not confirmed until this time, it will expire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChangeableUntil" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If this element is given, returned trip is not fix until this date/time. Until this date/time the trip may change because of bookings by other users.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellableUntil" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Until this date/time the trip may be cancelled by the customer who booked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingCancellationRequest" type="BookingCancellationRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking cancellation request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingCancellationRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking cancellation request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="BookingCodeGroup"/>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingCancellationResponse" type="BookingCancellationResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking cancellation response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingCancellationResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking cancellation response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingUpdateRequest" type="BookingUpdateRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking update request element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingUpdateRequestStructure">
+		<xs:annotation>
+			<xs:documentation>Booking update request structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="BookingCodeGroup"/>
+			<xs:element name="CustomerIdentification" type="CustomerIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Some UserId or app-code to identify the customer as the one who booked, required especially for verification of booking cancellation or update requests.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>====================================================</xs:documentation>
+	</xs:annotation>
+	<xs:element name="BookingUpdateResponse" type="BookingUpdateResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking update response element.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BookingUpdateResponseStructure">
+		<xs:annotation>
+			<xs:documentation>Booking update response structure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrorMessage" type="ErrorMessageStructure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Error messages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>This choice is intended for later extension to other mobility services than public transport.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="PublicTransport" type="BookingPTLegStructure">
+					<xs:annotation>
+						<xs:documentation>Definition of the journey leg that should be made by public transport.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
 			<xs:element name="Extension" type="xs:anyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

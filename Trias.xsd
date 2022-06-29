@@ -97,7 +97,11 @@
 			<xs:documentation>Choice of payload requests</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
+			<xs:element ref="AvailabilityRequest"/>
 			<xs:element ref="BookingInfoRequest"/>
+			<xs:element ref="BookingRequest"/>
+			<xs:element ref="BookingCancellationRequest"/>
+			<xs:element ref="BookingUpdateRequest"/>
 			<xs:element ref="ConnectionDemandRequest"/>
 			<xs:element ref="ConnectionDemandDeleteRequest"/>
 			<xs:element ref="ConnectionReportRequest"/>
@@ -181,7 +185,11 @@
 			<xs:documentation>Choice of delivery payload elements.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
+			<xs:element ref="AvailabilityResponse"/>
 			<xs:element ref="BookingInfoResponse"/>
+			<xs:element ref="BookingResponse"/>
+			<xs:element ref="BookingCancellationResponse"/>
+			<xs:element ref="BookingUpdateResponse"/>
 			<xs:element ref="ConnectionDemandResponse"/>
 			<xs:element ref="ConnectionDemandDeleteResponse"/>
 			<xs:element ref="ConnectionReportResponse"/>
