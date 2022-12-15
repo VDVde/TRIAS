@@ -27,7 +27,7 @@
 				<xs:group ref="ResponseGroup"/>
 				<xs:element name="Extension" type="xs:anyType"/>
 			</xs:choice>
-			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.3"/>
+			<xs:attribute name="version" type="xs:NMTOKEN" use="required" fixed="1.4"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:annotation>
